@@ -2,8 +2,12 @@ var myApp = angular.module('myApp',['ngRoute', 'ngCookies']);
 
 myApp.config(function($routeProvider){
 	$routeProvider.when('/login', {
-		controller:'LoginController',
-		templateUrl: 'views/login.html'
+		controller:'AuthController',
+		templateUrl: 'views/signin.html'
+	})
+	.when('/register', {
+		controller:'AuthController',
+		templateUrl: 'views/signup.html'
 	})
 	.when('/home', {
 		controller:'HomeController',
