@@ -5,7 +5,7 @@
         </a>
         <section class="m-b-lg">
             <header class="wrapper text-center">
-                <strong>Sign up to find interesting thing</strong>
+                <strong>Đăng kí để trở thành thành viên</strong>
             </header>
             <form>
                 <div class="alert alert-success" ng-if="data.success!=null&&data.success">
@@ -21,33 +21,33 @@
                     {{data.msg}}
                 </div>
                 <div class="form-group">
-                    <input placeholder="Username" ng-model="data.username" class="form-control rounded input-lg text-center no-border">
+                    <input placeholder="Tên đăng nhập" ng-model="data.username" class="form-control rounded input-lg text-center no-border">
                 </div>
                 <div class="form-group">
                     <input type="email" placeholder="Email" ng-model="data.email" class="form-control rounded input-lg text-center no-border">
                 </div>
                 <div class="form-group">
-                    <input type="password" placeholder="Password" ng-model="data.password" class="form-control rounded input-lg text-center no-border">
+                    <input type="password" placeholder="Mật khẩu" ng-model="data.password" class="form-control rounded input-lg text-center no-border">
                 </div>
                 <div class="form-group">
-                    <input type="fullname" placeholder="Fullname" ng-model="data.fullname" class="form-control rounded input-lg text-center no-border">
+                    <input type="fullname" placeholder="Tên đầy đủ" ng-model="data.fullname" class="form-control rounded input-lg text-center no-border">
                 </div>
                 <div class="checkbox i-checks m-b">
                     <label class="m-l">
                         <input type="checkbox" checked="">
-                        <i></i> Agree the
-                        <a href="#">terms and policy</a>
+                        <i></i> Đồng ý với
+                        <a href="#">chính sách và điều khoản</a>
                     </label>
                 </div>
                 <button type="submit" ng-click="register(data)" class="btn btn-lg btn-warning lt b-white b-2x btn-block btn-rounded">
                     <i class="icon-arrow-right pull-right"></i>
-                    <span class="m-r-n-lg">Sign up</span>
+                    <span class="m-r-n-lg">Đăng ký</span>
                 </button>
                 <div class="line line-dashed"></div>
                 <p class="text-muted text-center">
-                    <small>Already have an account?</small>
+                    <small>Bạn đã có tài khoản rồi?</small>
                 </p>
-                <a href="./#!/login" class="btn btn-lg btn-info btn-block btn-rounded">Sign in</a>
+                <a href="./#!/login" class="btn btn-lg btn-info btn-block btn-rounded">Đăng nhập</a>
             </form>
         </section>
     </div>

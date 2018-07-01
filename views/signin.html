@@ -1,11 +1,11 @@
 <section id="content" class="m-t-lg wrapper-md animated fadeInUp">
     <div class="container aside-xl">
         <a class="navbar-brand block" href="index.html">
-            <span class="h1 font-bold">BMusik</span>
+            <span class="h1 font-bold">BMusic</span>
         </a>
         <section class="m-b-lg">
             <header class="wrapper text-center">
-                <strong>Sign in to get in touch</strong>
+                <strong>Đăng nhập để có những trải nhiệm mới</strong>
             </header>
             <form>
                 <div class="alert alert-danger" ng-if="data.success!=null&&!data.success">
@@ -15,25 +15,25 @@
                     {{data.msg}}
                 </div>
                 <div class="form-group">
-                    <input type="text" placeholder="Username" ng-model="data.username" class="form-control rounded input-lg text-center no-border">
+                    <input type="text" placeholder="Tên đăng nhập" ng-model="data.username" class="form-control rounded input-lg text-center no-border">
                 </div>
                 <div class="form-group">
-                    <input type="password" placeholder="Password" ng-model="data.password" class="form-control rounded input-lg text-center no-border">
+                    <input type="password" placeholder="Mật khẩu" ng-model="data.password" class="form-control rounded input-lg text-center no-border">
                 </div>
                 <button type="submit" ng-click="login(data)" class="btn btn-lg btn-warning lt b-white b-2x btn-block btn-rounded">
                     <i class="icon-arrow-right pull-right"></i>
-                    <span class="m-r-n-lg">Sign in</span>
+                    <span class="m-r-n-lg">Đăng nhập</span>
                 </button>
                 <div class="text-center m-t m-b">
                     <a href="./#!/forgot">
-                        <small>Forgot password?</small>
+                        <small>Quên mật khẩu?</small>
                     </a>
                 </div>
                 <div class="line line-dashed"></div>
                 <p class="text-muted text-center">
-                    <small>Do not have an account?</small>
+                    <small>Bạn không có tài khoản?</small>
                 </p>
-                <a href="./#!/register" class="btn btn-lg btn-info btn-block rounded">Create an account</a>
+                <a href="./#!/register" class="btn btn-lg btn-info btn-block rounded">Tạo tài khoản</a>
             </form>
         </section>
     </div>
@@ -42,7 +42,7 @@
 <footer id="footer">
     <div class="text-center padder">
         <p>
-            <small>Web app framework base on Bootstrap
+            <small>BMusic mang cả thế giới âm nhạc tới bạn
                 <br>&copy; 2018</small>
         </p>
     </div>

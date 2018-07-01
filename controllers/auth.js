@@ -11,8 +11,22 @@ myApp.controller('AuthController', ['$scope', '$http', 'userService', '$location
 		$scope.user.username = '';
 		$scope.user.password = '';
 	}
+	$scope.send = function(data){
+		userService.doSend(data);
+	}
+	$scope.changePassword = function(data){
+		if(data.password!=data.password2){
+			data.success=false;
+			data.msg="Mật khẩu không giống nhau";
+		}else{
+			userService.doChangePassword(data);
+		}
+	}
 	$scope.register = function(data){
 		userService.doRegister(data).then(function(){
         })
+	}
+	$scope.logout = function(){
+		userService.doLogout();
 	}
 }]);

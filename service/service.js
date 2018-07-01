@@ -15,7 +15,8 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
         }).then(function (response){
             if(response.data.success){
                 $cookies.put('username', response.data.content.username);
-                $cookies.put('email', response.data.content.email);
+                $cookies.put('fullname', response.data.content.fullname);
+                $cookies.put('avatar', response.data.content.avatar);
                 $cookies.put('auth', auth);
                 $location.path('/home');
             }else{
@@ -50,6 +51,61 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
                 data.msg="Có lỗi xảy ra! Vui lòng thử lại";
             }
         });
+    };
+    userService.doSend = function(data){
+        return $http({
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            data: { 
+                email: data.email
+            },
+            url: 'http://localhost:8080/music-api/forgot',
+            method: 'POST'
+        }).then(function (response){
+            data.success = response.data.success;
+            data.msg = response.data.msg;
+        },function (error){
+            if(error.status==404){
+                data.success=false;
+                data.msg="Có lỗi xảy ra! Vui lòng thử lại";
+            }
+        });
+    };
+    userService.doChangePassword = function(data){
+        return $http({
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            data: { 
+                code: data.code,
+                user:{
+                    email:data.email,
+                    password:data.password
+                }
+            },
+            url: 'http://localhost:8080/music-api/reset-password',
+            method: 'POST'
+        }).then(function (response){
+            data.success = response.data.success;
+            data.msg = response.data.msg;
+            data.email="";
+            data.password="";
+            data.password2="";
+            data.code="";
+        },function (error){
+            if(error.status==404){
+                data.success=false;
+                data.msg="Có lỗi xảy ra! Vui lòng thử lại";
+            }
+        });
+    };
+    userService.doLogout = function(){
+        $cookies.remove("auth");
+        $cookies.remove("avatar");
+        $cookies.remove("username");
+        $cookies.remove("fullname");
+        $location.path("/home");
     };
     userService.getAuthStatus = function(){
         var status = $cookies.get('auth');

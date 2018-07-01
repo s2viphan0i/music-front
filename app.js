@@ -9,9 +9,18 @@ myApp.config(function($routeProvider){
 		controller:'AuthController',
 		templateUrl: 'views/signup.html'
 	})
+	.when('/forgot', {
+		controller:'AuthController',
+		templateUrl: 'views/forgot.html'
+	})
 	.when('/home', {
 		controller:'HomeController',
 		templateUrl: 'views/home.html',
+		authenticated: true
+	})
+	.when('/logout', {
+		controller:'AuthController',
+		templateUrl: 'views/logout.html',
 		authenticated: true
 	})
 	.when('/photos/:key', {
@@ -39,11 +48,9 @@ myApp.run(["$rootScope", "$location", 'userService',
 						$location.path('/login');
 					}
 				}
-
-				if(next.$$route.originPath=='/'){
-					console.log('login page');
+				if(next.$$route.originalPath=='/login'||next.$$route.originalPath=='/register'||next.$$route.originalPath=='/forgot'){
 					if(userService.getAuthStatus()){
-						$location.path(current.$$route.originPath);
+						$location.path('/home');
 					}
 				}
 			});
