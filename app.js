@@ -58,14 +58,9 @@ myApp.run(["$rootScope", "$location", "$cookies", 'userService',
 						$location.path('/home');
 					}
 				}
-				if(next.$$route.originalPath=='/logout'){
-					$rootScope.username = "";
-					$rootScope.fullname = "";
-					$rootScope.avatar = "";
-				}
 			});
-		$rootScope.username = $cookies.get('username');
-		$rootScope.fullname = $cookies.get('fullname');
-		$rootScope.avatar = $cookies.get('avatar');
+			$rootScope.username=$cookies.get("username");
+			$rootScope.fullname=$cookies.get("fullname");
+			$rootScope.avatar=$cookies.get("avatar");
 	}
 ]);
