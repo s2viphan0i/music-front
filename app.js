@@ -23,6 +23,11 @@ myApp.config(function($routeProvider){
 		templateUrl: 'views/logout.html',
 		authenticated: true
 	})
+	.when('/edit-profile', {
+		controller:'UserController',
+		templateUrl: 'views/edit_profile.html',
+		authenticated: true
+	})
 	.when('/photos/:key', {
 		controller:'PhotoController',
 		templateUrl: '/views/photos.html'
@@ -39,8 +44,8 @@ myApp.config(function($routeProvider){
 		redirectTo: '/login'
 	});
 });
-myApp.run(["$rootScope", "$location", 'userService',
-	function($rootScope, $location, userService){
+myApp.run(["$rootScope", "$location", "$cookies", 'userService',
+	function($rootScope, $location, $cookies, userService){
 		$rootScope.$on("$routeChangeStart",
 			function(event, next, current){
 				if(next.$$route.authenticated){
@@ -53,6 +58,14 @@ myApp.run(["$rootScope", "$location", 'userService',
 						$location.path('/home');
 					}
 				}
+				if(next.$$route.originalPath=='/logout'){
+					$rootScope.username = "";
+					$rootScope.fullname = "";
+					$rootScope.avatar = "";
+				}
 			});
+		$rootScope.username = $cookies.get('username');
+		$rootScope.fullname = $cookies.get('fullname');
+		$rootScope.avatar = $cookies.get('avatar');
 	}
 ]);

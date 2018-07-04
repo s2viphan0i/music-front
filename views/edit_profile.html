@@ -1,0 +1,399 @@
+<section class="vbox">
+    <header class="bg-white-only header header-md navbar navbar-fixed-top-xs">
+        <div class="navbar-header aside bg-info dk">
+            <a class="btn btn-link visible-xs" data-toggle="class:nav-off-screen,open" data-target="#nav,html">
+                <i class="icon-list"></i>
+            </a>
+            <a href="index.html" class="navbar-brand text-lt">
+                <i class="icon-earphones"></i>
+                <img src="images/logo.png" alt="." class="hide">
+                <span class="hidden-nav-xs m-l-sm">Musik</span>
+            </a>
+            <a class="btn btn-link visible-xs" data-toggle="dropdown" data-target=".user">
+                <i class="icon-settings"></i>
+            </a>
+        </div>
+        <ul class="nav navbar-nav hidden-xs">
+            <li>
+                <a href="#nav,.navbar-header" data-toggle="class:nav-xs,nav-xs" class="text-muted">
+                    <i class="fa fa-indent text"></i>
+                    <i class="fa fa-dedent text-active"></i>
+                </a>
+            </li>
+        </ul>
+        <form class="navbar-form navbar-left input-s-lg m-t m-l-n-xs hidden-xs" role="search">
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-sm bg-white btn-icon rounded">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                    <input type="text" class="form-control input-sm no-border rounded" placeholder="Search songs, albums...">
+                </div>
+            </div>
+        </form>
+        <div class="navbar-right ">
+            <ul class="nav navbar-nav m-n hidden-xs nav-user user">
+                <li class="hidden-xs">
+                    <a href="#" class="dropdown-toggle lt" data-toggle="dropdown">
+                        <i class="icon-bell"></i>
+                        <span class="badge badge-sm up bg-danger count">2</span>
+                    </a>
+                    <section class="dropdown-menu aside-xl animated fadeInUp">
+                        <section class="panel bg-white">
+                            <div class="panel-heading b-light bg-light">
+                                <strong>You have
+                                    <span class="count">2</span> notifications</strong>
+                            </div>
+                            <div class="list-group list-group-alt">
+                                <a href="#" class="media list-group-item">
+                                    <span class="pull-left thumb-sm">
+                                        <img src="images/a0.png" alt="..." class="img-circle">
+                                    </span>
+                                    <span class="media-body block m-b-none">
+                                        Use awesome animate.css
+                                        <br>
+                                        <small class="text-muted">10 minutes ago</small>
+                                    </span>
+                                </a>
+                                <a href="#" class="media list-group-item">
+                                    <span class="media-body block m-b-none">
+                                        1.0 initial released
+                                        <br>
+                                        <small class="text-muted">1 hour ago</small>
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="panel-footer text-sm">
+                                <a href="#" class="pull-right">
+                                    <i class="fa fa-cog"></i>
+                                </a>
+                                <a href="#notes" data-toggle="class:show animated fadeInRight">See all the notifications</a>
+                            </div>
+                        </section>
+                    </section>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle bg clear" data-toggle="dropdown">
+                        <span class="thumb-sm avatar pull-right m-t-n-sm m-b-n-sm m-l-sm">
+                            <img src="images/a0.png" alt="...">
+                        </span>
+                        John.Smith
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu animated fadeInRight">
+                        <li>
+                            <span class="arrow top"></span>
+                            <a href="#">Settings</a>
+                        </li>
+                        <li>
+                            <a href="profile.html">Profile</a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="badge bg-danger pull-right">3</span>
+                                Notifications
+                            </a>
+                        </li>
+                        <li>
+                            <a href="docs.html">Help</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="modal.lockme.html" data-toggle="ajaxModal">Logout</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </header>
+    <section>
+        <section class="hbox stretch">
+            <!-- .aside -->
+            <div ng ng-include="'views/side_bar.html'"></div>
+            <!-- /.aside -->
+            <section id="content">
+                <section class="vbox">
+                    <section class="scrollable padder">
+                        <div class="m-b-md">
+                            <h3 class="m-b-none">Validation</h3>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <form data-validate="parsley">
+                                    <section class="panel panel-default">
+                                        <header class="panel-heading">
+                                            <span class="h4">Register</span>
+                                        </header>
+                                        <div class="panel-body">
+                                            <p class="text-muted">Please fill the information to continue</p>
+                                            <div class="form-group">
+                                                <label>Username</label>
+                                                <input type="text" class="form-control" data-required="true">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Email</label>
+                                                <input type="text" class="form-control" data-type="email" data-required="true">
+                                            </div>
+                                            <div class="form-group pull-in clearfix">
+                                                <div class="col-sm-6">
+                                                    <label>Enter password</label>
+                                                    <input type="password" class="form-control" data-required="true" id="pwd">
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <label>Confirm password</label>
+                                                    <input type="password" class="form-control" data-equalto="#pwd" data-required="true">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Phone</label>
+                                                <input type="text" class="form-control" data-type="phone" placeholder="(XXX) XXXX XXX" data-required="true">
+                                            </div>
+                                            <div class="checkbox i-checks">
+                                                <label>
+                                                    <input type="checkbox" name="check" checked data-required="true">
+                                                    <i></i> I agree to the
+                                                    <a href="#" class="text-info">Terms of Service</a>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <footer class="panel-footer text-right bg-light lter">
+                                            <button type="submit" class="btn btn-success btn-s-xs">Submit</button>
+                                        </footer>
+                                    </section>
+                                </form>
+                            </div>
+                            <div class="col-sm-6">
+                                <form data-validate="parsley">
+                                    <section class="panel panel-default">
+                                        <header class="panel-heading">
+                                            <span class="h4">Contact</span>
+                                        </header>
+                                        <div class="panel-body">
+                                            <p class="text-muted">Need support? please fill the fields below.</p>
+                                            <div class="form-group pull-in clearfix">
+                                                <div class="col-sm-6">
+                                                    <label>Your name</label>
+                                                    <input type="text" class="form-control" placeholder="Name" data-required="true">
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <label>Email</label>
+                                                    <input type="email" class="form-control" placeholder="Enter email" data-required="true">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Your website</label>
+                                                <input type="text" data-type="url" data-required="true" class="form-control" placeholder="Your website url">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Message</label>
+                                                <textarea class="form-control" rows="6" data-minwords="6" data-required="true" placeholder="Type your message"></textarea>
+                                            </div>
+                                        </div>
+                                        <footer class="panel-footer text-right bg-light lter">
+                                            <button type="submit" class="btn btn-success btn-s-xs">Submit</button>
+                                        </footer>
+                                    </section>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <form class="form-horizontal" data-validate="parsley">
+                                    <section class="panel panel-default">
+                                        <header class="panel-heading">
+                                            <strong>Basic constraints</strong>
+                                        </header>
+                                        <div class="panel-body">
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Required</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control" data-required="true" placeholder="required field">
+                                                    <select data-required="true" class="form-control m-t">
+                                                        <option value="">Please choose</option>
+                                                        <option value="foo">Foo</option>
+                                                        <option value="bar">Bar</option>
+                                                    </select>
+                                                    <label class="checkbox i-checks">
+                                                        <input type="checkbox" name="inlineCheckbox1" value="option1" data-required="true" data-error-message="You must agree to the site policy.">
+                                                        <i></i> Agree to the policy
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="line line-dashed b-b line-lg pull-in"></div>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Not blank</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" data-notblank="true" class="form-control" placeholder="not blank field">
+                                                </div>
+                                            </div>
+                                            <div class="line line-dashed b-b line-lg pull-in"></div>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Min Length</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" data-minlength="6" class="form-control" placeholder="minlength = 6">
+                                                </div>
+                                            </div>
+                                            <div class="line line-dashed b-b line-lg pull-in"></div>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Max Length</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" data-maxlength="6" class="form-control" placeholder="maxlength = 6">
+                                                </div>
+                                            </div>
+                                            <div class="line line-dashed b-b line-lg pull-in"></div>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Range Length</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" data-rangelength="[5,10]" class="form-control" placeholder="data-rangelength = [5,10]">
+                                                </div>
+                                            </div>
+                                            <div class="line line-dashed b-b line-lg pull-in"></div>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Min</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" data-min="6" class="form-control" placeholder="min = 6">
+                                                </div>
+                                            </div>
+                                            <div class="line line-dashed b-b line-lg pull-in"></div>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Max</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" data-max="100" class="form-control" placeholder="max = 100">
+                                                </div>
+                                            </div>
+                                            <div class="line line-dashed b-b line-lg pull-in"></div>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Range</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" data-range="[6, 100]" class="form-control" placeholder="data-range = [6, 100]">
+                                                </div>
+                                            </div>
+                                            <div class="line line-dashed b-b line-lg pull-in"></div>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">RegExp</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" data-regexp="#[A-Fa-f0-9]{6}" class="form-control" placeholder="hexa color code">
+                                                </div>
+                                            </div>
+                                            <div class="line line-dashed b-b line-lg pull-in"></div>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Equal To</label>
+                                                <div class="col-sm-9">
+                                                    <div class="row">
+                                                        <div class="col-sm-6">
+                                                            <input type="text" value="foo" id="foo" class="form-control">
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <input type="text" data-equalto="#foo" placeholder="equal to foo"
+                                                                class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <footer class="panel-footer text-right bg-light lter">
+                                            <button type="submit" class="btn btn-success btn-s-xs">Submit</button>
+                                        </footer>
+                                    </section>
+                                </form>
+                            </div>
+                            <div class="col-sm-6">
+                                <form class="form-horizontal" data-validate="parsley">
+                                    <section class="panel panel-default">
+                                        <header class="panel-heading">
+                                            <strong>Type constraints</strong>
+                                        </header>
+                                        <div class="panel-body">
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Email</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control" data-type="email" data-required="true" placeholder="email">
+                                                </div>
+                                            </div>
+                                            <div class="line line-dashed b-b line-lg pull-in"></div>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Url</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" data-type="url" class="form-control" placeholder="url">
+                                                </div>
+                                            </div>
+                                            <div class="line line-dashed b-b line-lg pull-in"></div>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Url strict</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" data-type="urlstrict" class="form-control" placeholder="urlstrict">
+                                                </div>
+                                            </div>
+                                            <div class="line line-dashed b-b line-lg pull-in"></div>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Digits</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" data-type="digits" class="form-control" placeholder="digits">
+                                                </div>
+                                            </div>
+                                            <div class="line line-dashed b-b line-lg pull-in"></div>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Number</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" data-type="number" class="form-control" placeholder="number">
+                                                </div>
+                                            </div>
+                                            <div class="line line-dashed b-b line-lg pull-in"></div>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Alphanum</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" data-type="alphanum" class="form-control" placeholder="alphanumeric string">
+                                                </div>
+                                            </div>
+                                            <div class="line line-dashed b-b line-lg pull-in"></div>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Date Iso</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" data-type="dateIso" class="form-control" placeholder="YYYY-MM-DD">
+                                                </div>
+                                            </div>
+                                            <div class="line line-dashed b-b line-lg pull-in"></div>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Phone</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" data-type="phone" class="form-control" placeholder="(XXX) XXXX XXX">
+                                                </div>
+                                            </div>
+                                            <div class="line line-dashed b-b line-lg pull-in"></div>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Min Words</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" data-minwords="6" class="form-control" placeholder="min 6 words">
+                                                </div>
+                                            </div>
+                                            <div class="line line-dashed b-b line-lg pull-in"></div>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Max Words</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" data-maxwords="6" class="form-control" placeholder="max 6 words">
+                                                </div>
+                                            </div>
+                                            <div class="line line-dashed b-b line-lg pull-in"></div>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Range Words</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" data-rangewords="[6,10]" class="form-control" placeholder="min 6 words & max 10 words">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <footer class="panel-footer text-right bg-light lter">
+                                            <button type="submit" class="btn btn-success btn-s-xs">Submit</button>
+                                        </footer>
+                                    </section>
+                                </form>
+                            </div>
+                        </div>
+                    </section>
+                </section>
+                <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen,open" data-target="#nav,html"></a>
+            </section>
+        </section>
+    </section>
+</section>
