@@ -156,7 +156,9 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
         }).then(function (response){
             data.success = response.data.success;
             data.msg = response.data.msg;
-            $cookies.put('avatar', response.data.content.avatar);
+            if(response.data.content.avatar!=null){
+                $cookies.put('avatar', response.data.content.avatar);
+            }
             $cookies.put('fullname', response.data.content.fullname);
         },function (error){
             if(error.status==404){
