@@ -11,8 +11,8 @@ myApp.controller('AuthController', ['$scope', '$http', 'userService', '$location
 		$scope.user.username = '';
 		$scope.user.password = '';
 	}
-	$scope.send = function(data){
-		userService.doSend(data);
+	$scope.sendForgotPIN = function(data){
+		userService.doSendForgotPIN(data);
 	}
 	$scope.changePassword = function(data){
 		if(data.password!=data.password2){
