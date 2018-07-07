@@ -28,6 +28,11 @@ myApp.config(function($routeProvider){
 		templateUrl: 'views/edit_profile.html',
 		authenticated: true
 	})
+	.when('/profile', {
+		controller:'UserController',
+		templateUrl: 'views/profile.html',
+		authenticated: true
+	})
 	.when('/photos/:key', {
 		controller:'PhotoController',
 		templateUrl: '/views/photos.html'
