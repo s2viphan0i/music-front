@@ -2,12 +2,35 @@ var myApp = angular.module('myApp',['ngRoute', 'ngCookies']);
 
 myApp.config(function($routeProvider){
 	$routeProvider.when('/login', {
-		controller:'LoginController',
-		templateUrl: 'views/login.html'
+		controller:'AuthController',
+		templateUrl: 'views/signin.html'
+	})
+	.when('/register', {
+		controller:'AuthController',
+		templateUrl: 'views/signup.html'
+	})
+	.when('/forgot', {
+		controller:'AuthController',
+		templateUrl: 'views/forgot.html'
 	})
 	.when('/home', {
 		controller:'HomeController',
 		templateUrl: 'views/home.html',
+		authenticated: true
+	})
+	.when('/logout', {
+		controller:'AuthController',
+		templateUrl: 'views/logout.html',
+		authenticated: true
+	})
+	.when('/edit-profile', {
+		controller:'UserController',
+		templateUrl: 'views/edit_profile.html',
+		authenticated: true
+	})
+	.when('/profile/:username', {
+		controller:'UserController',
+		templateUrl: 'views/profile.html',
 		authenticated: true
 	})
 	.when('/photos/:key', {
@@ -26,8 +49,8 @@ myApp.config(function($routeProvider){
 		redirectTo: '/login'
 	});
 });
-myApp.run(["$rootScope", "$location", 'userService',
-	function($rootScope, $location, userService){
+myApp.run(["$rootScope", "$location", "$cookies", 'userService',
+	function($rootScope, $location, $cookies, userService){
 		$rootScope.$on("$routeChangeStart",
 			function(event, next, current){
 				if(next.$$route.authenticated){
@@ -35,13 +58,14 @@ myApp.run(["$rootScope", "$location", 'userService',
 						$location.path('/login');
 					}
 				}
-
-				if(next.$$route.originPath=='/'){
-					console.log('login page');
+				if(next.$$route.originalPath=='/login'||next.$$route.originalPath=='/register'||next.$$route.originalPath=='/forgot'){
 					if(userService.getAuthStatus()){
-						$location.path(current.$$route.originPath);
+						$location.path('/home');
 					}
 				}
 			});
+			$rootScope.username=$cookies.get("username");
+			$rootScope.fullname=$cookies.get("fullname");
+			$rootScope.avatar=$cookies.get("avatar");
 	}
 ]);
