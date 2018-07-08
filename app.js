@@ -28,7 +28,7 @@ myApp.config(function($routeProvider){
 		templateUrl: 'views/edit_profile.html',
 		authenticated: true
 	})
-	.when('/profile', {
+	.when('/profile/:username', {
 		controller:'UserController',
 		templateUrl: 'views/profile.html',
 		authenticated: true

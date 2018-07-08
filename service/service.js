@@ -3,6 +3,7 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
     var host = "http://localhost:8080"
     userService.doLogin = function(data){
         var auth = btoa(unescape(data.username+":"+data.password));
+        $("#login-spinner").removeClass("hidden")
         return $http({
             headers:{
                 'Content-Type': 'application/json',
@@ -14,6 +15,7 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
             url: host+'/login',
             method: 'POST'
         }).then(function (response){
+            $("#login-spinner").addClass("hidden");
             if(response.data.success){
                 $cookies.put('username', response.data.content.username);
                 $cookies.put('fullname', response.data.content.fullname);
@@ -25,6 +27,7 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
                 data.msg=response.data.msg;
             }
         },function (error){
+            $("#login-spinner").addClass("hidden");
             console.log(error);
             if(error.status==401){
                 data.success=false;
@@ -33,6 +36,7 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
         });
     };
     userService.doRegister = function(data){
+        $("#register-spinner").removeClass("hidden");
         return $http({
             headers:{
                 'Content-Type': 'application/json'
@@ -44,9 +48,11 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
             url: host+'/register',
             method: 'POST'
         }).then(function (response){
+            $("#register-spinner").addClass("hidden");
             data.success = response.data.success;
             data.msg = response.data.msg;
         },function (error){
+            $("#register-spinner").addClass("hidden");
             if(error.status==404){
                 data.success=false;
                 data.msg="Có lỗi xảy ra! Vui lòng thử lại";
@@ -54,6 +60,7 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
         });
     };
     userService.doSendForgotPIN = function(data){
+        $("#send-spinner").removeClass("hidden");
         return $http({
             headers:{
                 'Content-Type': 'application/json'
@@ -64,9 +71,11 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
             url: host+'/forgot',
             method: 'POST'
         }).then(function (response){
+            $("#send-spinner").addClass("hidden");
             data.success = response.data.success;
             data.msg = response.data.msg;
         },function (error){
+            $("#send-spinner").addClass("hidden");
             if(error.status==404){
                 data.success=false;
                 data.msg="Có lỗi xảy ra! Vui lòng thử lại";
@@ -74,9 +83,9 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
         });
     };
     userService.doChangePassword = function(data){
+        $("#change-spinner").removeClass("hidden");
         return $http({
             headers:{
-                
                 'Content-Type': 'application/json'
             },
             data: { 
@@ -89,6 +98,7 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
             url: host+'/reset-password',
             method: 'POST'
         }).then(function (response){
+            $("#change-spinner").addClass("hidden");
             data.success = response.data.success;
             data.msg = response.data.msg;
             data.email="";
@@ -96,6 +106,7 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
             data.password2="";
             data.code="";
         },function (error){
+            $("#change-spinner").addClass("hidden");
             if(error.status==404){
                 data.success=false;
                 data.msg="Có lỗi xảy ra! Vui lòng thử lại";
@@ -109,10 +120,34 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
             headers:{
                 'Authorization' : 'Basic ' + auth
             },
-            url: host+'/user/get-user-by-username',
+            url: host+'/user/get-user-by-username?username='+data.username,
+            method: 'GET'
+        }).then(function (response){
+            data.avatar = response.data.content.avatar;
+            data.fullname = response.data.content.fullname;
+            data.username = response.data.content.username;
+            data.phone = response.data.content.phone;
+            data.birthdate = response.data.content.birthdate;
+            data.note = response.data.content.note;
+        },function (error){
+            if(error.status==404){
+                data.success=false;
+                data.msg="Có lỗi xảy ra! Vui lòng thử lại";
+            }
+        });
+    };
+    userService.doGetUserByAuth = function(data){
+        var auth = $cookies.get("auth");
+        var username = $cookies.get("username");
+        return $http({
+            headers:{
+                'Authorization' : 'Basic ' + auth
+            },
+            url: host+'/user/get-user-by-auth',
             method: 'GET'
         }).then(function (response){
             data.fullname = response.data.content.fullname;
+            data.username = response.data.content.username;
             data.phone = response.data.content.phone;
             data.birthdate = response.data.content.birthdate;
             data.note = response.data.content.note;
