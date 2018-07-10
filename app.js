@@ -33,6 +33,11 @@ myApp.config(function($routeProvider){
 		templateUrl: 'views/profile.html',
 		authenticated: true
 	})
+	.when('/upload', {
+		controller:'SongController',
+		templateUrl: 'views/upload.html',
+		authenticated: true
+	})
 	.when('/photos/:key', {
 		controller:'PhotoController',
 		templateUrl: '/views/photos.html'

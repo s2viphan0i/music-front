@@ -1,4 +1,4 @@
-<section class="vbox" ng-init="getProfile(data)">
+<section class="vbox" ng-init="getUser(data)">
     <!-- header -->
     <header class="bg-white-only header header-md navbar navbar-fixed-top-xs">
         <div class="navbar-header aside bg-info nav-xs">
@@ -451,7 +451,7 @@
                                         <a href="#">Settings</a>
                                     </li>
                                     <li>
-                                        <a href="./#!/profile/{{username}}">Profile</a>
+                                        <a href="./#!/profile">Profile</a>
                                     </li>
                                     <li>
                                         <a href="#">
@@ -484,7 +484,7 @@
                                         <div class="wrapper">
                                             <div class="text-center m-b m-t">
                                                 <a href="#" class="thumb-lg">
-                                                    <img src="http://localhost:8080/resource/image?name={{data.avatar}}" class="img-circle">
+                                                    <img src="http://localhost:8080/resource/image?name={{avatar}}" class="img-circle">
                                                 </a>
                                                 <div>
                                                     <div class="h3 m-t-xs m-b-xs">{{data.fullname}}</div>
@@ -526,7 +526,7 @@
                                                 <small class="text-uc text-xs text-muted">info</small>
                                                 <p>{{data.note}}</p>
                                                 <div class="line"></div>
-                                                <p ng-if="data.username==username">
+                                                <p>
                                                     <a href="./#!/edit-profile" class="btn btn-success btn-xs">
                                                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
                                                 </p>
@@ -547,187 +547,74 @@
                                     </section>
                                 </section>
                             </aside>
-                            <aside class="bg-white">
-                                <section class="vbox">
-                                    <header class="header bg-light lt">
-                                        <ul class="nav nav-tabs nav-white">
-                                            <li class="active">
-                                                <a href="#activity" data-toggle="tab">Activity</a>
-                                            </li>
-                                            <li class="">
-                                                <a href="#events" data-toggle="tab">Events</a>
-                                            </li>
-                                            <li class="">
-                                                <a href="#interaction" data-toggle="tab">Interaction</a>
-                                            </li>
-                                        </ul>
-                                    </header>
-                                    <section class="scrollable">
-                                        <div class="tab-content">
-                                            <div class="tab-pane active" id="activity">
-                                                <ul class="list-group no-radius m-b-none m-t-n-xxs list-group-lg no-border">
-                                                    <li class="list-group-item">
-                                                        <a href="#" class="thumb-sm pull-left m-r-sm">
-                                                            <img src="images/a0.png" class="img-circle">
-                                                        </a>
-                                                        <a href="#" class="clear">
-                                                            <small class="pull-right">3 minuts ago</small>
-                                                            <strong class="block">Drew Wllon</strong>
-                                                            <small>Wellcome and play this web application template ... </small>
-                                                        </a>
-                                                    </li>
-                                                    <li class="list-group-item">
-                                                        <a href="#" class="thumb-sm pull-left m-r-sm">
-                                                            <img src="images/a1.png" class="img-circle">
-                                                        </a>
-                                                        <a href="#" class="clear">
-                                                            <small class="pull-right">1 hour ago</small>
-                                                            <strong class="block">Jonathan George</strong>
-                                                            <small>Morbi nec nunc condimentum...</small>
-                                                        </a>
-                                                    </li>
-                                                    <li class="list-group-item">
-                                                        <a href="#" class="thumb-sm pull-left m-r-sm">
-                                                            <img src="images/a2.png" class="img-circle">
-                                                        </a>
-                                                        <a href="#" class="clear">
-                                                            <small class="pull-right">2 hours ago</small>
-                                                            <strong class="block">Josh Long</strong>
-                                                            <small>Vestibulum ullamcorper sodales nisi nec...</small>
-                                                        </a>
-                                                    </li>
-                                                    <li class="list-group-item">
-                                                        <a href="#" class="thumb-sm pull-left m-r-sm">
-                                                            <img src="images/a3.png" class="img-circle">
-                                                        </a>
-                                                        <a href="#" class="clear">
-                                                            <small class="pull-right">1 day ago</small>
-                                                            <strong class="block">Jack Dorsty</strong>
-                                                            <small>Morbi nec nunc condimentum...</small>
-                                                        </a>
-                                                    </li>
-                                                    <li class="list-group-item">
-                                                        <a href="#" class="thumb-sm pull-left m-r-sm">
-                                                            <img src="images/a4.png" class="img-circle">
-                                                        </a>
-                                                        <a href="#" class="clear">
-                                                            <small class="pull-right">3 days ago</small>
-                                                            <strong class="block">Morgen Kntooh</strong>
-                                                            <small>Mobile first web app for startup...</small>
-                                                        </a>
-                                                    </li>
-                                                    <li class="list-group-item">
-                                                        <a href="#" class="thumb-sm pull-left m-r-sm">
-                                                            <img src="images/a5.png" class="img-circle">
-                                                        </a>
-                                                        <a href="#" class="clear">
-                                                            <small class="pull-right">Jun 21</small>
-                                                            <strong class="block">Yoha Omish</strong>
-                                                            <small>Morbi nec nunc condimentum...</small>
-                                                        </a>
-                                                    </li>
-                                                    <li class="list-group-item">
-                                                        <a href="#" class="thumb-sm pull-left m-r-sm">
-                                                            <img src="images/a6.png" class="img-circle">
-                                                        </a>
-                                                        <a href="#" class="clear">
-                                                            <small class="pull-right">May 10</small>
-                                                            <strong class="block">Gole Lido</strong>
-                                                            <small>Vestibulum ullamcorper sodales nisi nec...</small>
-                                                        </a>
-                                                    </li>
-                                                    <li class="list-group-item">
-                                                        <a href="#" class="thumb-sm pull-left m-r-sm">
-                                                            <img src="images/a7.png" class="img-circle">
-                                                        </a>
-                                                        <a href="#" class="clear">
-                                                            <small class="pull-right">Jan 2</small>
-                                                            <strong class="block">Jonthan Snow</strong>
-                                                            <small>Morbi nec nunc condimentum...</small>
-                                                        </a>
-                                                    </li>
-                                                    <li class="list-group-item" href="#email-content" data-toggle="class:show">
-                                                        <a href="#" class="thumb-sm pull-left m-r-sm">
-                                                            <img src="images/a8.png" class="img-circle">
-                                                        </a>
-                                                        <a href="#" class="clear">
-                                                            <small class="pull-right">3 minuts ago</small>
-                                                            <strong class="block">Drew Wllon</strong>
-                                                            <small>Vestibulum ullamcorper sodales nisi nec sodales nisi nec sodales
-                                                                nisi nec...</small>
-                                                        </a>
-                                                    </li>
-                                                    <li class="list-group-item">
-                                                        <a href="#" class="thumb-sm pull-left m-r-sm">
-                                                            <img src="images/a9.png" class="img-circle">
-                                                        </a>
-                                                        <a href="#" class="clear">
-                                                            <small class="pull-right">1 hour ago</small>
-                                                            <strong class="block">Jonathan George</strong>
-                                                            <small>Morbi nec nunc condimentum...</small>
-                                                        </a>
-                                                    </li>
-                                                </ul>
+                            <section class="scrollable padder">
+                                <div class="m-b-md">
+                                    <a href="./#!/profile/{{username}}" class="m-r" style="display: inline-block;">
+                                        <i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+                                    <h3 class="m-b-none" style="display: inline-block;">Upload song</h3>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <form data-validate="parsley">
+                                            <div class="alert alert-danger" ng-if="data.success!=null&&!data.success">
+                                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                                <i class="fa fa-ban-circle"></i>
+                                                <strong>Ôi không!</strong>
+                                                {{data.msg}}
                                             </div>
-                                            <div class="tab-pane" id="events">
-                                                <div class="text-center wrapper">
-                                                    <i class="fa fa-spinner fa fa-spin fa fa-large"></i>
+                                            <div class="alert alert-success" ng-if="data.success!=null&&data.success">
+                                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                                <i class="fa fa-ok-sign"></i>
+                                                <strong>Thành công!</strong>
+                                                {{data.msg}}
+                                            </div>
+                                            <section class="panel panel-default">
+                                                <header class="panel-heading">
+                                                    <span class="h4">Form</span>
+                                                </header>
+                                                <div class="row">
+                                                    <div class="panel-body">
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group">
+                                                                <label>Tiêu đề</label>
+                                                                <input type="text" class="form-control" ng-model="data.title" placeholder="Tiêu đề bài hát" data-required="true">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label>Thể loại</label>
+                                                                <input type="text" class="form-control" ng-model="data.phone" data-required="true">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label>Thể loại</label>
+                                                                <select ng-model="data.genre" ng-options="x for x in genres" class="form-control m-b">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label>Ảnh bìa</label>
+                                                                <input type="file" accept="image/*" file-model="data.image" class="customfileinput">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group">
+                                                                <label>File nhạc</label>
+                                                                <input type="file" accept="image/*" file-model="data.file" class="customfileinput">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label>Lyric</label>
+                                                                <textarea class="form-control" ng-model="data.note" rows="6" data-minwords="6" data-required="true" placeholder="Type something"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="tab-pane" id="interaction">
-                                                <div class="text-center wrapper">
-                                                    <i class="fa fa-spinner fa fa-spin fa fa-large"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </section>
-                                </section>
-                            </aside>
-                            <aside class="col-lg-3 b-l">
-                                <section class="vbox">
-                                    <section class="scrollable padder-v">
-                                        <div class="panel">
-                                            <h4 class="font-thin padder">Latest Tweets</h4>
-                                            <ul class="list-group">
-                                                <li class="list-group-item">
-                                                    <p>Wellcome
-                                                        <a href="#" class="text-info">@Drew Wllon</a> and play this web application template, have fun1
-                                                    </p>
-                                                    <small class="block text-muted">
-                                                        <i class="fa fa-clock-o"></i> 2 minuts ago</small>
-                                                </li>
-                                                <li class="list-group-item">
-                                                    <p>Morbi nec
-                                                        <a href="#" class="text-info">@Jonathan George</a> nunc condimentum ipsum dolor sit amet, consectetur</p>
-                                                    <small class="block text-muted">
-                                                        <i class="fa fa-clock-o"></i> 1 hour ago</small>
-                                                </li>
-                                                <li class="list-group-item">
-                                                    <p>
-                                                        <a href="#" class="text-info">@Josh Long</a> Vestibulum ullamcorper sodales nisi nec adipiscing
-                                                        elit. Morbi id neque quam. Aliquam sollicitudin venenatis</p>
-                                                    <small class="block text-muted">
-                                                        <i class="fa fa-clock-o"></i> 2 hours ago</small>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="panel clearfix">
-                                            <div class="panel-body">
-                                                <a href="#" class="thumb pull-left m-r">
-                                                    <img src="images/a0.png" class="img-circle">
-                                                </a>
-                                                <div class="clear">
-                                                    <a href="#" class="text-info">@Mike Mcalidek
-                                                        <i class="fa fa-twitter"></i>
-                                                    </a>
-                                                    <small class="block text-muted">2,415 followers / 225 tweets</small>
-                                                    <a href="#" class="btn btn-xs btn-success m-t-xs">Follow</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </section>
-                                </section>
-                            </aside>
+                                                <footer class="panel-footer text-right bg-light lter">
+                                                    <button type="submit" ng-click="editUser(data)" class="btn btn-success btn-s-xs">Submit
+                                                        <i class='fa fa-spinner fa fa-spin fa fa-large hidden' id="edit-spinner"></i>
+                                                    </button>
+                                                </footer>
+                                            </section>
+                                        </form>
+                                    </div>
+                                </div>
+                            </section>
                         </section>
                     </section>
                 </section>
