@@ -1,14 +1,18 @@
 var myApp = angular.module('myApp');
 
-myApp.controller('SongController', ['$scope', '$http', 'userService', '$location', '$routeParams', function($scope, $http, userService, $location, $routeParams){
+myApp.controller('SongController', ['$scope', '$http', 'userService', 'songService', '$location', '$routeParams', function($scope, $http, userService, songService, $location, $routeParams){
 	console.log('SongController loaded...');
 	$scope.getUser = function(){
 		$scope.data = [];
 		userService.doGetUserByAuth($scope.data);
     }
-    $scope.genres = function(){
-        return songService.getAllGenres();
+    $scope.getAllGenres = function(){
+        $scope.data = [];
+        songService.doGetAllGenres($scope.data);
     }
+    $scope.addSong = function(data){
+		songService.doAddSong(data);
+	}
 }]).directive('fileModel', ['$parse', function ($parse) {
 	return {
 	   restrict: 'A',
