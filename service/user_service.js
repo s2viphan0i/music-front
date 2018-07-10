@@ -121,6 +121,7 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
                 'Authorization' : 'Basic ' + auth
             },
             url: host+'/user/get-user-by-username?username='+data.username,
+            withCredentials: true,
             method: 'GET'
         }).then(function (response){
             data.avatar = response.data.content.avatar;
@@ -144,8 +145,10 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
                 'Authorization' : 'Basic ' + auth
             },
             url: host+'/user/get-user-by-auth',
+            withCredentials: true,
             method: 'GET'
         }).then(function (response){
+            console.log(response);
             data.fullname = response.data.content.fullname;
             data.username = response.data.content.username;
             data.phone = response.data.content.phone;
@@ -159,6 +162,7 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
         });
     };
     userService.doEditUser = function(data){
+        $("#edit-spinner").removeClass("hidden");
         var auth = $cookies.get("auth");
         if(data.note==undefined){
             data.note=""
@@ -187,8 +191,10 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
                 return formData;
             },
             url: host+'/user/edit',
+            withCredentials: true,
             method: 'PUT'
         }).then(function (response){
+            $("#edit-spinner").addClass("hidden");
             data.success = response.data.success;
             data.msg = response.data.msg;
             if(response.data.content.avatar!=null){
@@ -196,6 +202,7 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
             }
             $cookies.put('fullname', response.data.content.fullname);
         },function (error){
+            $("#edit-spinner").addClass("hidden");
             if(error.status==404){
                 data.success=false;
                 data.msg="Có lỗi xảy ra! Vui lòng thử lại";
@@ -207,7 +214,7 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
         $cookies.remove("avatar");
         $cookies.remove("username");
         $cookies.remove("fullname");
-        $location.path("/home");
+        $location.path("/login");
     };
     userService.getAuthStatus = function(){
         var status = $cookies.get('auth');
