@@ -544,7 +544,7 @@
                             </aside>
                             <section class="scrollable padder">
                                 <div class="m-b-md">
-                                    <a href="./#!/profile" class="m-r" style="display: inline-block;">
+                                    <a href="./#!/profile/{{username}}" class="m-r" style="display: inline-block;">
                                         <i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
                                     <h3 class="m-b-none" style="display: inline-block;">Edit profile</h3>
                                 </div>
@@ -596,7 +596,7 @@
                                                     </div>
                                                 </div>
                                                 <footer class="panel-footer text-right bg-light lter">
-                                                    <button type="submit" ng-click="editUser(data)" class="btn btn-success btn-s-xs">Submit</button>
+                                                    <button type="submit" ng-click="editUser(data)" class="btn btn-success btn-s-xs">Submit <i class='fa fa-spinner fa fa-spin fa fa-large hidden' id="edit-spinner"></i></button>
                                                 </footer>
                                             </section>
                                         </form>
