@@ -2,13 +2,11 @@ var myApp = angular.module('myApp');
 
 myApp.controller('SongController', ['$scope', '$http', 'userService', 'songService', '$location', '$routeParams', function($scope, $http, userService, songService, $location, $routeParams){
 	console.log('SongController loaded...');
-	$scope.getUser = function(){
+	$scope.init = function(){
 		$scope.data = [];
+		$scope.status = true;
 		userService.doGetUserByAuth($scope.data);
-    }
-    $scope.getAllGenres = function(){
-        $scope.data = [];
-        songService.doGetAllGenres($scope.data);
+		songService.doGetAllGenres($scope.data);
     }
     $scope.addSong = function(data){
 		songService.doAddSong(data);

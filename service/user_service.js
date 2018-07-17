@@ -17,6 +17,7 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
         }).then(function (response){
             $("#login-spinner").addClass("hidden");
             if(response.data.success){
+                $cookies.put('id', response.data.content.id);
                 $cookies.put('username', response.data.content.username);
                 $cookies.put('fullname', response.data.content.fullname);
                 $cookies.put('avatar', response.data.content.avatar);
@@ -114,16 +115,38 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
         });
     };
     userService.doGetUserByUsername = function(data){
-        var auth = $cookies.get("auth");
-        var username = $cookies.get("username");
         return $http({
             headers:{
-                'Authorization' : 'Basic ' + auth
+
             },
-            url: host+'/user/get-user-by-username?username='+data.username,
+            url: host+'/get-user-by-username?username='+data.username,
             withCredentials: true,
             method: 'GET'
         }).then(function (response){
+            data.id = response.data.content.id;
+            data.avatar = response.data.content.avatar;
+            data.fullname = response.data.content.fullname;
+            data.username = response.data.content.username;
+            data.phone = response.data.content.phone;
+            data.birthdate = response.data.content.birthdate;
+            data.note = response.data.content.note;
+        },function (error){
+            if(error.status==404){
+                data.success=false;
+                data.msg="Có lỗi xảy ra! Vui lòng thử lại";
+            }
+        });
+    };
+    userService.doGetUserById = function(data){
+        return $http({
+            headers:{
+
+            },
+            url: host+'/get-user-by-id?id='+data.id,
+            withCredentials: true,
+            method: 'GET'
+        }).then(function (response){
+            data.id = response.data.content.id;
             data.avatar = response.data.content.avatar;
             data.fullname = response.data.content.fullname;
             data.username = response.data.content.username;

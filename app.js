@@ -16,7 +16,6 @@ myApp.config(function($routeProvider){
 	.when('/home', {
 		controller:'HomeController',
 		templateUrl: 'views/home.html',
-		authenticated: true
 	})
 	.when('/logout', {
 		controller:'AuthController',
@@ -33,22 +32,15 @@ myApp.config(function($routeProvider){
 		templateUrl: 'views/profile.html',
 		authenticated: true
 	})
+	.when('/profile', {
+		controller:'UserController',
+		templateUrl: 'views/profile.html',
+		authenticated: true
+	})
 	.when('/upload', {
 		controller:'SongController',
 		templateUrl: 'views/upload.html',
 		authenticated: true
-	})
-	.when('/photos/:key', {
-		controller:'PhotoController',
-		templateUrl: '/views/photos.html'
-	})
-	.when('/photos/details/:id',{
-		controller:'PhotoController',
-		templateUrl: 'views/book_details.html'
-	})
-	.when('/photos/edit/:id',{
-		controller:'PhotoController',
-		templateUrl: 'views/edit_book.html'
 	})
 	.otherwise({
 		redirectTo: '/login'
