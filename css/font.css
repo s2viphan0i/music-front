@@ -2,17 +2,45 @@
   font-family: 'Source Sans Pro';
   font-style: normal;
   font-weight: 300;
-  src: local('Source Sans Pro Light'), local('SourceSansPro-Light'), url('../fonts/sourcesanspro/sourcesanspro-light.woff') format('woff');
+  src: local('Source Sans Pro Light'), local('SourceSansPro-Light'), url('../fonts/Source_Sans_Pro/SourceSansPro-Light.ttf') format('ttf');
 }
 @font-face {
   font-family: 'Source Sans Pro';
   font-style: normal;
   font-weight: 400;
-  src: local('Source Sans Pro'), local('SourceSansPro-Regular'), url('../fonts/sourcesanspro/sourcesanspro.woff') format('woff');
+  src: local('Source Sans Pro'), local('SourceSansPro-Regular'), url('../fonts/Source_Sans_Pro/SourceSansPro-Regular.ttf') format('ttf');
 }
 @font-face {
   font-family: 'Source Sans Pro';
   font-style: normal;
   font-weight: 700;
-  src: local('Source Sans Pro Bold'), local('SourceSansPro-Bold'), url('../fonts/sourcesanspro/sourcesanspro-bold.woff') format('woff');
+  src: local('Source Sans Pro Bold'), local('SourceSansPro-Bold'), url('../fonts/Source_Sans_Pro/SourceSansPro-Bold.ttf') format('ttf');
+}
+
+@font-face {
+  font-family: 'Alegreya Sans';
+  font-style: normal;
+  font-weight: 100;
+  src: local('Alegreya Sans Thin'), local('AlegreyaSans-Thin'), url('../fonts/Alegreya_Sans/AlegreyaSans-Thin.ttf') format('ttf');
+}
+
+@font-face {
+  font-family: 'Alegreya Sans';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Alegreya Sans Light'), local('AlegreyaSans-Light'), url('../fonts/Alegreya_Sans/AlegreyaSans-Light.ttf') format('ttf');
+}
+
+@font-face {
+  font-family: 'Alegreya Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Alegreya Sans Regular'), local('AlegreyaSans-Regular'), url('../fonts/Alegreya_Sans/AlegreyaSans-Regular.ttf') format('ttf');
+}
+
+@font-face {
+  font-family: 'Alegreya Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Alegreya Sans Bold'), local('AlegreyaSans-Bold'), url('../fonts/Alegreya_Sans/AlegreyaSans-Bold.ttf') format('ttf');
 }

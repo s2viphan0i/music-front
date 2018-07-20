@@ -239,6 +239,35 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
         $cookies.remove("fullname");
         $location.path("/login");
     };
+    userService.doFavorite = function(songId){
+        var auth = $cookies.get("auth");
+        return $http({
+            headers:{
+                'Authorization' : 'Basic ' + auth,
+                'Content-Type': undefined
+            },
+            data: { 
+                songId: songId
+            },
+            transformRequest: function (data, headersGetter) {
+                var formData = new FormData();
+                angular.forEach(data, function (value, key) {
+                    formData.append(key, value);
+                });
+                return formData;
+            },
+            url: host+'/user/favorite',
+            withCredentials: true,
+            method: 'POST'
+        }).then(function (response){
+            console.log(response);
+        },function (error){
+            if(error.status==404){
+                data.success=false;
+                data.msg="Có lỗi xảy ra! Vui lòng thử lại";
+            }
+        });
+    }
     userService.getAuthStatus = function(){
         var status = $cookies.get('auth');
         if(status){

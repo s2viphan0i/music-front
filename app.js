@@ -16,6 +16,7 @@ myApp.config(function($routeProvider){
 	.when('/home', {
 		controller:'HomeController',
 		templateUrl: 'views/home.html',
+		authenticated: false
 	})
 	.when('/logout', {
 		controller:'AuthController',
@@ -43,7 +44,7 @@ myApp.config(function($routeProvider){
 		authenticated: true
 	})
 	.otherwise({
-		redirectTo: '/login'
+		redirectTo: '/home'
 	});
 });
 myApp.run(["$rootScope", "$location", "$cookies", 'userService',

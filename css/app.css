@@ -72,6 +72,11 @@ small,
 a:hover .caret-white {
   border-top-color: #fff;
 }
+.transbutton{
+  background-color: transparent;
+  border:none;
+  padding:0 0;
+}
 .tooltip-inner {
   background-color: rgba(0,0,0,0.9);
   background-color: #5a6a7a;
