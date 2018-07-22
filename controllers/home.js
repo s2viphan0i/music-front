@@ -14,7 +14,7 @@ myApp.controller('HomeController', ['$scope', '$http', 'songService', 'userServi
 			songService.doUserGetListMostFavoriteSong($scope.data);
 		} else{
 			songService.doGetListNewSong($scope.data);
-			ongService.doGetListMostFavoriteSong($scope.data);
+			songService.doGetListMostFavoriteSong($scope.data);
 		}
 	}
 	$scope.addFavorite = function(songId){

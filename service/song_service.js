@@ -17,7 +17,6 @@ myApp.factory('songService', ['$http', '$cookies', '$location', function($http, 
     };
     songService.doGetListNewSong = function(data){
         $("#new-spinner").removeClass("hidden");
-        console.log("a");
         return $http({
             data: { 
                 sortField: "id",
@@ -76,9 +75,9 @@ myApp.factory('songService', ['$http', '$cookies', '$location', function($http, 
         $("#mostfavorite-spinner").removeClass("hidden");
         var date = new Date();
         var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
-        var firstDayString = firstDay.toString("dd-MM-yyyy");
+        var firstDayString = moment(firstDay.toString()).format("DD-MM-YYYY")
         var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-        var lastDayString = lastDay.toString("dd-MM-yyyy");
+        var lastDayString = moment(lastDay.toString()).format("DD-MM-YYYY")
         console.log(firstDayString);
         console.log(lastDayString);
         return $http({
@@ -110,9 +109,9 @@ myApp.factory('songService', ['$http', '$cookies', '$location', function($http, 
         $("#mostfavorite-spinner").removeClass("hidden");
         var date = new Date();
         var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
-        var firstDayString = firstDay.toString("dd-MM-yyyy");
+        var firstDayString = moment(firstDay.toString()).format("DD-MM-YYYY")
         var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-        var lastDayString = lastDay.toString("dd-MM-yyyy");
+        var lastDayString = moment(lastDay.toString()).format("DD-MM-YYYY")
         console.log(firstDayString);
         console.log(lastDayString);
         var auth = $cookies.get("auth");

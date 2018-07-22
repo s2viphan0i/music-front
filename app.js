@@ -43,6 +43,11 @@ myApp.config(function($routeProvider){
 		templateUrl: 'views/upload.html',
 		authenticated: true
 	})
+	.when('/song/:id', {
+		controller:'SongController',
+		templateUrl: 'views/song.html',
+		authenticated: true
+	})
 	.otherwise({
 		redirectTo: '/home'
 	});
