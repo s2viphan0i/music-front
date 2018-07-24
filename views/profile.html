@@ -1,4 +1,4 @@
-<section class="vbox" ng-init="getProfile(data)">
+<section class="vbox" ng-init="init();getUser()">
     <!-- header -->
     <header class="bg-white-only header header-md navbar navbar-fixed-top-xs">
         <div class="navbar-header aside bg-info nav-xs">
@@ -34,7 +34,7 @@
             </div>
         </form>
         <div class="navbar-right ">
-            <ul class="nav navbar-nav m-n hidden-xs nav-user user">
+            <ul class="nav navbar-nav m-n hidden-xs nav-user user" ng-if="auth!=null">
                 <li class="hidden-xs">
                     <a href="./#!/upload">
                         <i class="icon-cloud-upload"></i>
@@ -93,7 +93,7 @@
                             <a href="#">Settings</a>
                         </li>
                         <li>
-                            <a href="./#!/profile/{{username}}">Profile</a>
+                            <a href="./#!/profile/{{username}}">Trang cá nhân</a>
                         </li>
                         <li>
                             <a href="#">
@@ -102,13 +102,20 @@
                             </a>
                         </li>
                         <li>
-                            <a href="docs.html">Help</a>
+                            <a href="docs.html">Trợ giúp</a>
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="./#!/logout" data-toggle="ajaxModal">Logout</a>
+                            <a href="./#!/logout" data-toggle="ajaxModal">Đăng xuất</a>
                         </li>
                     </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav m-n hidden-xs nav-user user" ng-if="auth==null">
+                <li class="">
+                    <a href="./#!/login">
+                        Đăng nhập <i class="icon-login"></i>
+                    </a>
                 </li>
             </ul>
         </div>
@@ -429,7 +436,7 @@
                         </div>
                     </section>
 
-                    <footer class="footer hidden-xs no-padder text-center-nav-xs">
+                    <footer class="footer hidden-xs no-padder text-center-nav-xs" ng-if="auth!=null">
                         <div class="bg hidden-xs ">
                             <div class="dropdown dropup wrapper-sm clearfix">
                                 <a id="dropuptoggle" class="dropdown-toggle" data-toggle="dropdown">
@@ -451,7 +458,7 @@
                                         <a href="#">Settings</a>
                                     </li>
                                     <li>
-                                        <a href="./#!/profile/{{username}}">Profile</a>
+                                        <a href="./#!/profile/{{username}}">Trang cá nhân</a>
                                     </li>
                                     <li>
                                         <a href="#">
@@ -460,11 +467,11 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="docs.html">Help</a>
+                                        <a href="docs.html">Trợ giúp</a>
                                     </li>
                                     <li class="divider"></li>
                                     <li>
-                                        <a href="./#!/logout" data-toggle="ajaxModal">Logout</a>
+                                        <a href="./#!/logout" data-toggle="ajaxModal">Đăng xuất</a>
                                     </li>
                                 </ul>
                             </div>
@@ -528,7 +535,7 @@
                                                 <div class="line"></div>
                                                 <p ng-if="data.username==username">
                                                     <a href="./#!/edit-profile" class="btn btn-success btn-xs">
-                                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
+                                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Sửa thông tin</a>
                                                 </p>
                                                 <small class="text-uc text-xs text-muted">connection</small>
                                                 <p class="m-t-sm">

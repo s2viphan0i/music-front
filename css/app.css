@@ -72,6 +72,11 @@ small,
 a:hover .caret-white {
   border-top-color: #fff;
 }
+.transbutton{
+  background-color: transparent;
+  border:none;
+  padding:0 0;
+}
 .tooltip-inner {
   background-color: rgba(0,0,0,0.9);
   background-color: #5a6a7a;
@@ -3079,6 +3084,9 @@ a.bg-light:focus {
 .b-black {
   border-color: #2e3941;
 }
+.b-gray{
+  border-color: #191f23;
+}
 .b-white {
   border-color: #fff;
 }
@@ -3414,6 +3422,10 @@ a.bg-light:focus {
   height: auto;
   max-width: 100%;
   vertical-align: middle;
+}
+.img-thumnail {
+  width: 100px;
+  height: 100px;
 }
 .img-full {
   width: 100%;
@@ -3944,4 +3956,89 @@ fieldset[disabled] .i-checks input + i:before {
   100% {
     height: 65%;
   }
+}
+.bar1.b1{
+  left: 0%;
+  bottom: 40%;
+  height: 40%;
+}
+.bar2.b2{
+  left: 20%;
+  bottom: 20%;
+  height: 80%;
+}
+.bar3.b3{
+  left: 40%;
+  bottom: 0;
+  height: 80%;
+}
+.bar4.b4{
+  left: 60%;
+  bottom: 20%;
+  height: 80%;
+}
+.bar5.b5{
+  left: 80%;
+  bottom: 40%;
+  height: 40%;
+}
+.animate .b1, .animate .b5 {
+  -webkit-animation: movingbarb1 0.2s infinite alternate both;
+  -moz-animation: movingbarb1 0.2s infinite alternate both;
+  animation: movingbarb1 0.2s infinite alternate both;
+}
+
+.animate .b2, .animate .b4 {
+  -webkit-animation: movingbarb2 0.2s infinite alternate both;
+  -moz-animation: movingbarb2 0.2s infinite alternate both;
+  animation: movingbarb2 0.2s infinite alternate both;
+}
+
+.animate .b3 {
+  -webkit-animation: movingbarb3 0.2s infinite alternate both;
+  -moz-animation: movingbarb3 0.2s infinite alternate both;
+  animation: movingbarb3 0.2s infinite alternate both;
+}
+@keyframes movingbarb1 {
+  0% {
+    bottom: 45%;
+    height: 30%;
+  }
+  100% {
+    bottom: 40%;
+    height: 40%;
+  }
+}
+@keyframes movingbarb2 {
+  0% {
+    bottom: 25%;
+    height: 70%;
+  }
+  100% {
+    bottom: 20%;
+    height: 80%;
+  }
+}
+@keyframes movingbarb3 {
+  0% {
+    bottom: 5%;
+    height: 70%;
+  }
+  100% {
+    bottom: 0;
+    height: 80%;
+  }
+}
+.lyric{
+  white-space: pre-wrap;
+  overflow: hidden;
+}
+.lyric.height{
+  max-height: 190px;
+}
+.more{
+  text-align: center;
+}
+.more i{
+  cursor: pointer;
 }

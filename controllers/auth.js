@@ -27,7 +27,6 @@ myApp.controller('AuthController', ['$scope', '$http', 'userService', '$location
         })
 	}
 	$scope.logout = function(){
-		userService.doLogout().then(function(){
-        })
+		userService.doLogout();
 	}
 }]);
