@@ -4029,3 +4029,16 @@ fieldset[disabled] .i-checks input + i:before {
     height: 80%;
   }
 }
+.lyric{
+  white-space: pre-wrap;
+  overflow: hidden;
+}
+.lyric.height{
+  max-height: 190px;
+}
+.more{
+  text-align: center;
+}
+.more i{
+  cursor: pointer;
+}

@@ -11,3 +11,8 @@ $(document).on('click', 'a[id^="dropuptoggle"]', function(e){
 $(document).on('click', 'a[id^="notitoggle"]', function(e){
 
 });
+$(document).on('click', 'i[id^="more"]', function(e){
+    console.log("a");
+    $('.lyric').toggleClass("height");
+    $('#more').toggleClass("fa-chevron-down fa-chevron-up");
+});

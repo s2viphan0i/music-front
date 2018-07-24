@@ -41,6 +41,84 @@ myApp.factory('songService', ['$http', '$cookies', '$location', function($http, 
             }
         });
     };
+    songService.doGetSongById = function(data, callback){
+        return $http({
+            url: host+'/song?id='+data.id,
+            withCredentials: true,
+            method: 'GET'
+        }).then(function (response){
+            // $("#new-spinner").addClass("hidden");
+            console.log(response);
+            data.success = response.data.success;
+            data.msg = response.data.msg;
+            data.song = response.data.content;
+            callback();
+        },function (error){
+            // $("#new-spinner").addClass("hidden");
+            if(error.status==404){
+                data.success=false;
+                data.msg="Có lỗi xảy ra! Vui lòng thử lại";
+            }
+        });
+    };
+    songService.doUserGetSongById = function(data, callback){
+        var auth = $cookies.get("auth");
+        return $http({
+            headers:{
+                'Authorization' : 'Basic ' + auth,
+            },
+            url: host+'/user/song?id='+data.songId,
+            withCredentials: true,
+            method: 'GET'
+        }).then(function (response){
+            // $("#new-spinner").addClass("hidden");
+            console.log(response);
+            data.success = response.data.success;
+            data.msg = response.data.msg;
+            data.song = response.data.content;
+            callback();
+        },function (error){
+            // $("#new-spinner").addClass("hidden");
+            if(error.status==404){
+                data.success=false;
+                data.msg="Có lỗi xảy ra! Vui lòng thử lại";
+            }
+        });
+    };
+    songService.doGetListMostViewSong = function(data){
+        $("#mostview-spinner").removeClass("hidden");
+        var date = new Date();
+        var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+        var firstDayString = moment(firstDay.toString()).format("DD-MM-YYYY")
+        var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+        var lastDayString = moment(lastDay.toString()).format("DD-MM-YYYY")
+        console.log(firstDayString);
+        console.log(lastDayString);
+        return $http({
+            data: { 
+                sortField: "views",
+                sortOrder: "descend",
+                results: 5,
+                page: 1,
+                favoriteStartDate : firstDayString,
+                favoriteEndDate : lastDayString
+            },
+            url: host+'/song/get-list',
+            withCredentials: true,
+            method: 'POST'
+        }).then(function (response){
+            $("#mostview-spinner").addClass("hidden");
+            data.success = response.data.success;
+            data.msg = response.data.msg;
+            data.listMostViewSong = response.data.content;
+        },function (error){
+            $("#mostview-spinner").addClass("hidden");
+            if(error.status==404){
+                data.success=false;
+                data.msg="Có lỗi xảy ra! Vui lòng thử lại";
+            }
+        });
+    };
     songService.doUserGetListNewSong = function(data){
         $("#new-spinner").removeClass("hidden");
         var auth = $cookies.get("auth");
