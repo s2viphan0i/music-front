@@ -18,13 +18,27 @@ myApp.controller('UserController', ['$scope', '$http', '$cookies', 'userService'
 			var username = $routeParams.username;
 			$scope.data = [];
 			$scope.data.username = username;
-			userService.doGetUserByUsername($scope.data);
+			if($cookies.get('auth')){
+				userService.doUserGetUserByUsername($scope.data);
+			} else{
+				userService.doGetUserByUsername($scope.data);
+			}
 		} else if($routeParams.id!=null){
 			var id = $routeParams.id;
 			$scope.data = [];
 			$scope.data.id = id;
-			userService.doGetUserById($scope.data);
+			if($cookies.get('auth')){
+				userService.doUserGetUserById($scope.data);
+			} else{
+				userService.doGetUserById($scope.data);
+			}
 		}
+	}
+	$scope.addFollow = function(userId){
+		userService.doFollow(userId);
+	}
+	$scope.removeFollow = function(userId){
+		userService.doFollow(userId);
 	}
 	$scope.editUser = function(data){
 		userService.doEditUser(data);

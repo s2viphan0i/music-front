@@ -3,15 +3,18 @@ var myApp = angular.module('myApp', ['ngRoute', 'ngCookies']);
 myApp.config(function ($routeProvider) {
 	$routeProvider.when('/login', {
 			controller: 'AuthController',
-			templateUrl: 'views/signin.html'
+			templateUrl: 'views/signin.html',
+			authenticated: false
 		})
 		.when('/register', {
 			controller: 'AuthController',
-			templateUrl: 'views/signup.html'
+			templateUrl: 'views/signup.html',
+			authenticated: false
 		})
 		.when('/forgot', {
 			controller: 'AuthController',
-			templateUrl: 'views/forgot.html'
+			templateUrl: 'views/forgot.html',
+			authenticated: false
 		})
 		.when('/home', {
 			controller: 'HomeController',
@@ -31,7 +34,7 @@ myApp.config(function ($routeProvider) {
 		.when('/profile/:username', {
 			controller: 'UserController',
 			templateUrl: 'views/profile.html',
-			authenticated: true
+			authenticated: false
 		})
 		.when('/profile', {
 			controller: 'UserController',
@@ -46,7 +49,7 @@ myApp.config(function ($routeProvider) {
 		.when('/song/:id', {
 			controller: 'SongController',
 			templateUrl: 'views/song.html',
-			authenticated: true
+			authenticated: false
 		})
 		.otherwise({
 			redirectTo: '/home'
@@ -72,3 +75,5 @@ myApp.run(["$rootScope", "$location", "$cookies", 'userService', 'songService',
 		$rootScope.avatar = $cookies.get("avatar");
 	}
 ]);
+
+
