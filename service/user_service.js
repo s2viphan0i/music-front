@@ -123,13 +123,25 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
             withCredentials: true,
             method: 'GET'
         }).then(function (response){
-            data.id = response.data.content.id;
-            data.avatar = response.data.content.avatar;
-            data.fullname = response.data.content.fullname;
-            data.username = response.data.content.username;
-            data.phone = response.data.content.phone;
-            data.birthdate = response.data.content.birthdate;
-            data.note = response.data.content.note;
+            data.user = response.data.content;
+        },function (error){
+            if(error.status==404){
+                data.success=false;
+                data.msg="Có lỗi xảy ra! Vui lòng thử lại";
+            }
+        });
+    };
+    userService.doUserGetUserByUsername = function(data){
+        var auth = $cookies.get("auth");
+        return $http({
+            headers:{
+                'Authorization' : 'Basic ' + auth
+            },
+            url: host+'/user/get-user-by-username?username='+data.username,
+            withCredentials: true,
+            method: 'GET'
+        }).then(function (response){
+            data.user = response.data.content;
         },function (error){
             if(error.status==404){
                 data.success=false;
@@ -146,13 +158,25 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
             withCredentials: true,
             method: 'GET'
         }).then(function (response){
-            data.id = response.data.content.id;
-            data.avatar = response.data.content.avatar;
-            data.fullname = response.data.content.fullname;
-            data.username = response.data.content.username;
-            data.phone = response.data.content.phone;
-            data.birthdate = response.data.content.birthdate;
-            data.note = response.data.content.note;
+            data.user = response.data.content;
+        },function (error){
+            if(error.status==404){
+                data.success=false;
+                data.msg="Có lỗi xảy ra! Vui lòng thử lại";
+            }
+        });
+    };
+    userService.doUserGetUserById = function(data){
+        var auth = $cookies.get("auth");
+        return $http({
+            headers:{
+                'Authorization' : 'Basic ' + auth
+            },
+            url: host+'/user/get-user-by-id?id='+data.id,
+            withCredentials: true,
+            method: 'GET'
+        }).then(function (response){
+            data.user = response.data.content;
         },function (error){
             if(error.status==404){
                 data.success=false;
@@ -257,6 +281,35 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
                 return formData;
             },
             url: host+'/user/favorite',
+            withCredentials: true,
+            method: 'POST'
+        }).then(function (response){
+            console.log(response);
+        },function (error){
+            if(error.status==404){
+                data.success=false;
+                data.msg="Có lỗi xảy ra! Vui lòng thử lại";
+            }
+        });
+    }
+    userService.doFollow = function(userId){
+        var auth = $cookies.get("auth");
+        return $http({
+            headers:{
+                'Authorization' : 'Basic ' + auth,
+                'Content-Type': undefined
+            },
+            data: { 
+                userId: userId
+            },
+            transformRequest: function (data, headersGetter) {
+                var formData = new FormData();
+                angular.forEach(data, function (value, key) {
+                    formData.append(key, value);
+                });
+                return formData;
+            },
+            url: host+'/user/follow',
             withCredentials: true,
             method: 'POST'
         }).then(function (response){

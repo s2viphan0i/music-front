@@ -1,6 +1,6 @@
 var myApp = angular.module('myApp');
 
-myApp.controller('SongController', ['$scope', '$http', '$cookies', 'userService', 'songService', '$location', '$routeParams', function($scope, $http, $cookies, userService, songService, $location, $routeParams){
+myApp.controller('SongController', ['$scope', '$http', '$cookies', 'userService', 'songService', 'playerService', '$location', '$routeParams', function($scope, $http, $cookies, userService, songService, playerService, $location, $routeParams){
 	console.log('SongController loaded...');
 	$scope.initAddSong = function(){
 		$scope.data = [];
@@ -21,16 +21,23 @@ myApp.controller('SongController', ['$scope', '$http', '$cookies', 'userService'
 		if($cookies.get('auth')){
 			songService.doUserGetSongById($scope.data, function(){
 				$scope.data.song.lyric = unescape($scope.data.song.lyric);
+				playerService.Play({
+					StreamUri:"http://localhost:8080/resource/audio?name="+$scope.data.song.url,
+					Title: ""
+				});
 			});
 			
 		} else{
 			songService.doGetSongById($scope.data, function(){
 				$scope.data.song.lyric = unescape($scope.data.song.lyric);
+				playerService.Play({
+					StreamUri:"http://localhost:8080/resource/audio?name="+$scope.data.song.url,
+					Title: ""
+				});
 			});
 		}
 	}
 	$scope.addFavorite = function(songId){
-		console.log("a");
 		userService.doFavorite(songId);
 	}
 	$scope.removeFavorite = function(songId){

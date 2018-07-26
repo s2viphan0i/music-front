@@ -114,7 +114,8 @@
             <ul class="nav navbar-nav m-n hidden-xs nav-user user" ng-if="auth==null">
                 <li class="">
                     <a href="./#!/login">
-                        Đăng nhập <i class="icon-login"></i>
+                        Đăng nhập
+                        <i class="icon-login"></i>
                     </a>
                 </li>
             </ul>
@@ -491,49 +492,51 @@
                                         <div class="wrapper">
                                             <div class="text-center m-b m-t">
                                                 <a href="#" class="thumb-lg">
-                                                    <img src="http://localhost:8080/resource/image?name={{data.avatar}}" class="img-circle">
+                                                    <img src="http://localhost:8080/resource/image?name={{data.user.avatar}}" class="img-circle">
                                                 </a>
                                                 <div>
-                                                    <div class="h3 m-t-xs m-b-xs">{{data.fullname}}</div>
-                                                    <small class="text-muted">{{data.username}}</small>
+                                                    <div class="h3 m-t-xs m-b-xs">{{data.user.fullname}}</div>
+                                                    <small class="text-muted">{{data.user.username}}</small>
                                                 </div>
                                             </div>
                                             <div class="panel wrapper">
                                                 <div class="row text-center">
                                                     <div class="col-xs-6">
                                                         <a href="#">
-                                                            <span class="m-b-xs h4 block">245</span>
+                                                            <span class="m-b-xs h4 block">{{data.user.followers}}</span>
                                                             <small class="text-muted">Followers</small>
                                                         </a>
                                                     </div>
                                                     <div class="col-xs-6">
                                                         <a href="#">
-                                                            <span class="m-b-xs h4 block">55</span>
+                                                            <span class="m-b-xs h4 block">{{data.user.followings}}</span>
                                                             <small class="text-muted">Following</small>
                                                         </a>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="btn-group btn-group-justified m-b">
-                                                <a class="btn btn-success btn-rounded" data-toggle="button">
+                                                <a href="javascript:" ng-click="data.user.followers=data.user.followers+1;data.user.followed=true;addFollow(data.user.id)" class="btn btn-success btn-rounded" ng-if="data.user.followed!=true&&data.user.username!=username">
                                                     <span class="text">
                                                         <i class="fa fa-eye"></i> Follow
                                                     </span>
+                                                </a>
+                                                <a href="javascript:" ng-click="data.user.followers=data.user.followers-1;data.user.followed=false;removeFollow(data.user.id)" class="btn btn-success btn-rounded active" ng-if="data.user.followed==true&&data.user.username!=username">
                                                     <span class="text-active">
                                                         <i class="fa fa-eye"></i> Following
                                                     </span>
                                                 </a>
                                                 <a class="btn btn-dark btn-rounded">
-                                                    <i class="fa fa-comment-o"></i> Chat
+                                                    <i class="icon-share-alt"></i> Share
                                                 </a>
                                             </div>
                                             <div>
                                                 <small class="text-uc text-xs text-muted">Birthday</small>
-                                                <p>{{data.birthdate}}</p>
+                                                <p>{{data.user.birthdate}}</p>
                                                 <small class="text-uc text-xs text-muted">info</small>
-                                                <p>{{data.note}}</p>
+                                                <p>{{data.user.note}}</p>
                                                 <div class="line"></div>
-                                                <p ng-if="data.username==username">
+                                                <p ng-if="data.user.username==username">
                                                     <a href="./#!/edit-profile" class="btn btn-success btn-xs">
                                                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Sửa thông tin</a>
                                                 </p>

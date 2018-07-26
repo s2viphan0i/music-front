@@ -91,9 +91,7 @@ myApp.factory('songService', ['$http', '$cookies', '$location', function($http, 
         var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
         var firstDayString = moment(firstDay.toString()).format("DD-MM-YYYY")
         var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-        var lastDayString = moment(lastDay.toString()).format("DD-MM-YYYY")
-        console.log(firstDayString);
-        console.log(lastDayString);
+        var lastDayString = moment(lastDay.toString()).format("DD-MM-YYYY");
         return $http({
             data: { 
                 sortField: "views",
@@ -190,8 +188,6 @@ myApp.factory('songService', ['$http', '$cookies', '$location', function($http, 
         var firstDayString = moment(firstDay.toString()).format("DD-MM-YYYY")
         var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
         var lastDayString = moment(lastDay.toString()).format("DD-MM-YYYY")
-        console.log(firstDayString);
-        console.log(lastDayString);
         var auth = $cookies.get("auth");
         return $http({
             headers:{
