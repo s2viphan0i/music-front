@@ -4,11 +4,6 @@ myApp.controller('HomeController', ['$scope', '$http', 'songService', 'userServi
 	console.log('HomeController loaded...');
 
 	$scope.init = function(){
-		$scope.data = [];
-		$scope.auth = $cookies.get('auth');
-		$scope.username = $cookies.get('username');
-		$scope.fullname = $cookies.get('fullname');
-		$scope.avatar = $cookies.get('avatar');
 		if($cookies.get('auth')){
 			songService.doUserGetListNewSong($scope.data);
 			songService.doUserGetListMostFavoriteSong($scope.data);
@@ -17,6 +12,9 @@ myApp.controller('HomeController', ['$scope', '$http', 'songService', 'userServi
 			songService.doGetListMostFavoriteSong($scope.data);
 		}
 		songService.doGetListMostViewSong($scope.data);
+	}
+	$scope.playSong = function(id){
+		
 	}
 	$scope.addFavorite = function(songId){
 		userService.doFavorite(songId);

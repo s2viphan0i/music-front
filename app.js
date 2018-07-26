@@ -51,6 +51,11 @@ myApp.config(function ($routeProvider) {
 			templateUrl: 'views/song.html',
 			authenticated: false
 		})
+		.when('/test', {
+			controller: 'HomeController',
+			templateUrl: 'views/test.html',
+			authenticated: false
+		})
 		.otherwise({
 			redirectTo: '/home'
 		});

@@ -20,8 +20,41 @@
     <script src="js/ie/excanvas.js"></script>
   <![endif]-->
 </head>
-<body ng-view>
+<body data-ng-controller="IndexController">
+    <section class="vbox">
+      <header data-ng-hide="checkNavPage()" ng-class="{'bg-black':checkBlackPage(),'bg-white-only':!checkBlackPage()}" data-ng-include="'./views/header.html'" class="header header-md navbar navbar-fixed-top-xs">
 
+      </header>
+      <section>
+          <section class="hbox stretch">
+              <!-- left menu -->
+              <aside class="bg-black dk nav-xs aside hidden-print" id="nav" data-ng-hide="checkNavPage()" data-ng-include="'./views/left.html'">
+                  
+              </aside>
+              <!-- /.aside -->
+              <section id="content">
+                  <section class="hbox stretch">
+                      <section>
+                          <section class="vbox">
+                              <section class="scrollable w-f-md" ng-class="{'padder-lg':checkHomePage()}" id="bjax-target" data-ng-view>
+                                  
+                              </section>
+                              <footer class="footer bg-dark" data-ng-hide="checkNavPage()">
+                                  <jplayer></jplayer>
+                              </footer>
+                          </section>
+                      </section>
+                      <!-- side content -->
+                      <aside class="aside-md bg-light dk" id="sidebar" data-ng-hide="!checkHomePage()" data-ng-include="'./views/right.html'">
+                          
+                      </aside>
+                      <!-- / side content -->
+                  </section>
+                  <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen,open" data-target="#nav,html"></a>
+              </section>
+          </section>
+      </section>
+    </section>
 </body>
 <!-- library -->
 <script src="./bower_components/angular/angular.js"></script>
@@ -31,6 +64,7 @@
 <script src="./bower_components/jquery/dist/jquery.min.js"></script>
 <script src="./bower_components/jPlayer/dist/jplayer/jquery.jplayer.min.js"></script>
 <script src="./bower_components/jPlayer/dist/add-on/jplayer.playlist.min.js"></script>
+<script src="./bower_components/underscore/underscore-min.js"></script>
 <!-- app -->
 <script src="./app.js"></script>
 <!-- directive -->
@@ -43,6 +77,7 @@
 <script src="./controllers/auth.js"></script>
 <script src="./controllers/home.js"></script>
 <script src="./controllers/user.js"></script>
+<script src="./controllers/index.js"></script>
 <script src="./controllers/song.js"></script>
 <!-- jquery -->
 <!-- <script src="js/jquery.min.js"></script> -->

@@ -195,12 +195,7 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
             withCredentials: true,
             method: 'GET'
         }).then(function (response){
-            console.log(response);
-            data.fullname = response.data.content.fullname;
-            data.username = response.data.content.username;
-            data.phone = response.data.content.phone;
-            data.birthdate = response.data.content.birthdate;
-            data.note = response.data.content.note;
+            data.user = response.data.content;
         },function (error){
             if(error.status==404){
                 data.success=false;
@@ -211,14 +206,14 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
     userService.doEditUser = function(data){
         $("#edit-spinner").removeClass("hidden");
         var auth = $cookies.get("auth");
-        if(data.note==undefined){
-            data.note=""
+        if(data.user.note==undefined){
+            data.user.note=""
         }
-        if(data.birthdate==undefined){
-            data.birthdate=""
+        if(data.user.birthdate==undefined){
+            data.user.birthdate=""
         }
-        if(data.phone==undefined){
-            data.phone=""
+        if(data.user.phone==undefined){
+            data.user.phone=""
         }
         return $http({
             headers:{
@@ -227,8 +222,8 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
             },
             data: { 
                 file: data.avatar,
-                user: '{"fullname":"'+data.fullname+'", "birthdate":"'+data.birthdate+'", "phone":"'+data.phone+
-                '", "note":"'+data.note+'"}'
+                user: '{"fullname":"'+data.user.fullname+'", "birthdate":"'+data.user.birthdate+'", "phone":"'+data.user.phone+
+                '", "note":"'+data.user.note+'"}'
             },
             transformRequest: function (data, headersGetter) {
                 var formData = new FormData();

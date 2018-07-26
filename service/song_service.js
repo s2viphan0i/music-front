@@ -43,7 +43,7 @@ myApp.factory('songService', ['$http', '$cookies', '$location', function($http, 
     };
     songService.doGetSongById = function(data, callback){
         return $http({
-            url: host+'/song?id='+data.id,
+            url: host+'/song?id='+data.songId,
             withCredentials: true,
             method: 'GET'
         }).then(function (response){
@@ -135,7 +135,6 @@ myApp.factory('songService', ['$http', '$cookies', '$location', function($http, 
             method: 'POST'
         }).then(function (response){
             $("#new-spinner").addClass("hidden");
-            console.log(response);
             data.success = response.data.success;
             data.msg = response.data.msg;
             data.listNewSong = response.data.content;
