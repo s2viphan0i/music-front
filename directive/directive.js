@@ -2,7 +2,7 @@ var myApp = angular.module('myApp');
 
 myApp.directive("jplayer", ['$window', 'playerService', function ($window, playerService) {
     return {
-        restrict: "E",
+        restrict: "EA",
         // Have our own scope - we only want to watch the service and not conflict with other scopes
         scope: {},
         // Serve up some html with our player
@@ -20,7 +20,7 @@ myApp.directive("jplayer", ['$window', 'playerService', function ($window, playe
                 repeat: function (e) {
                     // Implement repeat from the service
                 }
-            }, [], { supplied: 'mp3', swfPath: "obj/", free: true }, 0);
+            }, [], { supplied: 'mp3', smoothPlayBar: true, keyEnabled: true, swfPath: "obj/", free: true }, 0);
 
             // Add the player service to the scope so we can watch stuff!
             scope.playerService = playerService;
@@ -31,7 +31,8 @@ myApp.directive("jplayer", ['$window', 'playerService', function ($window, playe
                     jPlayer.jPlayer('setMedia', {
                         // The url of the mp3 file
                         mp3: value.StreamUri,
-                        title: value.Title 
+                        title: value.Title,
+                        artist: value.Artist
                     }).jPlayer('play');
                 }
             });
@@ -59,7 +60,6 @@ myApp.directive("jplayer", ['$window', 'playerService', function ($window, playe
             scope.$on('$destroy', function () {
                 // Clean up memory from the events 
                 jPlayer.unbind($.jPlayer.event.ended);
-                playerService.CurrentTrack = null;
                 jPlayer.unbind($.jPlayer.event.play);
                 // Don't think we'll ever destroy it (it's on every page) - and why would you want to?
                 jPlayer.jPlayer('destroy');
