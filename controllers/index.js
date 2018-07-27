@@ -31,4 +31,8 @@ myApp.controller('IndexController', ['$scope', '$http', 'userService', '$cookies
 		$scope.cookie = null;
 		userService.doLogout();
 	}
+	
+	$scope.searchSong = function(){
+		console.log($scope.data.search.key);
+	}
 }]);

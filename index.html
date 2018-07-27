@@ -22,7 +22,7 @@
 </head>
 <body data-ng-controller="IndexController">
     <section class="vbox">
-      <header data-ng-hide="checkNavPage()" ng-class="{'bg-black':checkBlackPage(),'bg-white-only':!checkBlackPage()}" data-ng-include="'./views/header.html'" class="header header-md navbar navbar-fixed-top-xs">
+      <header ng-if="!checkNavPage()" ng-class="{'bg-black':checkBlackPage(),'bg-white-only':!checkBlackPage()}" data-ng-include="'./views/header.html'" class="header header-md navbar navbar-fixed-top-xs">
 
       </header>
       <section>

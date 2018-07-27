@@ -209,11 +209,14 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
         if(data.user.note==undefined){
             data.user.note=""
         }
-        if(data.user.birthdate==undefined){
-            data.user.birthdate=""
-        }
         if(data.user.phone==undefined){
             data.user.phone=""
+        }
+        var user = '{"fullname":"'+data.user.fullname+'", "birthdate":"'+data.user.birthdate+'", "phone":"'+data.user.phone+
+        '", "note":"'+data.user.note+'"}'
+        if(data.user.birthdate==undefined){
+            var user = '{"fullname":"'+data.user.fullname+'", "phone":"'+data.user.phone+
+                '", "note":"'+data.user.note+'"}'
         }
         return $http({
             headers:{
@@ -222,8 +225,7 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
             },
             data: { 
                 file: data.avatar,
-                user: '{"fullname":"'+data.user.fullname+'", "birthdate":"'+data.user.birthdate+'", "phone":"'+data.user.phone+
-                '", "note":"'+data.user.note+'"}'
+                user: user
             },
             transformRequest: function (data, headersGetter) {
                 var formData = new FormData();
@@ -239,7 +241,7 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
             $("#edit-spinner").addClass("hidden");
             data.success = response.data.success;
             data.msg = response.data.msg;
-            if(response.data.content.avatar!=null){
+            if(response.data.content&&response.data.content.avatar){
                 $cookies.put('avatar', response.data.content.avatar);
             }
             $cookies.put('fullname', response.data.content.fullname);

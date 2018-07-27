@@ -52,7 +52,7 @@
                         <small class="text-uc text-xs text-muted">info</small>
                         <p>{{data.user.note}}</p>
                         <div class="line"></div>
-                        <p ng-if="data.user.username==username">
+                        <p ng-if="isCurrent(data.user.username)">
                             <a href="./#!/edit-profile" class="btn btn-success btn-xs">
                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Sửa thông tin</a>
                         </p>
