@@ -40,8 +40,11 @@ myApp.controller('UserController', ['$scope', '$http', '$cookies', 'userService'
 	$scope.removeFollow = function(userId){
 		userService.doFollow(userId);
 	}
-	$scope.editUser = function(data){
-		userService.doEditUser(data);
+	$scope.editUser = function(){
+		userService.doEditUser($scope.data);
+	}
+	$scope.isCurrent = function(username){
+		return username == $cookies.get("username");
 	}
 }]).directive('fileModel', ['$parse', function ($parse) {
 	return {
