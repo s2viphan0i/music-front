@@ -19,7 +19,10 @@ myApp.controller('HomeController', ['$scope', '$http', 'songService', 'userServi
 			songService.doUserGetSongById($scope.data, function(){
 				$scope.data.song.lyric = unescape($scope.data.song.lyric);
 				playerService.Play({
-					StreamUri:"http://localhost:8080/resource/audio?name="+$scope.data.song.url,
+					StreamUri:"http://localhost/resource/audio/"+$scope.data.song.url,
+					title: $scope.data.song.title,
+					artist: $scope.data.song.user.fullname,
+					playlist: false
 				});
 			});
 			
@@ -27,7 +30,10 @@ myApp.controller('HomeController', ['$scope', '$http', 'songService', 'userServi
 			songService.doGetSongById($scope.data, function(){
 				$scope.data.song.lyric = unescape($scope.data.song.lyric);
 				playerService.Play({
-					StreamUri:"http://localhost:8080/resource/audio?name="+$scope.data.song.url,
+					StreamUri:"http://localhost/resource/audio/"+$scope.data.song.url,
+					title: $scope.data.song.title,
+					artist: $scope.data.song.user.fullname,
+					playlist: false
 				});
 			});
 		}

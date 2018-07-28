@@ -16,24 +16,42 @@ myApp.directive("jplayer", ['$window', 'playerService', function ($window, playe
             // Set up a playlist
             $window.myPlaylist = new jPlayerPlaylist({
                 jPlayer: "#jplayer_N",
-                cssSelectorAncestor: jplayerCss,
+                cssSelectorAncestor: "#jp_container_N",
                 repeat: function (e) {
                     // Implement repeat from the service
                 }
-            }, [], { supplied: 'mp3', smoothPlayBar: true, keyEnabled: true, swfPath: "obj/", free: true }, 0);
+            }, [], { 
+                supplied: 'mp3', 
+                smoothPlayBar: true, 
+                keyEnabled: true, 
+                swfPath: "obj/", 
+                free: true, 
+                playlistOptions: {
+                    enableRemoveControls: true,
+                    autoPlay: true
+                }
+            }, 0);
 
             // Add the player service to the scope so we can watch stuff!
             scope.playerService = playerService;
 
             // When the Current track (on the service) changes - we want to tell jPlayer to play that new song
             scope.$watch('playerService.CurrentTrack', function (value) {
-                if (value != null) {
-                    jPlayer.jPlayer('setMedia', {
-                        // The url of the mp3 file
+                if (value != null&&value.playlist==false) {
+                    $window.myPlaylist.setPlaylist([]);
+                    $window.myPlaylist.add({
                         mp3: value.StreamUri,
-                        title: value.Title,
-                        artist: value.Artist
-                    }).jPlayer('play');
+                        title: value.title,
+                        artist: value.artist
+                    },function(){
+                        $window.myPlaylist.play(-1);
+                    })
+                } else if(value!=null&&playlist==true){
+                    $window.myPlaylist.add({
+                        mp3: value.StreamUri,
+                        title: value.title,
+                        artist: value.artist
+                    })
                 }
             });
 
