@@ -6,16 +6,32 @@
                     <div class="m-t-n-xxs item">
                         <div class="row line-xs">
                             <div class="wrapper-lg col-sm-4">
-                                <img class="img-full" src="http://localhost:8080/resource/image?name={{data.song.image}}" alt="...">
+                                <div class="pos-rlt">
+                                    <img class="img-full" src="http://localhost:8080/resource/image?name={{data.song.image}}" alt="...">
+                                    <div class="item-overlay active opacity bg-black">
+                                        <div class="center text-center m-t-n">
+                                            <a href="javascript:">
+                                                <i class="icon-control-play i-2x" ng-click="playSong(data.song)"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="wrapper-lg col-sm-8">
                                 <div>
                                     <h2 class="h2 font-thin img-full">{{data.song.title}}</h2>
                                     <p>{{data.song.views}} lượt nghe</p>
                                     <div>
-                                        <a href="#" class="pull-left">
-                                            <i class="fa fa-plus-circle"></i>
-                                        </a>
+                                        <div class="btn-group">
+                                            <a href="javascript:" data-toggle="dropdown">
+                                                <i class="fa fa-plus-circle"></i>
+                                            </a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="javascript:" ng-click="addSongToPlaylist(data.song)"><i class="icon-list"></i> Thêm vào đang phát</a></li>
+                                                <li><a href="javascript:" ng-click="addSongToPlaylist(data.song)"><i class="icon-playlist"></i> Thêm vào playlist</a></li>
+                                            </ul>
+                                        </div>
+                                       
                                         <a href="javascript:" class="pull-right" ng-if="data.song.favorited!=true">
                                             {{data.song.favorites}} <i class="fa fa-heart-o" ng-click="data.song.favorites=data.song.favorites+1;data.song.favorited=true;addFavorite(data.song.id)"></i>
                                         </a>

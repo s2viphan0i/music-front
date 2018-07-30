@@ -21,21 +21,30 @@ myApp.controller('SongController', ['$scope', '$http', '$cookies', 'userService'
 		if($cookies.get('auth')){
 			songService.doUserGetSongById($scope.data, function(){
 				$scope.data.song.lyric = unescape($scope.data.song.lyric);
-				playerService.Play({
-					StreamUri:"http://localhost:8080/resource/audio?name="+$scope.data.song.url,
-					Title: ""
-				});
 			});
-			
 		} else{
 			songService.doGetSongById($scope.data, function(){
 				$scope.data.song.lyric = unescape($scope.data.song.lyric);
-				playerService.Play({
-					StreamUri:"http://localhost:8080/resource/audio?name="+$scope.data.song.url,
-					Title: ""
-				});
 			});
 		}
+	}
+	$scope.playSong = function(song){
+		playerService.Play({
+			id: song.id,
+			StreamUri:"http://localhost/resource/audio/"+song.url,
+			title: song.title,
+			artist: song.user.fullname,
+			playlist: false
+		});
+	}
+	$scope.addSongToPlaylist = function(song){
+		playerService.Play({
+			id: song.id,
+			StreamUri:"http://localhost/resource/audio/"+song.url,
+			title: song.title,
+			artist: song.user.fullname,
+			playlist: true
+		});
 	}
 	$scope.addFavorite = function(songId){
 		userService.doFavorite(songId);

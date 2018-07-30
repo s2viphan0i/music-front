@@ -13,30 +13,23 @@ myApp.controller('HomeController', ['$scope', '$http', 'songService', 'userServi
 		}
 		songService.doGetListMostViewSong($scope.data);
 	}
-	$scope.playSong = function(id){
-		$scope.data.songId = id;
-		if($cookies.get('auth')){
-			songService.doUserGetSongById($scope.data, function(){
-				$scope.data.song.lyric = unescape($scope.data.song.lyric);
-				playerService.Play({
-					StreamUri:"http://localhost/resource/audio/"+$scope.data.song.url,
-					title: $scope.data.song.title,
-					artist: $scope.data.song.user.fullname,
-					playlist: false
-				});
-			});
-			
-		} else{
-			songService.doGetSongById($scope.data, function(){
-				$scope.data.song.lyric = unescape($scope.data.song.lyric);
-				playerService.Play({
-					StreamUri:"http://localhost/resource/audio/"+$scope.data.song.url,
-					title: $scope.data.song.title,
-					artist: $scope.data.song.user.fullname,
-					playlist: false
-				});
-			});
-		}
+	$scope.playSong = function(song){
+		playerService.Play({
+			id: song.id,
+			StreamUri:"http://localhost/resource/audio/"+song.url,
+			title: song.title,
+			artist: song.user.fullname,
+			playlist: false
+		});
+	}
+	$scope.addSongToPlaylist = function(song){
+		playerService.Play({
+			id: song.id,
+			StreamUri:"http://localhost/resource/audio/"+song.url,
+			title: song.title,
+			artist: song.user.fullname,
+			playlist: true
+		});
 	}
 	$scope.addFavorite = function(songId){
 		userService.doFavorite(songId);

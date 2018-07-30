@@ -1,6 +1,6 @@
 var myApp = angular.module('myApp');
 
-myApp.directive("jplayer", ['$window', 'playerService', function ($window, playerService) {
+myApp.directive("jplayer", ['$window', 'songService', '$cookies', 'playerService', function ($window, songService, $cookies, playerService) {
     return {
         restrict: "EA",
         // Have our own scope - we only want to watch the service and not conflict with other scopes
@@ -46,8 +46,9 @@ myApp.directive("jplayer", ['$window', 'playerService', function ($window, playe
                     },function(){
                         $window.myPlaylist.play(-1);
                     })
-                } else if(value!=null&&playlist==true){
+                } else if(value!=null&&value.playlist==true){
                     $window.myPlaylist.add({
+                        id: value.id,
                         mp3: value.StreamUri,
                         title: value.title,
                         artist: value.artist
@@ -68,8 +69,17 @@ myApp.directive("jplayer", ['$window', 'playerService', function ($window, playe
                 }
             });
 
+            jPlayer.bind($.jPlayer.event.play, function (event) {
+                // Song has ended, try to go next
+                console.log(event.jPlayer.status);
+            });
+
             jPlayer.bind($.jPlayer.event.ended, function (event) {
                 // Song has ended, try to go next
+                if($cookies.get('auth')){
+                    songService.doUserViewSong(event.jPlayer.status.media.id);
+                }
+                console.log(event.jPlayer.status);
                 if (scope.playerService.HasNext) {
                     scope.playerService.Next();
                 }

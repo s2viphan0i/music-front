@@ -117,6 +117,26 @@ myApp.factory('songService', ['$http', '$cookies', '$location', function($http, 
             }
         });
     };
+    songService.doUserViewSong = function(id){
+        var auth = $cookies.get("auth");
+        return $http({
+            headers:{
+                'Authorization' : 'Basic ' + auth,
+            },
+            data: { 
+                song: {
+                    id: id
+                }
+            },
+            url: host+'/user/view',
+            withCredentials: true,
+            method: 'POST'
+        }).then(function (response){
+            console.log(response);
+        },function (error){
+
+        });
+    };
     songService.doUserGetListNewSong = function(data){
         $("#new-spinner").removeClass("hidden");
         var auth = $cookies.get("auth");

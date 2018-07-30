@@ -56,6 +56,11 @@ myApp.config(function ($routeProvider) {
 			templateUrl: 'views/test.html',
 			authenticated: false
 		})
+		.when('/search', {
+			controller: 'SearchController',
+			templateUrl: 'views/search.html',
+			authenticated: false
+		})
 		.otherwise({
 			redirectTo: '/home'
 		});

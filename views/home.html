@@ -25,7 +25,7 @@
                     </div>
                     <div class="center text-center m-t-n">
                         <a href="javascript:">
-                            <i class="icon-control-play i-2x" ng-click="playSong(song.id)"></i>
+                            <i class="icon-control-play i-2x" ng-click="playSong(song)"></i>
                         </a>
                     </div>
                     <div class="bottom padder m-b-sm">
@@ -36,9 +36,15 @@
                             <i class="fa fa-heart-o text"></i>
                             <i class="fa fa-heart text-active text-danger" ng-click="song.favorited=false;removeFavorite(song.id)"></i>
                         </a>
-                        <a href="#">
-                            <i class="fa fa-plus-circle"></i>
-                        </a>
+                        <div class="btn-group">
+                            <a href="javascript:" data-toggle="dropdown">
+                                <i class="fa fa-plus-circle"></i>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="javascript:" ng-click="addSongToPlaylist(song)"><i class="icon-list"></i> Thêm vào đang phát</a></li>
+                                <li><a href="javascript:" ng-click="addSongToPlaylist(song)"><i class="icon-playlist"></i> Thêm vào playlist</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 <a href="#">
@@ -79,7 +85,7 @@
                     </div>
                     <div class="center text-center m-t-n">
                         <a href="javascript:">
-                            <i class="icon-control-play i-2x" ng-click="playSong(song.id)"></i>
+                            <i class="icon-control-play i-2x" ng-click="playSong(song)"></i>
                         </a>
                     </div>
                     <div class="bottom padder m-b-sm">
@@ -90,9 +96,15 @@
                             <i class="fa fa-heart-o text"></i>
                             <i class="fa fa-heart text-active text-danger" ng-click="song.favorited=false;removeFavorite(song.id)"></i>
                         </a>
-                        <a href="#">
-                            <i class="fa fa-plus-circle"></i>
-                        </a>
+                        <div class="btn-group">
+                            <a href="javascript:" data-toggle="dropdown">
+                                <i class="fa fa-plus-circle"></i>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="javascript:" ng-click="addSongToPlaylist(song)"><i class="icon-list"></i> Thêm vào đang phát</a></li>
+                                <li><a href="javascript:" ng-click="addSongToPlaylist(song)"><i class="icon-playlist"></i> Thêm vào playlist</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 <a href="#">
