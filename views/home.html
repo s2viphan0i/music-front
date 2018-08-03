@@ -1,5 +1,5 @@
-<a href="#" class="pull-right text-muted m-t-lg" data-toggle="class:fa-spin" ng-init="init();">
-    <i class="icon-refresh i-lg  inline" id="refresh"></i>
+<a href="javascript:" ng-click="getListMostFavoriteSong()" class="pull-right text-muted m-t-lg" ng-init="init();">
+    <i class="icon-refresh i-lg  inline" id="new-spinner"></i>
 </a>
 <h2 class="font-thin m-b">Bài hát mới
     <span class="musicbar animate inline m-l-sm" style="width:20px;height:20px">
@@ -10,7 +10,6 @@
         <span class="bar5 a5 bg-danger dker"></span>
     </span>
 </h2>
-<i class='fa fa-spinner fa fa-spin fa fa-large hidden' id="new-spinner"></i>
 <div class="row row-sm">
     <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2" ng-repeat="song in data.listNewSong">
         <div class="item">
@@ -58,8 +57,8 @@
         </div>
     </div>
 </div>
-<a href="#" class="pull-right text-muted m-t-lg" data-toggle="class:fa-spin">
-    <i class="icon-refresh i-lg  inline" id="refresh"></i>
+<a href="javascript:" ng-click="getListNewSong()" class="pull-right text-muted m-t-lg">
+    <i class="icon-refresh i-lg inline" id="mostfavorite-spinner"></i>
 </a>
 <h2 class="font-thin m-b">Bài hát ưa thích
     <span class="musicbar animate inline m-l-sm" style="width:20px;height:20px">
@@ -70,7 +69,6 @@
         <span class="bar5 b5 bg-danger dker"></span>
     </span>
 </h2>
-<i class='fa fa-spinner fa fa-spin fa fa-large hidden' id="mostfavorite-spinner"></i>
 <div class="row row-sm">
     <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2" ng-repeat="song in data.listMostFavoriteSong">
         <div class="item">
@@ -294,7 +292,7 @@
                 </span>
                 <span class="clear">
                     <span>{{song.title}}</span>
-                    <small class="text-muted clear text-ellipsis">by {{song.user.fullname}}</small>
+                    <small class="text-muted clear text-ellipsis">bởi {{song.user.fullname}}</small>
                 </span>
             </a>
         </div>

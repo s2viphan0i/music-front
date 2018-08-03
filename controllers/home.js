@@ -13,6 +13,20 @@ myApp.controller('HomeController', ['$scope', '$http', 'songService', 'userServi
 		}
 		songService.doGetListMostViewSong($scope.data);
 	}
+	$scope.getListNewSong = function(){
+		if($cookies.get('auth')){
+			songService.doUserGetListNewSong($scope.data);
+		} else{
+			songService.doGetListNewSong($scope.data);
+		}
+	}
+	$scope.getListMostFavoriteSong = function(){
+		if($cookies.get('auth')){
+			songService.doUserGetListMostFavoriteSong($scope.data);
+		} else{
+			songService.doGetListMostFavoriteSong($scope.data);
+		}
+	}
 	$scope.playSong = function(song){
 		playerService.Play({
 			id: song.id,

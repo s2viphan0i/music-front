@@ -69,11 +69,6 @@ myApp.directive("jplayer", ['$window', 'songService', '$cookies', 'playerService
                 }
             });
 
-            jPlayer.bind($.jPlayer.event.play, function (event) {
-                // Song has ended, try to go next
-                console.log(event.jPlayer.status);
-            });
-
             jPlayer.bind($.jPlayer.event.ended, function (event) {
                 // Song has ended, try to go next
                 if($cookies.get('auth')){

@@ -2375,6 +2375,10 @@ fieldset[disabled] .btn-dark.active {
   background-color: #1ab667;
   color: #a9f3ce;
 }
+.bg-success.important{
+  background-color: #1ab667 !important;
+  color: #a9f3ce !important;
+}
 .bg-success.lt,
 .bg-success .lt {
   background-color: #20c974;
@@ -2856,6 +2860,9 @@ a.bg-light:focus {
 }
 .text-muted {
   color: #939aa0;
+}
+.text-success.important{
+  color: #1ab667 !important;
 }
 .pos-rlt {
   position: relative;
