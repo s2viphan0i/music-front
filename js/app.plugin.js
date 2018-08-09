@@ -48,7 +48,9 @@
 	easypie();
   
 	// datepicker
-	$(".datepicker-input").each(function(){ $(this).datepicker({ dateFormat: 'dd-mm-yy' });});
+	// $(".datepicker-input").each(function(){
+	// 	$(this).datepicker({ dateFormat: 'dd-mm-yy' });
+	// });
 
 	// dropfile
 	$('.dropfile').each(function(){

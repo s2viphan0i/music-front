@@ -212,7 +212,7 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
         if(data.user.phone==undefined){
             data.user.phone=""
         }
-        var user = '{"fullname":"'+data.user.fullname+'", "birthdate":"'+data.user.birthdate+'", "phone":"'+data.user.phone+
+        var user = '{"fullname":"'+data.user.fullname+'", "birthdate":"'+moment(data.user.birthdate).format("DD-MM-YYYY")+'", "phone":"'+data.user.phone+
         '", "note":"'+data.user.note+'"}'
         if(data.user.birthdate==undefined){
             var user = '{"fullname":"'+data.user.fullname+'", "phone":"'+data.user.phone+
@@ -325,6 +325,66 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
         }else{
             return false;
         }
+    };
+    userService.doUserGetUserByKeyword = function(data, search, callback){
+        $(".search-spinner").removeClass("hidden");
+        var auth = $cookies.get("auth");
+        return $http({
+            headers:{
+                'Authorization' : 'Basic ' + auth,
+            },
+            data: { 
+                keyword : search.keyword,
+                sortField: "followers",
+                sortOrder: "descend",
+                results: 18,
+                page: search.page
+            },
+            url: host+'/user/users/list',
+            withCredentials: true,
+            method: 'POST'
+        }).then(function (response){
+            $(".search-spinner").addClass("hidden");
+            data.success = response.data.success;
+            data.msg = response.data.msg;
+            data.total = response.data.total;
+            data.listResultUser = response.data.content;
+            callback();
+        },function (error){
+            $(".search-spinner").addClass("hidden");
+            if(error.status==404){
+                data.success=false;
+                data.msg="Có lỗi xảy ra! Vui lòng thử lại";
+            }
+        });
+    };
+    userService.doGetUserByKeyword = function(data, search, callback){
+        $(".search-spinner").removeClass("hidden");
+        return $http({
+            data: { 
+                keyword : search.keyword,
+                sortField: "followers",
+                sortOrder: "descend",
+                results: 18,
+                page: search.page
+            },
+            url: host+'/users/list',
+            withCredentials: true,
+            method: 'POST'
+        }).then(function (response){
+            $(".search-spinner").addClass("hidden");
+            data.success = response.data.success;
+            data.msg = response.data.msg;
+            data.total = response.data.total;
+            data.listResultUser = response.data.content;
+            callback();
+        },function (error){
+            $(".search-spinner").addClass("hidden");
+            if(error.status==404){
+                data.success=false;
+                data.msg="Có lỗi xảy ra! Vui lòng thử lại";
+            }
+        });
     };
     userService.getCookie = function(){
         return $cookies.get('auth');

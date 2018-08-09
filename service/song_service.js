@@ -118,7 +118,7 @@ myApp.factory('songService', ['$http', '$cookies', '$location', function($http, 
         });
     };
     songService.doUserGetSongByKeyword = function(data, search, callback){
-        $("#search-spinner").removeClass("hidden");
+        $(".search-spinner").removeClass("hidden");
         var auth = $cookies.get("auth");
         return $http({
             headers:{
@@ -135,14 +135,14 @@ myApp.factory('songService', ['$http', '$cookies', '$location', function($http, 
             withCredentials: true,
             method: 'POST'
         }).then(function (response){
-            $("#search-spinner").addClass("hidden");
+            $(".search-spinner").addClass("hidden");
             data.success = response.data.success;
             data.msg = response.data.msg;
             data.total = response.data.total;
             data.listResultSong = response.data.content;
             callback();
         },function (error){
-            $("#new-spinner").addClass("hidden");
+            $(".search-spinner").addClass("hidden");
             if(error.status==404){
                 data.success=false;
                 data.msg="Có lỗi xảy ra! Vui lòng thử lại";
@@ -150,7 +150,7 @@ myApp.factory('songService', ['$http', '$cookies', '$location', function($http, 
         });
     };
     songService.doGetSongByKeyword = function(data, search, callback){
-        $("#search-spinner").removeClass("hidden");
+        $(".search-spinner").removeClass("hidden");
         return $http({
             data: { 
                 keyword : search.keyword,
@@ -163,14 +163,14 @@ myApp.factory('songService', ['$http', '$cookies', '$location', function($http, 
             withCredentials: true,
             method: 'POST'
         }).then(function (response){
-            $("#search-spinner").addClass("hidden");
+            $(".search-spinner").addClass("hidden");
             data.success = response.data.success;
             data.msg = response.data.msg;
             data.total = response.data.total;
             data.listResultSong = response.data.content;
             callback();
         },function (error){
-            $("#search-spinner").addClass("hidden");
+            $(".search-spinner").addClass("hidden");
             if(error.status==404){
                 data.success=false;
                 data.msg="Có lỗi xảy ra! Vui lòng thử lại";

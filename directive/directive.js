@@ -40,6 +40,7 @@ myApp.directive("jplayer", ['$window', 'songService', '$cookies', 'playerService
                 if (value != null&&value.playlist==false) {
                     $window.myPlaylist.setPlaylist([]);
                     $window.myPlaylist.add({
+                        id: value.id,
                         mp3: value.StreamUri,
                         title: value.title,
                         artist: value.artist
@@ -74,7 +75,6 @@ myApp.directive("jplayer", ['$window', 'songService', '$cookies', 'playerService
                 if($cookies.get('auth')){
                     songService.doUserViewSong(event.jPlayer.status.media.id);
                 }
-                console.log(event.jPlayer.status);
                 if (scope.playerService.HasNext) {
                     scope.playerService.Next();
                 }

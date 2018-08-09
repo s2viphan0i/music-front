@@ -6,6 +6,10 @@ myApp.controller('SearchController', ['$scope', '$http', '$cookies', 'userServic
 		
 	}
 	$scope.getSongByKeyword = function(page){
+		$(".nav-tabs li").removeClass("active");
+		$("#song-tab").addClass("active");
+		$(".tab-content .tab-pane").removeClass("active");
+		$("#song").addClass("active");
 		$scope.data = [];
 		var search = {
 			keyword: "",
@@ -24,6 +28,35 @@ myApp.controller('SearchController', ['$scope', '$http', '$cookies', 'userServic
 			});
 		} else{
 			songService.doGetSongByKeyword($scope.data, search, function(){
+				$scope.totalPage = Math.ceil($scope.data.total/18);
+				$scope.total = $scope.data.total;
+			});
+		}
+
+	}
+	$scope.getUserByKeyword = function(page){
+		$(".nav-tabs li").removeClass("active");
+		$("#user-tab").addClass("active");
+		$(".tab-content .tab-pane").removeClass("active");
+		$("#user").addClass("active");
+		$scope.data = [];
+		var search = {
+			keyword: "",
+			page: page
+		}
+        if($routeParams.keyword){
+			search.keyword = $routeParams.keyword;
+		}
+		
+		$scope.page = search.page;
+		$scope.keyword = search.keyword;
+		if($cookies.get('auth')){
+			userService.doUserGetUserByKeyword($scope.data, search, function(){
+				$scope.totalPage = Math.ceil($scope.data.total/18);
+				$scope.total = $scope.data.total;
+			});
+		} else{
+			songService.doGetUserByKeyword($scope.data, search, function(){
 				$scope.totalPage = Math.ceil($scope.data.total/18);
 				$scope.total = $scope.data.total;
 			});
@@ -53,6 +86,12 @@ myApp.controller('SearchController', ['$scope', '$http', '$cookies', 'userServic
 	}
 	$scope.removeFavorite = function(songId){
 		userService.doFavorite(songId);
+	}
+	$scope.addFollow = function(userId){
+		userService.doFollow(userId);
+	}
+	$scope.removeFollow = function(userId){
+		userService.doFollow(userId);
 	}
 
 }]);

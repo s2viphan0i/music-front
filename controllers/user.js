@@ -6,6 +6,12 @@ myApp.controller('UserController', ['$scope', '$http', '$cookies', 'userService'
 		$scope.data = [];
 		userService.doGetUserByAuth($scope.data);
 	}
+	$scope.dateOptions = {
+		onClose: (value, picker, $element) => {
+			$element.focus()
+		},
+		dateFormat: 'dd-mm-yy'
+	}
 	$scope.init = function(){
 		$scope.data = [];
 		$scope.auth = $cookies.get('auth');

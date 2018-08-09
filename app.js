@@ -1,4 +1,4 @@
-var myApp = angular.module('myApp', ['ngRoute', 'ngCookies']);
+var myApp = angular.module('myApp', ['ngRoute', 'ngCookies', 'ui.date']);
 
 myApp.config(function ($routeProvider) {
 	$routeProvider.when('/login', {

@@ -84,13 +84,13 @@
                 <section class="panel panel-default">
                     <header class="panel-heading text-right bg-light">
                         <ul class="nav nav-tabs pull-left">
-                            <li class="active">
-                                <a href="#messages-2" data-toggle="tab">
+                            <li id="song-tab" ng-click="getSongByKeyword(1)">
+                                <a href="javascript:" data-toggle="tab">
                                     <i class="icon-music-tone-alt text-muted"></i> Bài hát
                                 </a>
                             </li>
-                            <li>
-                                <a href="#profile-2" data-toggle="tab">
+                            <li id="user-tab" ng-click="getUserByKeyword(1)">
+                                <a href="javascript:" data-toggle="tab">
                                     <i class="icon-user text-muted"></i> Người dùng</a>
                             </li>
                             <li>
@@ -106,7 +106,7 @@
                     </header>
                     <div class="panel-body">
                         <div class="tab-content">
-                            <div class="tab-pane active padder-lg" id="home">
+                            <div class="tab-pane padder-lg" id="song">
                                 <h2 class="font-thin m-b">Bài hát
                                     <i class='fa fa-spinner fa fa-spin fa fa-large hidden' id="search-spinner"></i>
                                 </h2>
@@ -191,7 +191,62 @@
                                     </li>
                                 </ul>
                             </div>
-                            <div class="tab-pane" id="profile">profile</div>
+                            <div class="tab-pane padder-lg" id="user">
+                                <h2 class="font-thin m-b">Người dùng
+                                    <i class='fa fa-spinner fa fa-spin fa fa-large hidden' id="search-spinner"></i>
+                                </h2>
+                                <div class="row row-sm">
+                                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2" ng-repeat="user in data.listResultUser">
+                                        <div class="item">
+                                            <div class="pos-rlt">
+                                                <div class="item-overlay opacity rounded bg-black">
+                                                    <div class="center text-center m-t-n">
+                                                        <a href="./#!/profile/{{user.username}}">
+                                                            <i class="icon-link i-2x"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <a href="#">
+                                                    <img src="http://localhost:8080/resource/image?name={{user.avatar}}" alt="" class="rounded img-full">
+                                                </a>
+                                            </div>
+                                            <div class="padder-v">
+                                                <a href="./#!/profile/{{user.username}}" class="text-ellipsis">{{user.fullname}}</a>
+                                                <p class="text-ellipsis text-xs text-muted m-n">{{user.followers}} người theo dõi</p>
+                                                <a href="javascript:" ng-click="user.followers=user.followers+1;user.followed=true;addFollow(user.id)" class="btn btn-xs btn-success m-t-xs" ng-if="user.followed==false">Theo dõi</a>
+                                                <a href="javascript:" ng-click="user.followers=user.followers-1;user.followed=false;removeFollow(user.id)" class="btn btn-xs active btn-success m-t-xs" ng-if="user.followed==true">Đã theo dõi</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <ul class="pagination" ng-if="total!=0">
+                                    <li ng-if="page-1>0">
+                                        <a href="javascript:" ng-click="getUserByKeyword(page-1)" class="text-success important">
+                                            <i class="fa fa-chevron-left"></i>
+                                        </a>
+                                    </li>
+                                    <li ng-if="page-2>0" class="text-success">
+                                        <a href="javascript:" ng-click="getUserByKeyword(page-2)" class="text-success important">{{page-2}}</a>
+                                    </li>
+                                    <li ng-if="page-1>0">
+                                        <a href="javascript:" ng-click="getUserByKeyword(page-1)" class="text-success important">{{page-1}}</a>
+                                    </li>
+                                    <li class="active">
+                                        <a href="javascript:" ng-click="getUserByKeyword(page)" class="bg-success important">{{page}}</a>
+                                    </li>
+                                    <li ng-if="(page+1)<=totalPage">
+                                        <a href="javascript:" ng-click="getUserByKeyword(page+1)" class="text-success important">{{page+1}}</a>
+                                    </li>
+                                    <li ng-if="(page+2)<=totalPage">
+                                        <a href="javascript:" ng-click="getUserByKeyword(page+2)" class="text-success important">{{page+2}}</a>
+                                    </li>
+                                    <li ng-if="(page+1)<=totalPage">
+                                        <a href="javascript:" ng-click="getUserByKeyword(page+1)" class="text-success important">
+                                            <i class="fa fa-chevron-right"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                             <div class="tab-pane" id="messages">message</div>
                             <div class="tab-pane" id="settings">settings</div>
                         </div>
