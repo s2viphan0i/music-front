@@ -198,9 +198,9 @@ a.list-group-item:focus {
   margin-top: 0;
 }
 .list-group-item.active {
-  color: #fff;
-  border-color: #4cb6cb !important;
-  background-color: #4cb6cb !important;
+  color: #a9f3ce;
+  border-color: #1ab667 !important;
+  background-color: #1ab667 !important;
 }
 .list-group-item.active .text-muted {
   color: #c3e6ed;
@@ -1910,7 +1910,7 @@ fieldset[disabled] .btn-dark.active {
   visibility: hidden;
 }
 .customfileinput::before {
-  content: 'Select some files';
+  content: 'Chọn tệp';
   color: black;
   display: inline-block;
   background: -webkit-linear-gradient(top, #f9f9f9, #e3e3e3);
@@ -2374,6 +2374,10 @@ fieldset[disabled] .btn-dark.active {
 .bg-success {
   background-color: #1ab667;
   color: #a9f3ce;
+}
+.bg-success.important{
+  background-color: #1ab667 !important;
+  color: #a9f3ce !important;
 }
 .bg-success.lt,
 .bg-success .lt {
@@ -2856,6 +2860,9 @@ a.bg-light:focus {
 }
 .text-muted {
   color: #939aa0;
+}
+.text-success.important{
+  color: #1ab667 !important;
 }
 .pos-rlt {
   position: relative;

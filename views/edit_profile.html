@@ -18,26 +18,26 @@
                             <div class="col-xs-6">
                                 <a href="#">
                                     <span class="m-b-xs h4 block">{{data.user.followers}}</span>
-                                    <small class="text-muted">Followers</small>
+                                    <small class="text-muted">Người theo dõi</small>
                                 </a>
                             </div>
                             <div class="col-xs-6">
                                 <a href="#">
                                     <span class="m-b-xs h4 block">{{data.user.followings}}</span>
-                                    <small class="text-muted">Following</small>
+                                    <small class="text-muted">Đang theo dõi</small>
                                 </a>
                             </div>
                         </div>
                     </div>
                     <div class="btn-group btn-group-justified m-b">
                         <a class="btn btn-dark btn-rounded">
-                            <i class="icon-share-alt"></i> Share
+                            <i class="icon-share-alt"></i> Chia sẻ
                         </a>
                     </div>
                     <div>
-                        <small class="text-uc text-xs text-muted">Birthday</small>
-                        <p>{{data.user.birthdate}}</p>
-                        <small class="text-uc text-xs text-muted">info</small>
+                        <small class="text-uc text-xs text-muted">Sinh nhật</small>
+                        <p>{{data.user.birthdate | date:'dd-MM-yyyy' }}</p>
+                        <small class="text-uc text-xs text-muted">Mô tả</small>
                         <p>{{data.user.note}}</p>
                         <div class="line"></div>
                         <p>
@@ -64,8 +64,8 @@
     <section class="scrollable padder">
         <div class="m-b-md">
             <a href="./#!/profile/{{data.user.username}}" class="m-r" style="display: inline-block;">
-                <i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
-            <h3 class="m-b-none" style="display: inline-block;">Edit profile</h3>
+                <i class="fa fa-arrow-left" aria-hidden="true"></i> Trở lại</a>
+            <h3 class="m-b-none" style="display: inline-block;">Sửa thông tin</h3>
         </div>
         <div class="row">
             <div class="col-sm-12">
@@ -84,38 +84,39 @@
                     </div>
                     <section class="panel panel-default">
                         <header class="panel-heading">
-                            <span class="h4">Form</span>
+                            <span class="h4">Sửa thông tin cá nhân</span>
                         </header>
                         <div class="row">
                             <div class="panel-body">
                                 <div class="col-sm-6">
+                                    <input type="hidden" class="form-control" ng-model="data.user.id" data-required="true">
                                     <div class="form-group">
-                                        <label>Fullname</label>
+                                        <label>Tên đầy đủ</label>
                                         <input type="text" class="form-control" ng-model="data.user.fullname" data-required="true">
                                     </div>
                                     <div class="form-group">
-                                        <label>Phone</label>
+                                        <label>Số điện thoại</label>
                                         <input type="text" class="form-control" ng-model="data.user.phone" placeholder="0 XXXX XXXX" data-required="true">
                                     </div>
                                     <div class="form-group">
-                                        <label>Avatar</label>
+                                        <label>Ảnh đại diện</label>
                                         <input type="file" accept="image/*" file-model="data.avatar" class="customfileinput">
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label>Birthdate</label>
-                                        <input class="datepicker-input form-control" size="16" type="text" ng-model="data.user.birthdate" placeholder="dd-mm-yyyy" data-date-format="dd-mm-yyyy">
+                                        <label>Sinh nhật</label>
+                                        <input class="datepicker-input form-control" ui-date="dateOptions" size="16" type="text" ng-model="data.user.birthdate" placeholder="dd-mm-yyyy" ui-date-format="dd-mm-yy">
                                     </div>
                                     <div class="form-group">
-                                        <label>Note</label>
+                                        <label>Mô tả</label>
                                         <textarea class="form-control" ng-model="data.user.note" rows="6" data-minwords="6" data-required="true" placeholder="Type something"></textarea>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <footer class="panel-footer text-right bg-light lter">
-                            <button type="submit" ng-click="editUser()" class="btn btn-success btn-s-xs">Submit
+                            <button type="submit" ng-click="editUser()" class="btn btn-success btn-s-xs">Chỉnh sửa
                                 <i class='fa fa-spinner fa fa-spin fa fa-large hidden' id="edit-spinner"></i>
                             </button>
                         </footer>

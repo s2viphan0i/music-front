@@ -1,4 +1,4 @@
-var myApp = angular.module('myApp', ['ngRoute', 'ngCookies']);
+var myApp = angular.module('myApp', ['ngRoute', 'ngCookies', 'ui.date']);
 
 myApp.config(function ($routeProvider) {
 	$routeProvider.when('/login', {
@@ -54,6 +54,11 @@ myApp.config(function ($routeProvider) {
 		.when('/test', {
 			controller: 'HomeController',
 			templateUrl: 'views/test.html',
+			authenticated: false
+		})
+		.when('/search', {
+			controller: 'SearchController',
+			templateUrl: 'views/search.html',
 			authenticated: false
 		})
 		.otherwise({

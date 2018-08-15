@@ -15,6 +15,10 @@ myApp.controller('IndexController', ['$scope', '$http', 'userService', '$cookies
 		return $location.path().match(/song/)||location.hash.match(/playlist/)?true:false;
 	}
 
+	$scope.search = function(key){
+		$location.path('/search').search({keyword: key, type: $routeParams.type});
+	}
+
 	$scope.$watch(function() { return $cookies.get('auth'); }, function(newValue) {
         $scope.data = {
 			auth : $cookies.get('auth'),

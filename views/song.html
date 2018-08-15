@@ -1,418 +1,361 @@
-<section class="hbox stretch bg-black dker" ng-init="getSongById()">
-        <!-- side content -->
-        <aside class="col-sm-5 no-padder" id="sidebar">
-            <section class="vbox animated fadeInUp">
-                <section class="scrollable">
-                    <div class="m-t-n-xxs item">
-                        <div class="row line-xs">
-                            <div class="wrapper-lg col-sm-4">
+<section class="hbox stretch bg-black dker" ng-init="getSongById();loadComment(1);">
+    <!-- side content -->
+    <aside class="col-sm-5 no-padder" id="sidebar">
+        <section class="vbox animated fadeInUp">
+            <section class="scrollable">
+                <div class="m-t-n-xxs item">
+                    <div class="row line-xs">
+                        <div class="wrapper-lg col-sm-4">
+                            <div class="pos-rlt">
                                 <img class="img-full" src="http://localhost:8080/resource/image?name={{data.song.image}}" alt="...">
-                            </div>
-                            <div class="wrapper-lg col-sm-8">
-                                <div>
-                                    <h2 class="h2 font-thin img-full">{{data.song.title}}</h2>
-                                    <p>{{data.song.views}} lượt nghe</p>
-                                    <div>
-                                        <a href="#" class="pull-left">
-                                            <i class="fa fa-plus-circle"></i>
-                                        </a>
-                                        <a href="javascript:" class="pull-right" ng-if="data.song.favorited!=true">
-                                            {{data.song.favorites}} <i class="fa fa-heart-o" ng-click="data.song.favorites=data.song.favorites+1;data.song.favorited=true;addFavorite(data.song.id)"></i>
-                                        </a>
-                                        <a href="javascript:" class="pull-right active" data-toggle="class" ng-if="data.song.favorited==true">
-                                            <i class="fa fa-heart-o text"></i>
-                                            {{data.song.favorites}} <i class="fa fa-heart text-active text-danger" ng-click="data.song.favorites=data.song.favorites-1;data.song.favorited=false;removeFavorite(data.song.id)"></i>
+                                <div class="item-overlay active opacity bg-black">
+                                    <div class="center text-center m-t-n">
+                                        <a href="javascript:">
+                                            <i class="icon-control-play i-2x" ng-click="playSong(data.song)"></i>
                                         </a>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wrapper-lg col-sm-8">
+                            <div>
+                                <h2 class="h2 font-thin img-full">{{data.song.title}}</h2>
+                                <p>{{data.song.views}} lượt nghe</p>
+                                <div>
+                                    <div class="btn-group">
+                                        <a href="javascript:" data-toggle="dropdown">
+                                            <i class="fa fa-plus-circle"></i>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="javascript:" ng-click="addSongToPlaylist(data.song)">
+                                                    <i class="icon-list"></i> Thêm vào đang phát</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:" ng-click="addSongToPlaylist(data.song)">
+                                                    <i class="icon-playlist"></i> Thêm vào playlist</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <a href="javascript:" class="pull-right" ng-if="data.song.favorited!=true">
+                                        {{data.song.favorites}}
+                                        <i class="fa fa-heart-o" ng-click="data.song.favorites=data.song.favorites+1;data.song.favorited=true;addFavorite(data.song.id)"></i>
+                                    </a>
+                                    <a href="javascript:" class="pull-right active" data-toggle="class" ng-if="data.song.favorited==true">
+                                        <i class="fa fa-heart-o text"></i>
+                                        {{data.song.favorites}}
+                                        <i class="fa fa-heart text-active text-danger" ng-click="data.song.favorites=data.song.favorites-1;data.song.favorited=false;removeFavorite(data.song.id)"></i>
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- owner information -->
-                    <section class="bg-black clearfix b-b b-gray">
-                        <div class="panel-body">
-                            <a href="./#!/profile/{{data.song.user.username}}" class="thumb pull-right m-l m-t-xs avatar">
-                                <img src="http://localhost:8080/resource/image?name={{data.song.user.avatar}}" alt="...">
-                                <i class="on md b-white bottom"></i>
+                </div>
+                <!-- owner information -->
+                <section class="bg-black clearfix b-b b-gray">
+                    <div class="panel-body">
+                        <a href="./#!/profile/{{data.song.user.username}}" class="thumb pull-right m-l m-t-xs avatar">
+                            <img src="http://localhost:8080/resource/image?name={{data.song.user.avatar}}" alt="...">
+                            <i class="on md b-white bottom"></i>
+                        </a>
+                        <div class="clear">
+                            <a href="./#!/profile/{{data.song.user.username}}" class="text-info">@{{data.song.user.fullname}}
+                                <i class="icon-twitter"></i>
                             </a>
-                            <div class="clear">
-                                <a href="./#!/profile/{{data.song.user.username}}" class="text-info">@{{data.song.user.fullname}}
-                                    <i class="icon-twitter"></i>
-                                </a>
-                                <small class="block text-muted">2,415 followers / 225 tweets</small>
-                                <a href="#" class="btn btn-xs btn-success m-t-xs">Theo dõi</a>
-                            </div>
+                            <small class="block text-muted">2,415 followers / 225 tweets</small>
+                            <a href="#" class="btn btn-xs btn-success m-t-xs">Theo dõi</a>
                         </div>
-                    </section>
-                    <section class="bg-black clearfix b-b b-gray">
-                        <div class="panel-body">
-                            <strong>Đăng tải ngày {{data.song.createTime}}</strong>
-                            <h2 class="">Lời bài hát</h2>
-                            <div class="lyric height pos-rlt">{{data.song.lyric}}</div>
-                            <div class="more"><i class="fa fa-chevron-down" id="more"></i></div>
-                        </div>
-                    </section>
-                    <!-- Comment -->
-                    <section class="comment-list panel-body block bg-black">
-                        <h2 class="font-thin padder-v bg-black line-xs">Bình luận</h2>
-                        <article id="comment-id-1" class="comment-item">
-                            <a class="pull-left thumb-sm avatar">
-                                <img src="images/a1.png" class="img-circle" alt="...">
-                            </a>
-                            <span class="arrow left"></span>
-                            <section class="comment-body panel panel-default">
-                                <header class="panel-heading bg-white">
-                                    <a href="#">John smith</a>
-                                    <label class="label bg-info m-l-xs">Editor</label>
-                                    <span class="text-muted m-l-sm pull-right">
-                                        <i class="fa fa-clock-o"></i>
-                                        Just now
-                                    </span>
-                                </header>
-                                <div class="panel-body">
-                                    <div>Lorem ipsum dolor sit amet, consecteter adipiscing elit, sed diam
-                                        nonummy nibh euismod tincidunt ut laoreet.</div>
-                                    <div class="comment-action m-t-sm">
-                                        <a href="#" data-toggle="class" class="btn btn-default btn-xs active">
-                                            <i class="fa fa-star-o text-muted text"></i>
-                                            <i class="fa fa-star text-danger text-active"></i>
-                                            Like
-                                        </a>
-                                        <a href="#comment-form" class="btn btn-default btn-xs">
-                                            <i class="fa fa-mail-reply text-muted"></i> Reply
-                                        </a>
-                                    </div>
-                                </div>
-                            </section>
-                        </article>
-                        <!-- .comment-reply -->
-                        <article id="comment-id-2" class="comment-item comment-reply">
-                            <a class="pull-left thumb-sm avatar">
-                                <img src="images/a8.png" alt="...">
-                            </a>
-                            <span class="arrow left"></span>
-                            <section class="comment-body panel panel-default text-sm">
-                                <div class="panel-body">
-                                    <span class="text-muted m-l-sm pull-right">
-                                        <i class="fa fa-clock-o"></i>
-                                        10m ago
-                                    </span>
-                                    <a href="#">Mika Sam</a>
-                                    <label class="label bg-dark m-l-xs">Admin</label>
-                                    Report this comment is helpful
-                                </div>
-                            </section>
-                        </article>
-                        <!-- / .comment-reply -->
-                        <article id="comment-id-3" class="comment-item">
-                            <a class="pull-left thumb-sm avatar">
-                                <img src="images/a9.png" alt="...">
-                            </a>
-                            <span class="arrow left"></span>
-                            <section class="comment-body panel panel-default">
-                                <header class="panel-heading">
-                                    <a href="#">By me</a>
-                                    <label class="label bg-success m-l-xs">User</label>
-                                    <span class="text-muted m-l-sm pull-right">
-                                        <i class="fa fa-clock-o"></i>
-                                        1h ago
-                                    </span>
-                                </header>
-                                <div class="panel-body">
-                                    <div>This comment was posted by you.</div>
-                                    <div class="comment-action m-t-sm">
-                                        <a href="#comment-id-3" data-dismiss="alert" class="btn btn-default btn-xs">
-                                            <i class="fa fa-trash-o text-muted"></i>
-                                            Remove
-                                        </a>
-                                    </div>
-                                </div>
-                            </section>
-                        </article>
-                        <article id="comment-id-4" class="comment-item">
-                            <a class="pull-left thumb-sm avatar">
-                                <img src="images/a5.png" alt="...">
-                            </a>
-                            <span class="arrow left"></span>
-                            <section class="comment-body panel panel-default">
-                                <header class="panel-heading">
-                                    <a href="#">Peter</a>
-                                    <label class="label bg-primary m-l-xs">Vip</label>
-                                    <span class="text-muted m-l-sm pull-right">
-                                        <i class="fa fa-clock-o"></i>
-                                        2hs ago
-                                    </span>
-                                </header>
-                                <div class="panel-body">
-                                    <blockquote>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-                                            posuere erat a ante.</p>
-                                        <small>Someone famous in
-                                            <cite title="Source Title">Source Title</cite>
-                                        </small>
-                                    </blockquote>
-                                    <div>Lorem ipsum dolor sit amet, consecteter adipiscing elit...</div>
-                                    <div class="comment-action m-t-sm">
-                                        <a href="#" data-toggle="class" class="btn btn-default btn-xs">
-                                            <i class="fa fa-star-o text-muted text"></i>
-                                            <i class="fa fa-star text-danger text-active"></i>
-                                            Like
-                                        </a>
-                                        <a href="#comment-form" class="btn btn-default btn-xs">
-                                            <i class="fa fa-mail-reply text-muted"></i> Reply</a>
-                                    </div>
-                                </div>
-                            </section>
-                        </article>
-                        <!-- comment form -->
-                        <article class="comment-item media" id="comment-form">
-                            <a class="pull-left thumb-sm avatar">
-                                <img src="images/a6.png" alt="...">
-                            </a>
-                            <section class="media-body">
-                                <form action="index.html" class="m-b-none">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Input your comment here">
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-success" type="button">POST</button>
-                                        </span>
-                                    </div>
-                                </form>
-                            </section>
-                        </article>
-                    </section>
+                    </div>
                 </section>
-            </section>
-        </aside>
-        <!-- / side content -->
-        <section class="col-sm-4 no-padder bg">
-            <section class="vbox">
-                <section class="scrollable hover">
-                    <ul class="list-group list-group-lg no-bg auto m-b-none m-t-n-xxs">
-                        <li class="list-group-item clearfix">
-                            <a href="#" class="jp-play-me pull-right m-t-sm m-l text-md">
-                                <i class="icon-control-play text"></i>
-                                <i class="icon-control-pause text-active"></i>
-                            </a>
-                            <a href="#" class="pull-left thumb-sm m-r">
-                                <img src="images/m0.jpg" alt="...">
-                            </a>
-                            <a class="clear" href="#">
-                                <span class="block text-ellipsis">Little Town</span>
-                                <small class="text-muted">by Soph Ashe</small>
-                            </a>
-                        </li>
-                        <li class="list-group-item clearfix">
-                            <a href="#" class="jp-play-me pull-right m-t-sm m-l text-md">
-                                <i class="icon-control-play text"></i>
-                                <i class="icon-control-pause text-active"></i>
-                            </a>
-                            <a href="#" class="pull-left thumb-sm m-r">
-                                <img src="images/a1.png" alt="...">
-                            </a>
-                            <a class="clear" href="#">
-                                <span class="block text-ellipsis">Get lacinia odio sem nec elit</span>
-                                <small class="text-muted">by Filex</small>
-                            </a>
-                        </li>
-                        <li class="list-group-item clearfix">
-                            <a href="#" class="jp-play-me pull-right m-t-sm m-l text-md">
-                                <i class="icon-control-play text"></i>
-                                <i class="icon-control-pause text-active"></i>
-                            </a>
-                            <a href="#" class="pull-left thumb-sm m-r">
-                                <img src="images/a2.png" alt="...">
-                            </a>
-                            <a class="clear" href="#">
-                                <span class="block text-ellipsis">Donec sed odio du</span>
-                                <small class="text-muted">by Dan Doorack</small>
-                            </a>
-                        </li>
-                        <li class="list-group-item clearfix">
-                            <a href="#" class="jp-play-me pull-right m-t-sm m-l text-md">
-                                <i class="icon-control-play text"></i>
-                                <i class="icon-control-pause text-active"></i>
-                            </a>
-                            <a href="#" class="pull-left thumb-sm m-r">
-                                <img src="images/a3.png" alt="...">
-                            </a>
-                            <a class="clear" href="#">
-                                <span class="block text-ellipsis">Curabitur blandit tempu</span>
-                                <small class="text-muted">by Foxes</small>
-                            </a>
-                        </li>
-                        <li class="list-group-item clearfix">
-                            <a href="#" class="jp-play-me pull-right m-t-sm m-l text-md">
-                                <i class="icon-control-play text"></i>
-                                <i class="icon-control-pause text-active"></i>
-                            </a>
-                            <a href="#" class="pull-left thumb-sm m-r">
-                                <img src="images/a4.png" alt="...">
-                            </a>
-                            <a class="clear" href="#">
-                                <span class="block text-ellipsis">Urna mollis ornare vel eu leo</span>
-                                <small class="text-muted">by Chris Fox</small>
-                            </a>
-                        </li>
-                        <li class="list-group-item clearfix">
-                            <a href="#" class="jp-play-me pull-right m-t-sm m-l text-md">
-                                <i class="icon-control-play text"></i>
-                                <i class="icon-control-pause text-active"></i>
-                            </a>
-                            <a href="#" class="pull-left thumb-sm m-r">
-                                <img src="images/a5.png" alt="...">
-                            </a>
-                            <a class="clear" href="#">
-                                <span class="block text-ellipsis">Faucibus dolor auctor</span>
-                                <small class="text-muted">by Lauren Taylor</small>
-                            </a>
-                        </li>
-                        <li class="list-group-item clearfix">
-                            <a href="#" class="jp-play-me pull-right m-t-sm m-l text-md">
-                                <i class="icon-control-play text"></i>
-                                <i class="icon-control-pause text-active"></i>
-                            </a>
-                            <a href="#" class="pull-left thumb-sm m-r">
-                                <img src="images/a6.png" alt="...">
-                            </a>
-                            <a class="clear" href="#">
-                                <span class="block text-ellipsis">Praesent commodo cursus magn</span>
-                                <small class="text-muted">by Chris Fox</small>
-                            </a>
-                        </li>
-                        <li class="list-group-item clearfix">
-                            <a href="#" class="jp-play-me pull-right m-t-sm m-l text-md">
-                                <i class="icon-control-play text"></i>
-                                <i class="icon-control-pause text-active"></i>
-                            </a>
-                            <a href="#" class="pull-left thumb-sm m-r">
-                                <img src="images/a7.png" alt="...">
-                            </a>
-                            <a class="clear" href="#">
-                                <span class="block text-ellipsis">Vestibulum id</span>
-                                <small class="text-muted">by Milian</small>
-                            </a>
-                        </li>
-                        <li class="list-group-item clearfix">
-                            <a href="#" class="jp-play-me pull-right m-t-sm m-l text-md">
-                                <i class="icon-control-play text"></i>
-                                <i class="icon-control-pause text-active"></i>
-                            </a>
-                            <a href="#" class="pull-left thumb-sm m-r">
-                                <img src="images/a8.png" alt="...">
-                            </a>
-                            <a class="clear" href="#">
-                                <span class="block text-ellipsis">Blandit tempu</span>
-                                <small class="text-muted">by Amanda Conlan</small>
-                            </a>
-                        </li>
-                        <li class="list-group-item clearfix">
-                            <a href="#" class="jp-play-me pull-right m-t-sm m-l text-md">
-                                <i class="icon-control-play text"></i>
-                                <i class="icon-control-pause text-active"></i>
-                            </a>
-                            <a href="#" class="pull-left thumb-sm m-r">
-                                <img src="images/a9.png" alt="...">
-                            </a>
-                            <a class="clear" href="#">
-                                <span class="block text-ellipsis">Vestibulum ullamcorpe quis malesuada augue mco rpe</span>
-                                <small class="text-muted">by Dan Doorack</small>
-                            </a>
-                        </li>
-                        <li class="list-group-item clearfix">
-                            <a href="#" class="jp-play-me pull-right m-t-sm m-l text-md">
-                                <i class="icon-control-play text"></i>
-                                <i class="icon-control-pause text-active"></i>
-                            </a>
-                            <a href="#" class="pull-left thumb-sm m-r">
-                                <img src="images/a10.png" alt="...">
-                            </a>
-                            <a class="clear" href="#">
-                                <span class="block text-ellipsis">Natis ipsum ac feugiat</span>
-                                <small class="text-muted">by Hamburg</small>
-                            </a>
-                        </li>
-                        <li class="list-group-item clearfix">
-                            <a href="#" class="jp-play-me pull-right m-t-sm m-l text-md">
-                                <i class="icon-control-play text"></i>
-                                <i class="icon-control-pause text-active"></i>
-                            </a>
-                            <a href="#" class="pull-left thumb-sm m-r">
-                                <img src="images/a0.png" alt="...">
-                            </a>
-                            <a class="clear" href="#">
-                                <span class="block text-ellipsis">Sec condimentum au</span>
-                                <small class="text-muted">by Amanda Conlan</small>
-                            </a>
-                        </li>
-                    </ul>
+                <section class="bg-black clearfix b-b b-gray">
+                    <div class="panel-body">
+                        <strong>Đăng tải ngày {{data.song.createTime}}</strong>
+                        <h2 class="">Lời bài hát</h2>
+                        <div class="lyric height pos-rlt">{{data.song.lyric}}</div>
+                        <div class="more">
+                            <i class="fa fa-chevron-down" id="more"></i>
+                        </div>
+                    </div>
+                </section>
+                <!-- Comment -->
+                <section class="comment-list panel-body block bg-black">
+                    <h2 class="font-thin padder-v bg-black line-xs">Bình luận</h2>
+                    <article class="comment-item" ng-repeat="comment in data.listComment | orderBy:'id' track by $index">
+                        <a class="pull-left thumb-sm avatar">
+                            <img src="http://localhost:8080/resource/image?name={{comment.user.avatar}}" class="img-circle" alt="...">
+                        </a>
+                        <span class="arrow left"></span>
+                        <section class="comment-body panel panel-default">
+                            <header class="panel-heading bg-white">
+                                <a href="#">{{comment.user.username}}</a>
+                                <label class="label bg-danger m-l-xs" ng-if="comment.user.username==='admin'">Admin</label>
+                                <span class="text-muted m-l-sm pull-right">
+                                    <i class="fa fa-clock-o"></i>
+                                    {{comment.createTimeFrom}}
+                                </span>
+                            </header>
+                            <div class="panel-body">
+                                <div>{{comment.content}}</div>
+                                <div class="comment-action m-t-sm">
+                                    <a href="#comment-id-3" data-dismiss="alert" class="btn btn-default btn-xs">
+                                        <i class="fa fa-trash-o text-muted"></i>
+                                        Remove
+                                    </a>
+                                </div>
+                            </div>
+                        </section>
+                    </article>
+                    <!-- comment form -->
+                    <article class="comment-item media" id="comment-form" ng-if="data.avatar">
+                        <a class="pull-left thumb-sm avatar">
+                            <img src="http://localhost:8080/resource/image?name={{data.avatar}}" alt="...">
+                        </a>
+                        <section class="media-body">
+                            <form class="m-b-none">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" ng-model="data.comment.content" ng-keyup="$event.keyCode==13?comment(data.song.id):null"
+                                        placeholder="Viết bình luận ...">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-success" type="button" ng-click="comment(data.song.id)">Bình luận</button>
+                                    </span>
+                                </div>
+                            </form>
+                        </section>
+                    </article>
                 </section>
             </section>
         </section>
-        <section class="col-sm-3 no-padder lt">
-            <section class="vbox">
-                <section class="scrollable hover">
-                    <div class="m-t-n-xxs">
-                        <div class="item pos-rlt">
-                            <a href="#" class="item-overlay active opacity wrapper-md font-xs">
-                                <span class="block h3 font-bold text-info">Find</span>
-                                <span class="text-muted">Search the music you like</span>
-                                <span class="bottom wrapper-md block">-
-                                    <i class="icon-arrow-right i-lg pull-right"></i>
-                                </span>
-                            </a>
-                            <a href="#">
-                                <img class="img-full" src="images/m40.jpg" alt="...">
-                            </a>
-                        </div>
-                        <div class="item pos-rlt">
-                            <a href="#" class="item-overlay active opacity wrapper-md font-xs text-right">
-                                <span class="block h3 font-bold text-warning text-u-c">Listen</span>
-                                <span class="text-muted">Find the peace in your heart</span>
-                                <span class="bottom wrapper-md block">
-                                    <i class="icon-arrow-right i-lg pull-left"></i> -</span>
-                            </a>
-                            <a href="#">
-                                <img class="img-full" src="images/m41.jpg" alt="...">
-                            </a>
-                        </div>
-                        <div class="item pos-rlt">
-                            <a href="#" class="item-overlay active opacity wrapper-md font-xs">
-                                <span class="block h3 font-bold text-success text-u-c">Share</span>
-                                <span class="text-muted">Share the good songs with your loves</span>
-                                <span class="bottom wrapper-md block">-
-                                    <i class="icon-arrow-right i-lg pull-right"></i>
-                                </span>
-                            </a>
-                            <a href="#">
-                                <img class="img-full" src="images/m42.jpg" alt="...">
-                            </a>
-                        </div>
-                        <div class="item pos-rlt">
-                            <a href="#" class="item-overlay active opacity wrapper-md font-xs text-right">
-                                <span class="block h3 font-bold text-white text-u-c">2014</span>
-                                <span class="text-muted">Find, Listen & Share</span>
-                                <span class="bottom wrapper-md block">
-                                    <i class="icon-arrow-right i-lg pull-left"></i> -</span>
-                            </a>
-                            <a href="#">
-                                <img class="img-full" src="images/m44.jpg" alt="...">
-                            </a>
-                        </div>
-                        <div class="item pos-rlt">
-                            <a href="#" class="item-overlay active opacity wrapper-md font-xs">
-                                <span class="block h3 font-bold text-danger-lter text-u-c">Top10</span>
-                                <span class="text-muted">Selected songs</span>
-                                <span class="bottom wrapper-md block">-
-                                    <i class="icon-arrow-right i-lg pull-right"></i>
-                                </span>
-                            </a>
-                            <a href="#">
-                                <img class="img-full" src="images/m45.jpg" alt="...">
-                            </a>
-                        </div>
-                    </div>
-                </section>
+    </aside>
+    <!-- / side content -->
+    <section class="col-sm-4 no-padder bg">
+        <section class="vbox">
+            <section class="scrollable hover">
+                <ul class="list-group list-group-lg no-bg auto m-b-none m-t-n-xxs">
+                    <li class="list-group-item clearfix">
+                        <a href="#" class="jp-play-me pull-right m-t-sm m-l text-md">
+                            <i class="icon-control-play text"></i>
+                            <i class="icon-control-pause text-active"></i>
+                        </a>
+                        <a href="#" class="pull-left thumb-sm m-r">
+                            <img src="images/m0.jpg" alt="...">
+                        </a>
+                        <a class="clear" href="#">
+                            <span class="block text-ellipsis">Little Town</span>
+                            <small class="text-muted">by Soph Ashe</small>
+                        </a>
+                    </li>
+                    <li class="list-group-item clearfix">
+                        <a href="#" class="jp-play-me pull-right m-t-sm m-l text-md">
+                            <i class="icon-control-play text"></i>
+                            <i class="icon-control-pause text-active"></i>
+                        </a>
+                        <a href="#" class="pull-left thumb-sm m-r">
+                            <img src="images/a1.png" alt="...">
+                        </a>
+                        <a class="clear" href="#">
+                            <span class="block text-ellipsis">Get lacinia odio sem nec elit</span>
+                            <small class="text-muted">by Filex</small>
+                        </a>
+                    </li>
+                    <li class="list-group-item clearfix">
+                        <a href="#" class="jp-play-me pull-right m-t-sm m-l text-md">
+                            <i class="icon-control-play text"></i>
+                            <i class="icon-control-pause text-active"></i>
+                        </a>
+                        <a href="#" class="pull-left thumb-sm m-r">
+                            <img src="images/a2.png" alt="...">
+                        </a>
+                        <a class="clear" href="#">
+                            <span class="block text-ellipsis">Donec sed odio du</span>
+                            <small class="text-muted">by Dan Doorack</small>
+                        </a>
+                    </li>
+                    <li class="list-group-item clearfix">
+                        <a href="#" class="jp-play-me pull-right m-t-sm m-l text-md">
+                            <i class="icon-control-play text"></i>
+                            <i class="icon-control-pause text-active"></i>
+                        </a>
+                        <a href="#" class="pull-left thumb-sm m-r">
+                            <img src="images/a3.png" alt="...">
+                        </a>
+                        <a class="clear" href="#">
+                            <span class="block text-ellipsis">Curabitur blandit tempu</span>
+                            <small class="text-muted">by Foxes</small>
+                        </a>
+                    </li>
+                    <li class="list-group-item clearfix">
+                        <a href="#" class="jp-play-me pull-right m-t-sm m-l text-md">
+                            <i class="icon-control-play text"></i>
+                            <i class="icon-control-pause text-active"></i>
+                        </a>
+                        <a href="#" class="pull-left thumb-sm m-r">
+                            <img src="images/a4.png" alt="...">
+                        </a>
+                        <a class="clear" href="#">
+                            <span class="block text-ellipsis">Urna mollis ornare vel eu leo</span>
+                            <small class="text-muted">by Chris Fox</small>
+                        </a>
+                    </li>
+                    <li class="list-group-item clearfix">
+                        <a href="#" class="jp-play-me pull-right m-t-sm m-l text-md">
+                            <i class="icon-control-play text"></i>
+                            <i class="icon-control-pause text-active"></i>
+                        </a>
+                        <a href="#" class="pull-left thumb-sm m-r">
+                            <img src="images/a5.png" alt="...">
+                        </a>
+                        <a class="clear" href="#">
+                            <span class="block text-ellipsis">Faucibus dolor auctor</span>
+                            <small class="text-muted">by Lauren Taylor</small>
+                        </a>
+                    </li>
+                    <li class="list-group-item clearfix">
+                        <a href="#" class="jp-play-me pull-right m-t-sm m-l text-md">
+                            <i class="icon-control-play text"></i>
+                            <i class="icon-control-pause text-active"></i>
+                        </a>
+                        <a href="#" class="pull-left thumb-sm m-r">
+                            <img src="images/a6.png" alt="...">
+                        </a>
+                        <a class="clear" href="#">
+                            <span class="block text-ellipsis">Praesent commodo cursus magn</span>
+                            <small class="text-muted">by Chris Fox</small>
+                        </a>
+                    </li>
+                    <li class="list-group-item clearfix">
+                        <a href="#" class="jp-play-me pull-right m-t-sm m-l text-md">
+                            <i class="icon-control-play text"></i>
+                            <i class="icon-control-pause text-active"></i>
+                        </a>
+                        <a href="#" class="pull-left thumb-sm m-r">
+                            <img src="images/a7.png" alt="...">
+                        </a>
+                        <a class="clear" href="#">
+                            <span class="block text-ellipsis">Vestibulum id</span>
+                            <small class="text-muted">by Milian</small>
+                        </a>
+                    </li>
+                    <li class="list-group-item clearfix">
+                        <a href="#" class="jp-play-me pull-right m-t-sm m-l text-md">
+                            <i class="icon-control-play text"></i>
+                            <i class="icon-control-pause text-active"></i>
+                        </a>
+                        <a href="#" class="pull-left thumb-sm m-r">
+                            <img src="images/a8.png" alt="...">
+                        </a>
+                        <a class="clear" href="#">
+                            <span class="block text-ellipsis">Blandit tempu</span>
+                            <small class="text-muted">by Amanda Conlan</small>
+                        </a>
+                    </li>
+                    <li class="list-group-item clearfix">
+                        <a href="#" class="jp-play-me pull-right m-t-sm m-l text-md">
+                            <i class="icon-control-play text"></i>
+                            <i class="icon-control-pause text-active"></i>
+                        </a>
+                        <a href="#" class="pull-left thumb-sm m-r">
+                            <img src="images/a9.png" alt="...">
+                        </a>
+                        <a class="clear" href="#">
+                            <span class="block text-ellipsis">Vestibulum ullamcorpe quis malesuada augue mco rpe</span>
+                            <small class="text-muted">by Dan Doorack</small>
+                        </a>
+                    </li>
+                    <li class="list-group-item clearfix">
+                        <a href="#" class="jp-play-me pull-right m-t-sm m-l text-md">
+                            <i class="icon-control-play text"></i>
+                            <i class="icon-control-pause text-active"></i>
+                        </a>
+                        <a href="#" class="pull-left thumb-sm m-r">
+                            <img src="images/a10.png" alt="...">
+                        </a>
+                        <a class="clear" href="#">
+                            <span class="block text-ellipsis">Natis ipsum ac feugiat</span>
+                            <small class="text-muted">by Hamburg</small>
+                        </a>
+                    </li>
+                    <li class="list-group-item clearfix">
+                        <a href="#" class="jp-play-me pull-right m-t-sm m-l text-md">
+                            <i class="icon-control-play text"></i>
+                            <i class="icon-control-pause text-active"></i>
+                        </a>
+                        <a href="#" class="pull-left thumb-sm m-r">
+                            <img src="images/a0.png" alt="...">
+                        </a>
+                        <a class="clear" href="#">
+                            <span class="block text-ellipsis">Sec condimentum au</span>
+                            <small class="text-muted">by Amanda Conlan</small>
+                        </a>
+                    </li>
+                </ul>
             </section>
         </section>
     </section>
+    <section class="col-sm-3 no-padder lt">
+        <section class="vbox">
+            <section class="scrollable hover">
+                <div class="m-t-n-xxs">
+                    <div class="item pos-rlt">
+                        <a href="#" class="item-overlay active opacity wrapper-md font-xs">
+                            <span class="block h3 font-bold text-info">Find</span>
+                            <span class="text-muted">Search the music you like</span>
+                            <span class="bottom wrapper-md block">-
+                                <i class="icon-arrow-right i-lg pull-right"></i>
+                            </span>
+                        </a>
+                        <a href="#">
+                            <img class="img-full" src="images/m40.jpg" alt="...">
+                        </a>
+                    </div>
+                    <div class="item pos-rlt">
+                        <a href="#" class="item-overlay active opacity wrapper-md font-xs text-right">
+                            <span class="block h3 font-bold text-warning text-u-c">Listen</span>
+                            <span class="text-muted">Find the peace in your heart</span>
+                            <span class="bottom wrapper-md block">
+                                <i class="icon-arrow-right i-lg pull-left"></i> -</span>
+                        </a>
+                        <a href="#">
+                            <img class="img-full" src="images/m41.jpg" alt="...">
+                        </a>
+                    </div>
+                    <div class="item pos-rlt">
+                        <a href="#" class="item-overlay active opacity wrapper-md font-xs">
+                            <span class="block h3 font-bold text-success text-u-c">Share</span>
+                            <span class="text-muted">Share the good songs with your loves</span>
+                            <span class="bottom wrapper-md block">-
+                                <i class="icon-arrow-right i-lg pull-right"></i>
+                            </span>
+                        </a>
+                        <a href="#">
+                            <img class="img-full" src="images/m42.jpg" alt="...">
+                        </a>
+                    </div>
+                    <div class="item pos-rlt">
+                        <a href="#" class="item-overlay active opacity wrapper-md font-xs text-right">
+                            <span class="block h3 font-bold text-white text-u-c">2014</span>
+                            <span class="text-muted">Find, Listen & Share</span>
+                            <span class="bottom wrapper-md block">
+                                <i class="icon-arrow-right i-lg pull-left"></i> -</span>
+                        </a>
+                        <a href="#">
+                            <img class="img-full" src="images/m44.jpg" alt="...">
+                        </a>
+                    </div>
+                    <div class="item pos-rlt">
+                        <a href="#" class="item-overlay active opacity wrapper-md font-xs">
+                            <span class="block h3 font-bold text-danger-lter text-u-c">Top10</span>
+                            <span class="text-muted">Selected songs</span>
+                            <span class="bottom wrapper-md block">-
+                                <i class="icon-arrow-right i-lg pull-right"></i>
+                            </span>
+                        </a>
+                        <a href="#">
+                            <img class="img-full" src="images/m45.jpg" alt="...">
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </section>
+</section>
