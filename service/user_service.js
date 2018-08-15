@@ -119,7 +119,7 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
             headers:{
 
             },
-            url: host+'/get-user-by-username?username='+data.username,
+            url: host+'/users/username/'+data.username,
             withCredentials: true,
             method: 'GET'
         }).then(function (response){
@@ -137,7 +137,7 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
             headers:{
                 'Authorization' : 'Basic ' + auth
             },
-            url: host+'/user/get-user-by-username?username='+data.username,
+            url: host+'/user/users/username/'+data.username,
             withCredentials: true,
             method: 'GET'
         }).then(function (response){
@@ -154,7 +154,7 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
             headers:{
 
             },
-            url: host+'/get-user-by-id?id='+data.id,
+            url: host+'/users/'+data.id,
             withCredentials: true,
             method: 'GET'
         }).then(function (response){
@@ -172,7 +172,7 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
             headers:{
                 'Authorization' : 'Basic ' + auth
             },
-            url: host+'/user/get-user-by-id?id='+data.id,
+            url: host+'/user/users/'+data.id,
             withCredentials: true,
             method: 'GET'
         }).then(function (response){
@@ -191,7 +191,7 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
             headers:{
                 'Authorization' : 'Basic ' + auth
             },
-            url: host+'/user/get-user-by-auth',
+            url: host+'/user/users/auth',
             withCredentials: true,
             method: 'GET'
         }).then(function (response){
@@ -205,6 +205,7 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
     };
     userService.doEditUser = function(data){
         $("#edit-spinner").removeClass("hidden");
+        console.log(data);
         var auth = $cookies.get("auth");
         if(data.user.note==undefined){
             data.user.note=""
@@ -212,7 +213,7 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
         if(data.user.phone==undefined){
             data.user.phone=""
         }
-        var user = '{"fullname":"'+data.user.fullname+'", "birthdate":"'+moment(data.user.birthdate).format("DD-MM-YYYY")+'", "phone":"'+data.user.phone+
+        var user = '{"fullname":"'+data.user.fullname+'", "birthdate":"'+data.user.birthdate+'", "phone":"'+data.user.phone+
         '", "note":"'+data.user.note+'"}'
         if(data.user.birthdate==undefined){
             var user = '{"fullname":"'+data.user.fullname+'", "phone":"'+data.user.phone+
@@ -234,7 +235,7 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
                 });
                 return formData;
             },
-            url: host+'/user/edit',
+            url: host+'/user/users/'+data.user.id,
             withCredentials: true,
             method: 'PUT'
         }).then(function (response){
@@ -260,35 +261,6 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
         $cookies.remove("fullname");
         $location.path("/login");
     };
-    userService.doFavorite = function(songId){
-        var auth = $cookies.get("auth");
-        return $http({
-            headers:{
-                'Authorization' : 'Basic ' + auth,
-                'Content-Type': undefined
-            },
-            data: { 
-                songId: songId
-            },
-            transformRequest: function (data, headersGetter) {
-                var formData = new FormData();
-                angular.forEach(data, function (value, key) {
-                    formData.append(key, value);
-                });
-                return formData;
-            },
-            url: host+'/user/favorite',
-            withCredentials: true,
-            method: 'POST'
-        }).then(function (response){
-            console.log(response);
-        },function (error){
-            if(error.status==404){
-                data.success=false;
-                data.msg="Có lỗi xảy ra! Vui lòng thử lại";
-            }
-        });
-    }
     userService.doFollow = function(userId){
         var auth = $cookies.get("auth");
         return $http({
@@ -296,17 +268,7 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
                 'Authorization' : 'Basic ' + auth,
                 'Content-Type': undefined
             },
-            data: { 
-                userId: userId
-            },
-            transformRequest: function (data, headersGetter) {
-                var formData = new FormData();
-                angular.forEach(data, function (value, key) {
-                    formData.append(key, value);
-                });
-                return formData;
-            },
-            url: host+'/user/follow',
+            url: host+'/user/users/'+userId+'/follows',
             withCredentials: true,
             method: 'POST'
         }).then(function (response){
@@ -326,7 +288,7 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
             return false;
         }
     };
-    userService.doUserGetUserByKeyword = function(data, search, callback){
+    userService.doUserGetUserByKeyword = function(data){
         $(".search-spinner").removeClass("hidden");
         var auth = $cookies.get("auth");
         return $http({
@@ -334,11 +296,11 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
                 'Authorization' : 'Basic ' + auth,
             },
             data: { 
-                keyword : search.keyword,
+                keyword : data.keyword,
                 sortField: "followers",
                 sortOrder: "descend",
                 results: 18,
-                page: search.page
+                page: data.page
             },
             url: host+'/user/users/list',
             withCredentials: true,
@@ -348,8 +310,8 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
             data.success = response.data.success;
             data.msg = response.data.msg;
             data.total = response.data.total;
+            data.totalPage = Math.ceil(data.total/18);
             data.listResultUser = response.data.content;
-            callback();
         },function (error){
             $(".search-spinner").addClass("hidden");
             if(error.status==404){
@@ -358,15 +320,15 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
             }
         });
     };
-    userService.doGetUserByKeyword = function(data, search, callback){
+    userService.doGetUserByKeyword = function(data){
         $(".search-spinner").removeClass("hidden");
         return $http({
             data: { 
-                keyword : search.keyword,
+                keyword : data.keyword,
                 sortField: "followers",
                 sortOrder: "descend",
                 results: 18,
-                page: search.page
+                page: data.page
             },
             url: host+'/users/list',
             withCredentials: true,
@@ -376,8 +338,8 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
             data.success = response.data.success;
             data.msg = response.data.msg;
             data.total = response.data.total;
+            data.totalPage = Math.ceil(data.total/18);
             data.listResultUser = response.data.content;
-            callback();
         },function (error){
             $(".search-spinner").addClass("hidden");
             if(error.status==404){

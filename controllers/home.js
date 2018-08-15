@@ -46,9 +46,9 @@ myApp.controller('HomeController', ['$scope', '$http', 'songService', 'userServi
 		});
 	}
 	$scope.addFavorite = function(songId){
-		userService.doFavorite(songId);
+		songService.doUserFavoriteSong(songId);
 	}
 	$scope.removeFavorite = function(songId){
-		userService.doFavorite(songId);
+		songService.doUserFavoriteSong(songId);
 	}
 }]);

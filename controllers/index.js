@@ -16,8 +16,7 @@ myApp.controller('IndexController', ['$scope', '$http', 'userService', '$cookies
 	}
 
 	$scope.search = function(key){
-		console.log(key);
-		$location.path('/search').search({keyword: key});
+		$location.path('/search').search({keyword: key, type: $routeParams.type});
 	}
 
 	$scope.$watch(function() { return $cookies.get('auth'); }, function(newValue) {

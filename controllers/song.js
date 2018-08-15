@@ -47,13 +47,43 @@ myApp.controller('SongController', ['$scope', '$http', '$cookies', 'userService'
 		});
 	}
 	$scope.addFavorite = function(songId){
-		userService.doFavorite(songId);
+		songService.doUserFavoriteSong(songId);
 	}
 	$scope.removeFavorite = function(songId){
-		userService.doFavorite(songId);
+		songService.doUserFavoriteSong(songId);
 	}
     $scope.addSong = function(data){
 		songService.doAddSong(data);
+	}
+	$scope.comment = function(songId){
+		$scope.data.song.id = songId;
+		songService.doUserAddComment($scope.data, function(){
+			$scope.data.c.createTimeFrom = moment($scope.data.c.createTime, "DD-MM-YYYY hh:mm:ss").fromNow();
+			if($scope.data.listComment){
+				$scope.data.c.content = unescape($scope.data.c.content);
+				$scope.data.listComment.push($scope.data.c);
+			} else{
+				$scope.data.c.content = unescape($scope.data.c.content);
+				$scope.data.listComment = [];
+				$scope.data.listComment.push($scope.data.c);
+			}
+			$scope.data.comment.content = "";
+		});
+	}
+	$scope.loadComment =  function(page){
+		if($cookies.get('avatar')){
+			$scope.data.avatar = $cookies.get('avatar');
+		}
+		$scope.data.songId = $routeParams.id;
+		$scope.data.page = page;
+		songService.doGetCommentBySongId($scope.data, function(){
+			moment.locale("vi");
+			$scope.data.listComment.forEach(comment => {
+				comment.content = unescape(comment.content);
+				comment.createTimeFrom = moment(comment.createTime, "DD-MM-YYYY hh:mm:ss").fromNow();
+			});
+			console.log($scope.data.listComment);
+		});
 	}
 }]).directive('fileModel', ['$parse', function ($parse) {
 	return {

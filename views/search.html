@@ -1,4 +1,4 @@
-<section class="hbox stretch" ng-init="getSongByKeyword(1)">
+<section class="hbox stretch" ng-init="search(1)">
     <!-- side content -->
     <aside class="aside bg-light dk" id="sidebar">
         <section class="vbox animated fadeInUp">
@@ -84,13 +84,13 @@
                 <section class="panel panel-default">
                     <header class="panel-heading text-right bg-light">
                         <ul class="nav nav-tabs pull-left">
-                            <li id="song-tab" ng-click="getSongByKeyword(1)">
-                                <a href="javascript:" data-toggle="tab">
+                            <li id="song-tab">
+                                <a href="./#!/search?keyword={{data.keyword}}&type=song" data-toggle="tab">
                                     <i class="icon-music-tone-alt text-muted"></i> Bài hát
                                 </a>
                             </li>
-                            <li id="user-tab" ng-click="getUserByKeyword(1)">
-                                <a href="javascript:" data-toggle="tab">
+                            <li id="user-tab">
+                                <a href="./#!/search?keyword={{data.keyword}}&type=user" data-toggle="tab">
                                     <i class="icon-user text-muted"></i> Người dùng</a>
                             </li>
                             <li>
@@ -108,7 +108,7 @@
                         <div class="tab-content">
                             <div class="tab-pane padder-lg" id="song">
                                 <h2 class="font-thin m-b">Bài hát
-                                    <i class='fa fa-spinner fa fa-spin fa fa-large hidden' id="search-spinner"></i>
+                                    <i class='fa fa-spinner fa fa-spin fa fa-large hidden search-spinner'></i>
                                 </h2>
                                 <div class="row row-sm">
                                     <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2" ng-repeat="song in data.listResultSong">
@@ -163,29 +163,29 @@
                                         </div>
                                     </div>
                                 </div>
-                                <ul class="pagination" ng-if="total!=0">
-                                    <li ng-if="page-1>0">
-                                        <a href="javascript:" ng-click="getSongByKeyword(page-1)" class="text-success important">
+                                <ul class="pagination" ng-if="data.total!=0">
+                                    <li ng-if="data.page-1>0">
+                                        <a href="javascript:" ng-click="search(data.page-1)" class="text-success important">
                                             <i class="fa fa-chevron-left"></i>
                                         </a>
                                     </li>
-                                    <li ng-if="page-2>0" class="text-success">
-                                        <a href="javascript:" ng-click="getSongByKeyword(page-2)" class="text-success important">{{page-2}}</a>
+                                    <li ng-if="data.page-2>0" class="text-success">
+                                        <a href="javascript:" ng-click="search(data.page-2)" class="text-success important">{{data.page-2}}</a>
                                     </li>
-                                    <li ng-if="page-1>0">
-                                        <a href="javascript:" ng-click="getSongByKeyword(page-1)" class="text-success important">{{page-1}}</a>
+                                    <li ng-if="data.page-1>0">
+                                        <a href="javascript:" ng-click="search(data.page-1)" class="text-success important">{{data.page-1}}</a>
                                     </li>
                                     <li class="active">
-                                        <a href="javascript:" ng-click="getSongByKeyword(page)" class="bg-success important">{{page}}</a>
+                                        <a href="javascript:" ng-click="search(data.page)" class="bg-success important">{{data.page}}</a>
                                     </li>
-                                    <li ng-if="(page+1)<=totalPage">
-                                        <a href="javascript:" ng-click="getSongByKeyword(page+1)" class="text-success important">{{page+1}}</a>
+                                    <li ng-if="(data.page+1)<=data.totalPage">
+                                        <a href="javascript:" ng-click="search(data.page+1)" class="text-success important">{{data.page+1}}</a>
                                     </li>
-                                    <li ng-if="(page+2)<=totalPage">
-                                        <a href="javascript:" ng-click="getSongByKeyword(page+2)" class="text-success important">{{page+2}}</a>
+                                    <li ng-if="(data.page+2)<=data.totalPage">
+                                        <a href="javascript:" ng-click="search(data.page+2)" class="text-success important">{{data.page+2}}</a>
                                     </li>
-                                    <li ng-if="(page+1)<=totalPage">
-                                        <a href="javascript:" ng-click="getSongByKeyword(page+1)" class="text-success important">
+                                    <li ng-if="(data.page+1)<=data.totalPage">
+                                        <a href="javascript:" ng-click="search(data.page+1)" class="text-success important">
                                             <i class="fa fa-chevron-right"></i>
                                         </a>
                                     </li>
@@ -193,7 +193,7 @@
                             </div>
                             <div class="tab-pane padder-lg" id="user">
                                 <h2 class="font-thin m-b">Người dùng
-                                    <i class='fa fa-spinner fa fa-spin fa fa-large hidden' id="search-spinner"></i>
+                                    <i class='fa fa-spinner fa fa-spin fa fa-large hidden search-spinner'></i>
                                 </h2>
                                 <div class="row row-sm">
                                     <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2" ng-repeat="user in data.listResultUser">
@@ -219,29 +219,29 @@
                                         </div>
                                     </div>
                                 </div>
-                                <ul class="pagination" ng-if="total!=0">
-                                    <li ng-if="page-1>0">
+                                <ul class="pagination" ng-if="data.total!=0">
+                                    <li ng-if="data.page-1>0">
                                         <a href="javascript:" ng-click="getUserByKeyword(page-1)" class="text-success important">
                                             <i class="fa fa-chevron-left"></i>
                                         </a>
                                     </li>
-                                    <li ng-if="page-2>0" class="text-success">
-                                        <a href="javascript:" ng-click="getUserByKeyword(page-2)" class="text-success important">{{page-2}}</a>
+                                    <li ng-if="data.page-2>0" class="text-success">
+                                        <a href="javascript:" class="text-success important">{{data.page-2}}</a>
                                     </li>
-                                    <li ng-if="page-1>0">
-                                        <a href="javascript:" ng-click="getUserByKeyword(page-1)" class="text-success important">{{page-1}}</a>
+                                    <li ng-if="data.page-1>0">
+                                        <a href="javascript:" class="text-success important">{{data.page-1}}</a>
                                     </li>
                                     <li class="active">
-                                        <a href="javascript:" ng-click="getUserByKeyword(page)" class="bg-success important">{{page}}</a>
+                                        <a href="javascript:" class="bg-success important">{{data.page}}</a>
                                     </li>
-                                    <li ng-if="(page+1)<=totalPage">
-                                        <a href="javascript:" ng-click="getUserByKeyword(page+1)" class="text-success important">{{page+1}}</a>
+                                    <li ng-if="(data.page+1)<=data.totalPage">
+                                        <a href="javascript:" class="text-success important">{{data.page+1}}</a>
                                     </li>
-                                    <li ng-if="(page+2)<=totalPage">
-                                        <a href="javascript:" ng-click="getUserByKeyword(page+2)" class="text-success important">{{page+2}}</a>
+                                    <li ng-if="(data.page+2)<=data.totalPage">
+                                        <a href="javascript:" class="text-success important">{{data.page+2}}</a>
                                     </li>
-                                    <li ng-if="(page+1)<=totalPage">
-                                        <a href="javascript:" ng-click="getUserByKeyword(page+1)" class="text-success important">
+                                    <li ng-if="(data.page+1)<=data.totalPage">
+                                        <a href="javascript:" class="text-success important">
                                             <i class="fa fa-chevron-right"></i>
                                         </a>
                                     </li>

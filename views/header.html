@@ -22,11 +22,11 @@
     <div class="form-group">
         <div class="input-group">
             <span class="input-group-btn">
-                <a class="btn btn-sm bg-white btn-icon rounded" href="./#!/search?keyword={{data.search.keyword}}">
+                <a class="btn btn-sm bg-white btn-icon rounded" href="javascript:" ng-click="search(data.keyword)">
                     <i class="fa fa-search"></i>
                 </a>
             </span>
-            <input type="text" ng-model="data.search.keyword" ng-keyup="$event.keyCode==13?search(data.search.keyword):null" class="form-control input-sm no-border rounded" placeholder="Tìm kiếm bài hát, playlist ...">
+            <input type="text" ng-model="data.keyword" ng-keyup="$event.keyCode==13?search(data.keyword):null" class="form-control input-sm no-border rounded" placeholder="Tìm kiếm bài hát, playlist ...">
         </div>
     </div>
 </form>
