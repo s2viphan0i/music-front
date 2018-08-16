@@ -97,10 +97,10 @@
                             </header>
                             <div class="panel-body">
                                 <div>{{comment.content}}</div>
-                                <div class="comment-action m-t-sm">
-                                    <a href="#comment-id-3" data-dismiss="alert" class="btn btn-default btn-xs">
+                                <div class="comment-action m-t-sm" ng-if="comment.user.username==data.username">
+                                    <a href="javascript:" ng-click="deleteComment(comment.id);" class="btn btn-default btn-xs">
                                         <i class="fa fa-trash-o text-muted"></i>
-                                        Remove
+                                        Xóa
                                     </a>
                                 </div>
                             </div>
@@ -359,3 +359,13 @@
         </section>
     </section>
 </section>
+<modal visible="showModal">
+    <modal-header title="Xác nhận"></modal-header>
+    <modal-body>
+        <h4>Bạn có chắc chắn muốn xóa bình luận này không?</h4>
+    </modal-body>
+    <modal-footer>
+        <button class="btn btn-default" ng-click="cancelDeleteComment()">Hủy</button>
+        <button class="btn btn-success" ng-click="confirmDeleteComment(selected)">Xóa</button>
+    </modal-footer>
+</modal>

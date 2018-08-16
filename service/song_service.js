@@ -359,54 +359,6 @@ myApp.factory('songService', ['$http', '$cookies', '$location', function($http, 
             }
         });
     };
-    songService.doUserAddComment = function(data, callback){
-        var auth = $cookies.get("auth");
-        return $http({
-            headers:{
-                'Authorization' : 'Basic ' + auth
-            },
-            data:{
-                content : escape(data.comment.content)
-            },
-            url: host+'/user/songs/'+data.song.id+'/comments',
-            withCredentials: true,
-            method: 'POST'
-        }).then(function (response){
-            data.success = response.data.success;
-            data.msg = response.data.msg;
-            data.c = response.data.content;
-            callback();
-        },function (error){
-            if(error.status==404){
-                data.success=false;
-                data.msg="Có lỗi xảy ra! Vui lòng thử lại";
-            }
-        });
-    }
-    songService.doGetCommentBySongId = function(data, callback){
-        // $("#mostfavorite-spinner").addClass("fa-spin");
-        return $http({
-            data: { 
-                page : data.page,
-                results: 10
-            },
-            url: host+'/songs/'+data.songId+'/comments/list',
-            withCredentials: true,
-            method: 'POST'
-        }).then(function (response){
-            // $("#mostfavorite-spinner").removeClass("fa-spin");
-            data.success = response.data.success;
-            data.msg = response.data.msg;
-            data.total = response.data.total;
-            data.listComment = response.data.content;
-            callback();
-        },function (error){
-            // $("#mostfavorite-spinner").removeClass("fa-spin");
-            if(error.status==404){
-                data.success=false;
-                data.msg="Có lỗi xảy ra! Vui lòng thử lại";
-            }
-        });
-    };
+    
     return songService;
 }])

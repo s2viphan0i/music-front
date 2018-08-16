@@ -4049,3 +4049,7 @@ fieldset[disabled] .i-checks input + i:before {
 .more i{
   cursor: pointer;
 }
+.modal-s{
+  width: 600px;
+  margin: 30px auto;
+}
