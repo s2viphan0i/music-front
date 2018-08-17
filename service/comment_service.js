@@ -40,7 +40,11 @@ myApp.factory('commentService', ['$http', '$cookies', '$location', function ($ht
             data.success = response.data.success;
             data.msg = response.data.msg;
             data.total = response.data.total;
-            data.listComment = response.data.content;
+            if(data.listComment){
+                data.listComment = data.listComment.concat(response.data.content);
+            } else {
+                data.listComment = response.data.content;
+            }
             callback();
         }, function (error) {
             // $("#mostfavorite-spinner").removeClass("fa-spin");

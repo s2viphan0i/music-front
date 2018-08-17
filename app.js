@@ -42,7 +42,7 @@ myApp.config(function ($routeProvider) {
 			authenticated: true
 		})
 		.when('/upload', {
-			controller: 'SongController',
+			controller: 'UploadController',
 			templateUrl: 'views/upload.html',
 			authenticated: true
 		})

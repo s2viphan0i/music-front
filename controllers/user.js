@@ -12,27 +12,24 @@ myApp.controller('UserController', ['$scope', '$http', '$cookies', 'userService'
 		},
 		dateFormat: 'dd-mm-yy'
 	}
-	$scope.init = function(){
-		$scope.data = [];
-		$scope.auth = $cookies.get('auth');
-		$scope.username = $cookies.get('username');
-		$scope.fullname = $cookies.get('fullname');
-		$scope.avatar = $cookies.get('avatar');
-	}
 	$scope.getUser = function(){
 		if($routeParams.username!=null){
-			var username = $routeParams.username;
-			$scope.data = [];
-			$scope.data.username = username;
+			$scope.data = {
+				user : {
+					username : $routeParams.username
+				}
+			};
 			if($cookies.get('auth')){
 				userService.doUserGetUserByUsername($scope.data);
 			} else{
 				userService.doGetUserByUsername($scope.data);
 			}
 		} else if($routeParams.id!=null){
-			var id = $routeParams.id;
-			$scope.data = [];
-			$scope.data.id = id;
+			$scope.data = {
+				user : {
+					id : $routeParams.id
+				}
+			};
 			if($cookies.get('auth')){
 				userService.doUserGetUserById($scope.data);
 			} else{
@@ -40,11 +37,11 @@ myApp.controller('UserController', ['$scope', '$http', '$cookies', 'userService'
 			}
 		}
 	}
-	$scope.addFollow = function(userId){
-		userService.doFollow(userId);
+	$scope.addFollow = function(id){
+		userService.doFollow(id);
 	}
-	$scope.removeFollow = function(userId){
-		userService.doFollow(userId);
+	$scope.removeFollow = function(id){
+		userService.doFollow(id);
 	}
 	$scope.editUser = function(){
 		userService.doEditUser($scope.data);
@@ -52,18 +49,4 @@ myApp.controller('UserController', ['$scope', '$http', '$cookies', 'userService'
 	$scope.isCurrent = function(username){
 		return username == $cookies.get("username");
 	}
-}]).directive('fileModel', ['$parse', function ($parse) {
-	return {
-	   restrict: 'A',
-	   link: function(scope, element, attrs) {
-		  var model = $parse(attrs.fileModel);
-		  var modelSetter = model.assign;
-		  
-		  element.bind('change', function(){
-			 scope.$apply(function(){
-				modelSetter(scope, element[0].files[0]);
-			 });
-		  });
-	   }
-	};
- }]);
+}]);

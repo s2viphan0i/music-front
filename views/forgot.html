@@ -23,7 +23,7 @@
                 <div class="form-group">
                     <input type="text" placeholder="Email" autocomplete="email" ng-model="data.email" class="form-control rounded input-lg text-center no-border">
                 </div>
-                <button type="submit" ng-click="sendForgotPIN(data)" class="btn btn-lg btn-warning lt b-white b-2x btn-block btn-rounded" style="margin-bottom: 15px">
+                <button type="submit" ng-click="sendForgotPIN()" class="btn btn-lg btn-warning lt b-white b-2x btn-block btn-rounded" style="margin-bottom: 15px">
                     <i class="icon-arrow-right pull-right"></i>
                     <span class="m-r-n-lg">Gửi mã <i class='fa fa-spinner fa fa-spin fa fa-large hidden' id="send-spinner"></i></span>
                 </button>
@@ -36,7 +36,7 @@
                 <div class="form-group">
                     <input type="password" placeholder="Nhập lại mật khẩu" ng-model="data.password2" class="form-control rounded input-lg text-center no-border">
                 </div>
-                <button type="submit" ng-click="changePassword(data)" class="btn btn-lg btn-info btn-block rounded">
+                <button type="submit" ng-click="changePassword()" class="btn btn-lg btn-info btn-block rounded">
                     Đổi mật khẩu <i class='fa fa-spinner fa fa-spin fa fa-large hidden' id="change-spinner"></i>
                 </button>
                 <div class="line line-dashed"></div>

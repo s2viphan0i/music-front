@@ -2,12 +2,6 @@ var myApp = angular.module('myApp');
 
 myApp.controller('SongController', ['$scope', '$http', '$cookies', 'commentService', 'userService', 'songService', 'playerService', '$location', '$routeParams', function($scope, $http, $cookies, commentService, userService, songService, playerService, $location, $routeParams){
 	console.log('SongController loaded...');
-	$scope.initAddSong = function(){
-		$scope.data = [];
-		$scope.status = true;
-		userService.doGetUserByAuth($scope.data);
-		songService.doGetAllGenres($scope.data);
-	}
 	$scope.deleteComment = function(id){
 		$scope.showModal = true;
 		$scope.selected = id;
@@ -24,46 +18,48 @@ myApp.controller('SongController', ['$scope', '$http', '$cookies', 'commentServi
 			$scope.data.fullname = $cookies.get('fullname');
 			$scope.data.avatar = $cookies.get('avatar');
 		}
-		$scope.data.songId = $routeParams.id;
+		$scope.data.song = {
+			id : $routeParams.id
+		}
 		if($cookies.get('auth')){
 			songService.doUserGetSongById($scope.data, function(){
 				$scope.data.song.lyric = unescape($scope.data.song.lyric);
+				userService.doUserGetUserById($scope.data.song);
+				console.log($scope.data.song);
 			});
 		} else{
 			songService.doGetSongById($scope.data, function(){
 				$scope.data.song.lyric = unescape($scope.data.song.lyric);
+				userService.doGetUserById($scope.data.song);
+				console.log($scope.data.song);
 			});
 		}
 	}
-	$scope.playSong = function(song){
+	$scope.playSong = function(){
 		playerService.Play({
-			id: song.id,
-			StreamUri:"http://localhost/resource/audio/"+song.url,
-			title: song.title,
-			artist: song.user.fullname,
+			id: $scope.data.song.id,
+			StreamUri:"http://localhost/resource/audio/"+$scope.data.song.url,
+			title: $scope.data.song.title,
+			artist: $scope.data.song.user.fullname,
 			playlist: false
 		});
 	}
-	$scope.addSongToPlaylist = function(song){
+	$scope.addSongToPlaylist = function(){
 		playerService.Play({
-			id: song.id,
-			StreamUri:"http://localhost/resource/audio/"+song.url,
-			title: song.title,
-			artist: song.user.fullname,
+			id: $scope.data.song.id,
+			StreamUri:"http://localhost/resource/audio/"+$scope.data.song.url,
+			title: $scope.data.song.title,
+			artist: $scope.data.song.user.fullname,
 			playlist: true
 		});
 	}
-	$scope.addFavorite = function(songId){
-		songService.doUserFavoriteSong(songId);
+	$scope.addFavorite = function(){
+		songService.doUserFavoriteSong($scope.data.song.id);
 	}
-	$scope.removeFavorite = function(songId){
-		songService.doUserFavoriteSong(songId);
+	$scope.removeFavorite = function(){
+		songService.doUserFavoriteSong($scope.data.song.id);
 	}
-    $scope.addSong = function(data){
-		songService.doAddSong(data);
-	}
-	$scope.comment = function(songId){
-		$scope.data.song.id = songId;
+	$scope.addComment = function(){
 		commentService.doUserAddComment($scope.data, function(){
 			$scope.data.c.createTimeFrom = moment($scope.data.c.createTime, "DD-MM-YYYY hh:mm:ss").fromNow();
 			if($scope.data.listComment){
@@ -77,17 +73,17 @@ myApp.controller('SongController', ['$scope', '$http', '$cookies', 'commentServi
 			$scope.data.comment.content = "";
 		});
 	}
-	$scope.loadComment =  function(page){
-		console.log($scope);
+	$scope.loadComment = function(page){
 		$scope.data.songId = $routeParams.id;
 		$scope.data.page = page;
 		commentService.doGetCommentBySongId($scope.data, function(){
 			moment.locale("vi");
-			$scope.data.listComment.forEach(comment => {
-				comment.content = unescape(comment.content);
-				comment.createTimeFrom = moment(comment.createTime, "DD-MM-YYYY hh:mm:ss").fromNow();
-			});
-			console.log($scope.data.listComment);
+			if($scope.data.listComment){
+				$scope.data.listComment.forEach(comment => {
+					comment.content = unescape(comment.content);
+					comment.createTimeFrom = moment(comment.createTime, "DD-MM-YYYY hh:mm:ss").fromNow();
+				});
+			}
 		});
 	}
 	$scope.confirmDeleteComment = function(id){
@@ -105,18 +101,10 @@ myApp.controller('SongController', ['$scope', '$http', '$cookies', 'commentServi
 			console.log($scope.data.listComment);
 		});
 	}
-}]).directive('fileModel', ['$parse', function ($parse) {
-	return {
-	   restrict: 'A',
-	   link: function(scope, element, attrs) {
-		  var model = $parse(attrs.fileModel);
-		  var modelSetter = model.assign;
-		  
-		  element.bind('change', function(){
-			 scope.$apply(function(){
-				modelSetter(scope, element[0].files[0]);
-			 });
-		  });
-	   }
-	};
- }]);
+	$scope.addFollow = function(id){
+		userService.doFollow(id);
+	}
+	$scope.removeFollow = function(id){
+		userService.doFollow(id);
+	}
+}]);

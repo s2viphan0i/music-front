@@ -43,7 +43,7 @@ myApp.factory('songService', ['$http', '$cookies', '$location', function($http, 
     };
     songService.doGetSongById = function(data, callback){
         return $http({
-            url: host+'/songs/'+data.songId,
+            url: host+'/songs/'+data.song.id,
             withCredentials: true,
             method: 'GET'
         }).then(function (response){
@@ -67,7 +67,7 @@ myApp.factory('songService', ['$http', '$cookies', '$location', function($http, 
             headers:{
                 'Authorization' : 'Basic ' + auth,
             },
-            url: host+'/user/songs/'+data.songId,
+            url: host+'/user/songs/'+data.song.id,
             withCredentials: true,
             method: 'GET'
         }).then(function (response){

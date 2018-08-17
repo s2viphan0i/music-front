@@ -2,28 +2,28 @@ var myApp = angular.module('myApp');
 
 myApp.controller('AuthController', ['$scope', '$http', 'userService', '$location', '$routeParams', function($scope, $http, userService, $location, $routeParams){
 	console.log('AuthController loaded...');
-
-	$scope.login = function(data){
-		userService.doLogin(data).then(function(){
+	$scope.data = [];
+	$scope.login = function(){
+		userService.doLogin($scope.data).then(function(){
         })
 	}
 	$scope.reset = function(){
 		$scope.user.username = '';
 		$scope.user.password = '';
 	}
-	$scope.sendForgotPIN = function(data){
-		userService.doSendForgotPIN(data);
+	$scope.sendForgotPIN = function(){
+		userService.doSendForgotPIN($scope.data);
 	}
-	$scope.changePassword = function(data){
-		if(data.password!=data.password2){
-			data.success=false;
-			data.msg="Mật khẩu không giống nhau";
+	$scope.changePassword = function(){
+		if($scope.data.password!=$scope.data.password2){
+			$scope.data.success=false;
+			$scope.data.msg="Mật khẩu không giống nhau";
 		}else{
-			userService.doChangePassword(data);
+			userService.doChangePassword($scope.data);
 		}
 	}
-	$scope.register = function(data){
-		userService.doRegister(data).then(function(){
+	$scope.register = function(){
+		userService.doRegister($scope.data).then(function(){
         })
 	}
 	$scope.logout = function(){

@@ -119,7 +119,7 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
             headers:{
 
             },
-            url: host+'/users/username/'+data.username,
+            url: host+'/users/username/'+data.user.username,
             withCredentials: true,
             method: 'GET'
         }).then(function (response){
@@ -137,7 +137,7 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
             headers:{
                 'Authorization' : 'Basic ' + auth
             },
-            url: host+'/user/users/username/'+data.username,
+            url: host+'/user/users/username/'+data.user.username,
             withCredentials: true,
             method: 'GET'
         }).then(function (response){
@@ -154,7 +154,7 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
             headers:{
 
             },
-            url: host+'/users/'+data.id,
+            url: host+'/users/'+data.user.id,
             withCredentials: true,
             method: 'GET'
         }).then(function (response){
@@ -172,7 +172,7 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
             headers:{
                 'Authorization' : 'Basic ' + auth
             },
-            url: host+'/user/users/'+data.id,
+            url: host+'/user/users/'+data.user.id,
             withCredentials: true,
             method: 'GET'
         }).then(function (response){
@@ -213,7 +213,7 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
         if(data.user.phone==undefined){
             data.user.phone=""
         }
-        var user = '{"fullname":"'+data.user.fullname+'", "birthdate":"'+data.user.birthdate+'", "phone":"'+data.user.phone+
+        var user = '{"fullname":"'+data.user.fullname+'", "birthdate":"'+moment(data.user.birthdate).format("DD-MM-YYYY")+'", "phone":"'+data.user.phone+
         '", "note":"'+data.user.note+'"}'
         if(data.user.birthdate==undefined){
             var user = '{"fullname":"'+data.user.fullname+'", "phone":"'+data.user.phone+

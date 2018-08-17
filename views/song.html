@@ -63,8 +63,13 @@
                             <a href="./#!/profile/{{data.song.user.username}}" class="text-info">@{{data.song.user.fullname}}
                                 <i class="icon-twitter"></i>
                             </a>
-                            <small class="block text-muted">2,415 followers / 225 tweets</small>
-                            <a href="#" class="btn btn-xs btn-success m-t-xs">Theo dõi</a>
+                            <small class="block text-muted">{{data.song.user.followers}} người theo dõi</small>
+                            <a href="javascript:" class="btn btn-xs btn-success m-t-xs" 
+                                ng-click="data.song.user.followers=data.song.user.followers+1;data.song.user.followed=true;addFollow(data.song.user.id)"
+                                ng-if="data.song.user.followed!=true&&data.song.user.username!=username">Theo dõi</a>
+                            <a href="javascript:" class="btn btn-xs btn-success m-t-xs active" 
+                                ng-click="data.song.user.followers=data.song.user.followers-1;data.song.user.followed=false;removeFollow(data.song.user.id)"
+                                ng-if="data.song.user.followed==true&&data.song.user.username!=username">Đang theo dõi</a>
                         </div>
                     </div>
                 </section>
@@ -81,6 +86,7 @@
                 <!-- Comment -->
                 <section class="comment-list panel-body block bg-black">
                     <h2 class="font-thin padder-v bg-black line-xs">Bình luận</h2>
+                    <div class="more m-sm"><a href="javascript:" ng-click="loadComment(data.page+1)" ng-if="(data.page)*10<data.total">Xem thêm</a></div>
                     <article class="comment-item" ng-repeat="comment in data.listComment | orderBy:'id' track by $index">
                         <a class="pull-left thumb-sm avatar">
                             <img src="http://localhost:8080/resource/image?name={{comment.user.avatar}}" class="img-circle" alt="...">
@@ -114,10 +120,10 @@
                         <section class="media-body">
                             <form class="m-b-none">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" ng-model="data.comment.content" ng-keyup="$event.keyCode==13?comment(data.song.id):null"
+                                    <input type="text" class="form-control" ng-model="data.comment.content" ng-keyup="$event.keyCode==13?addComment():null"
                                         placeholder="Viết bình luận ...">
                                     <span class="input-group-btn">
-                                        <button class="btn btn-success" type="button" ng-click="comment(data.song.id)">Bình luận</button>
+                                        <button class="btn btn-success" type="button" ng-click="addComment()">Bình luận</button>
                                     </span>
                                 </div>
                             </form>
