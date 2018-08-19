@@ -28,6 +28,9 @@ myApp.controller('IndexController', ['$scope', '$http', 'userService', '$cookies
 				avatar : $cookies.get('avatar'),
 			}
 		};
+		if($cookies.get('auth')){
+			userService.doUserGetFollowing($scope.data);
+		}
     });
 
 	$scope.logout = function(){

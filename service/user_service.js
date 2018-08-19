@@ -351,5 +351,31 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
     userService.getCookie = function(){
         return $cookies.get('auth');
     }
+    userService.doUserGetFollowing = function(data){
+        var auth = $cookies.get("auth");
+        return $http({
+            headers:{
+                'Authorization' : 'Basic ' + auth,
+            },
+            data: { 
+                sortField: "id",
+                sortOrder: "descend",
+                results: 10,
+                page: 1
+            },
+            url: host+'/user/users/followings/list',
+            withCredentials: true,
+            method: 'POST'
+        }).then(function (response){
+            data.success = response.data.success;
+            data.msg = response.data.msg;
+            data.listFollowing = response.data.content;
+        },function (error){
+            if(error.status==404){
+                data.success=false;
+                data.msg="Có lỗi xảy ra! Vui lòng thử lại";
+            }
+        });
+    }
     return userService;
 }])

@@ -7,7 +7,7 @@
                     <div class="row line-xs">
                         <div class="wrapper-lg col-sm-4">
                             <div class="pos-rlt">
-                                <img class="img-full" src="http://localhost:8080/resource/image?name={{data.song.image}}" alt="...">
+                                <img class="img-full" src="http://localhost:8080/resource/image?name={{data.song.image}}" >
                                 <div class="item-overlay active opacity bg-black">
                                     <div class="center text-center m-t-n">
                                         <a href="javascript:">
@@ -56,7 +56,7 @@
                 <section class="bg-black clearfix b-b b-gray">
                     <div class="panel-body">
                         <a href="./#!/profile/{{data.song.user.username}}" class="thumb pull-right m-l m-t-xs avatar">
-                            <img src="http://localhost:8080/resource/image?name={{data.song.user.avatar}}" alt="...">
+                            <img src="http://localhost:8080/resource/image?name={{data.song.user.avatar}}" >
                             <i class="on md b-white bottom"></i>
                         </a>
                         <div class="clear">
@@ -89,7 +89,7 @@
                     <div class="more m-sm"><a href="javascript:" ng-click="loadComment(data.page+1)" ng-if="(data.page)*10<data.total">Xem thêm</a></div>
                     <article class="comment-item" ng-repeat="comment in data.listComment | orderBy:'id' track by $index">
                         <a class="pull-left thumb-sm avatar">
-                            <img src="http://localhost:8080/resource/image?name={{comment.user.avatar}}" class="img-circle" alt="...">
+                            <img src="http://localhost:8080/resource/image?name={{comment.user.avatar}}" class="img-circle" >
                         </a>
                         <span class="arrow left"></span>
                         <section class="comment-body panel panel-default">
@@ -115,7 +115,7 @@
                     <!-- comment form -->
                     <article class="comment-item media" id="comment-form" ng-if="data.avatar">
                         <a class="pull-left thumb-sm avatar">
-                            <img src="http://localhost:8080/resource/image?name={{data.avatar}}" alt="...">
+                            <img src="http://localhost:8080/resource/image?name={{data.avatar}}" >
                         </a>
                         <section class="media-body">
                             <form class="m-b-none">
@@ -144,7 +144,7 @@
                             <i class="icon-control-pause text-active"></i>
                         </a>
                         <a href="#" class="pull-left thumb-sm m-r">
-                            <img src="images/m0.jpg" alt="...">
+                            <img src="images/m0.jpg" >
                         </a>
                         <a class="clear" href="#">
                             <span class="block text-ellipsis">Little Town</span>
@@ -157,7 +157,7 @@
                             <i class="icon-control-pause text-active"></i>
                         </a>
                         <a href="#" class="pull-left thumb-sm m-r">
-                            <img src="images/a1.png" alt="...">
+                            <img src="images/a1.png" >
                         </a>
                         <a class="clear" href="#">
                             <span class="block text-ellipsis">Get lacinia odio sem nec elit</span>
@@ -170,7 +170,7 @@
                             <i class="icon-control-pause text-active"></i>
                         </a>
                         <a href="#" class="pull-left thumb-sm m-r">
-                            <img src="images/a2.png" alt="...">
+                            <img src="images/a2.png" >
                         </a>
                         <a class="clear" href="#">
                             <span class="block text-ellipsis">Donec sed odio du</span>
@@ -183,7 +183,7 @@
                             <i class="icon-control-pause text-active"></i>
                         </a>
                         <a href="#" class="pull-left thumb-sm m-r">
-                            <img src="images/a3.png" alt="...">
+                            <img src="images/a3.png" >
                         </a>
                         <a class="clear" href="#">
                             <span class="block text-ellipsis">Curabitur blandit tempu</span>
@@ -196,7 +196,7 @@
                             <i class="icon-control-pause text-active"></i>
                         </a>
                         <a href="#" class="pull-left thumb-sm m-r">
-                            <img src="images/a4.png" alt="...">
+                            <img src="images/a4.png" >
                         </a>
                         <a class="clear" href="#">
                             <span class="block text-ellipsis">Urna mollis ornare vel eu leo</span>
@@ -209,7 +209,7 @@
                             <i class="icon-control-pause text-active"></i>
                         </a>
                         <a href="#" class="pull-left thumb-sm m-r">
-                            <img src="images/a5.png" alt="...">
+                            <img src="images/a5.png" >
                         </a>
                         <a class="clear" href="#">
                             <span class="block text-ellipsis">Faucibus dolor auctor</span>
@@ -222,7 +222,7 @@
                             <i class="icon-control-pause text-active"></i>
                         </a>
                         <a href="#" class="pull-left thumb-sm m-r">
-                            <img src="images/a6.png" alt="...">
+                            <img src="images/a6.png" >
                         </a>
                         <a class="clear" href="#">
                             <span class="block text-ellipsis">Praesent commodo cursus magn</span>
@@ -235,7 +235,7 @@
                             <i class="icon-control-pause text-active"></i>
                         </a>
                         <a href="#" class="pull-left thumb-sm m-r">
-                            <img src="images/a7.png" alt="...">
+                            <img src="images/a7.png" >
                         </a>
                         <a class="clear" href="#">
                             <span class="block text-ellipsis">Vestibulum id</span>
@@ -248,7 +248,7 @@
                             <i class="icon-control-pause text-active"></i>
                         </a>
                         <a href="#" class="pull-left thumb-sm m-r">
-                            <img src="images/a8.png" alt="...">
+                            <img src="images/a8.png" >
                         </a>
                         <a class="clear" href="#">
                             <span class="block text-ellipsis">Blandit tempu</span>
@@ -261,7 +261,7 @@
                             <i class="icon-control-pause text-active"></i>
                         </a>
                         <a href="#" class="pull-left thumb-sm m-r">
-                            <img src="images/a9.png" alt="...">
+                            <img src="images/a9.png" >
                         </a>
                         <a class="clear" href="#">
                             <span class="block text-ellipsis">Vestibulum ullamcorpe quis malesuada augue mco rpe</span>
@@ -274,7 +274,7 @@
                             <i class="icon-control-pause text-active"></i>
                         </a>
                         <a href="#" class="pull-left thumb-sm m-r">
-                            <img src="images/a10.png" alt="...">
+                            <img src="images/a10.png" >
                         </a>
                         <a class="clear" href="#">
                             <span class="block text-ellipsis">Natis ipsum ac feugiat</span>
@@ -287,7 +287,7 @@
                             <i class="icon-control-pause text-active"></i>
                         </a>
                         <a href="#" class="pull-left thumb-sm m-r">
-                            <img src="images/a0.png" alt="...">
+                            <img src="images/a0.png" >
                         </a>
                         <a class="clear" href="#">
                             <span class="block text-ellipsis">Sec condimentum au</span>
@@ -311,7 +311,7 @@
                             </span>
                         </a>
                         <a href="#">
-                            <img class="img-full" src="images/m40.jpg" alt="...">
+                            <img class="img-full" src="images/m40.jpg" >
                         </a>
                     </div>
                     <div class="item pos-rlt">
@@ -322,7 +322,7 @@
                                 <i class="icon-arrow-right i-lg pull-left"></i> -</span>
                         </a>
                         <a href="#">
-                            <img class="img-full" src="images/m41.jpg" alt="...">
+                            <img class="img-full" src="images/m41.jpg" >
                         </a>
                     </div>
                     <div class="item pos-rlt">
@@ -334,7 +334,7 @@
                             </span>
                         </a>
                         <a href="#">
-                            <img class="img-full" src="images/m42.jpg" alt="...">
+                            <img class="img-full" src="images/m42.jpg" >
                         </a>
                     </div>
                     <div class="item pos-rlt">
@@ -345,7 +345,7 @@
                                 <i class="icon-arrow-right i-lg pull-left"></i> -</span>
                         </a>
                         <a href="#">
-                            <img class="img-full" src="images/m44.jpg" alt="...">
+                            <img class="img-full" src="images/m44.jpg" >
                         </a>
                     </div>
                     <div class="item pos-rlt">
@@ -357,7 +357,7 @@
                             </span>
                         </a>
                         <a href="#">
-                            <img class="img-full" src="images/m45.jpg" alt="...">
+                            <img class="img-full" src="images/m45.jpg" >
                         </a>
                     </div>
                 </div>
