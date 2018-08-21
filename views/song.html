@@ -28,7 +28,7 @@
                                         </a>
                                         <ul class="dropdown-menu">
                                             <li>
-                                                <a href="javascript:" ng-click="addSongToPlaylist(data.song)">
+                                                <a href="javascript:" ng-click="addSongToPlaying(data.song)">
                                                     <i class="icon-list"></i> Thêm vào đang phát</a>
                                             </li>
                                             <li>
@@ -368,10 +368,10 @@
 <modal visible="showModal">
     <modal-header title="Xác nhận"></modal-header>
     <modal-body>
-        <h4>Bạn có chắc chắn muốn xóa bình luận này không?</h4>
+        <h5>Bạn có chắc chắn muốn xóa bình luận này không?</h5>
     </modal-body>
     <modal-footer>
-        <button class="btn btn-default" ng-click="cancelDeleteComment()">Hủy</button>
-        <button class="btn btn-success" ng-click="confirmDeleteComment(selected)">Xóa</button>
+        <button class="btn btn-default btn-sm" ng-click="cancelDeleteComment()">Hủy</button>
+        <button class="btn btn-success btn-sm" ng-click="confirmDeleteComment(selected)">Xóa</button>
     </modal-footer>
 </modal>

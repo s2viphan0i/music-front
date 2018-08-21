@@ -4049,7 +4049,16 @@ fieldset[disabled] .i-checks input + i:before {
 .more i{
   cursor: pointer;
 }
-.modal-s{
-  width: 600px;
-  margin: 30px auto;
+
+.modal-footer, .modal-header, .modal-body{
+  padding: 10px 20px;
+  margin: 0;
+}
+
+.height-lg{
+  height: 200px;
+}
+
+.l-h-lg{
+  line-height: 40px;
 }

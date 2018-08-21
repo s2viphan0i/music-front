@@ -1,6 +1,6 @@
 var myApp = angular.module('myApp');
 
-myApp.controller('IndexController', ['$scope', '$http', 'userService', '$cookies', '$location', '$routeParams', function($scope, $http, userService, $cookies, $location, $routeParams){
+myApp.controller('IndexController', ['$scope', '$http', 'playlistService', 'userService', '$cookies', '$location', '$routeParams', function($scope, $http, playlistService, userService, $cookies, $location, $routeParams){
 	console.log('IndexController loaded...');
 
 	$scope.checkNavPage = function(){
@@ -30,6 +30,7 @@ myApp.controller('IndexController', ['$scope', '$http', 'userService', '$cookies
 		};
 		if($cookies.get('auth')){
 			userService.doUserGetFollowing($scope.data);
+			playlistService.doGetAllUserPlaylist($scope.data);
 		}
     });
 

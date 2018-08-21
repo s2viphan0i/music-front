@@ -44,7 +44,7 @@ myApp.controller('SongController', ['$scope', '$http', '$cookies', 'commentServi
 			playlist: false
 		});
 	}
-	$scope.addSongToPlaylist = function(){
+	$scope.addSongToPlaying = function(){
 		playerService.Play({
 			id: $scope.data.song.id,
 			StreamUri:"http://localhost/resource/audio/"+$scope.data.song.url,
