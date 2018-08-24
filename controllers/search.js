@@ -50,16 +50,16 @@ myApp.controller('SearchController', ['$scope', '$http', '$cookies', 'userServic
 			StreamUri:"http://localhost/resource/audio/"+song.url,
 			title: song.title,
 			artist: song.user.fullname,
-			playlist: false
+			add: false
 		});
 	}
-	$scope.addSongToPlaylist = function(song){
+	$scope.addSongToPlaying = function(song){
 		playerService.Play({
 			id: song.id,
 			StreamUri:"http://localhost/resource/audio/"+song.url,
 			title: song.title,
 			artist: song.user.fullname,
-			playlist: true
+			add: true
 		});
 	}
 	$scope.addFavorite = function(songId){

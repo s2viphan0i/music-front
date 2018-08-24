@@ -69,13 +69,50 @@ myApp.factory('playlistService', ['$http', '$cookies', '$location', function($ht
             data: { 
                 id: song.id
             },
-            url: host+'/user/playlists/'+playlist.id+'/songs',
+            url: host+'/user/playlists/'+playlist.id+'/songs/',
             withCredentials: true,
             method: 'POST'
         }).then(function (response){
             data.success = response.data.success;
             data.msg = response.data.msg;
         },function (error){
+            if(error.status==404){
+                data.success=false;
+                data.msg="Có lỗi xảy ra! Vui lòng thử lại";
+            }
+        });
+    };
+    playlistService.doRemoveSongFromPlaylist = function(song, playlist, data){
+        var auth = $cookies.get("auth");
+        return $http({
+            headers:{
+                'Authorization' : 'Basic ' + auth
+            },
+            url: host+'/user/playlists/'+playlist.id+'/songs/'+song.id,
+            withCredentials: true,
+            method: 'DELETE'
+        }).then(function (response){
+            data.success = response.data.success;
+            data.msg = response.data.msg;
+        },function (error){
+            if(error.status==404){
+                data.success=false;
+                data.msg="Có lỗi xảy ra! Vui lòng thử lại";
+            }
+        });
+    };
+    playlistService.doGetPlaylistById = function(data){
+        return $http({
+            url: host+'/playlists/'+data.playlist.id,
+            withCredentials: true,
+            method: 'GET'
+        }).then(function (response){
+            // $("#new-spinner").addClass("hidden");
+            data.success = response.data.success;
+            data.msg = response.data.msg;
+            data.playlist = response.data.content;
+        },function (error){
+            // $("#new-spinner").addClass("hidden");
             if(error.status==404){
                 data.success=false;
                 data.msg="Có lỗi xảy ra! Vui lòng thử lại";

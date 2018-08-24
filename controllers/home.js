@@ -4,9 +4,6 @@ myApp.controller('HomeController', ['$scope', '$http', 'playlistService', 'songS
 	console.log('HomeController loaded...');
 
 	$scope.init = function(){
-		$scope.data.selected = {};
-		$scope.showCreatePlaylistModal=false;
-		$scope.showPlaylistModal=false;
 		if($cookies.get('auth')){
 			songService.doUserGetListNewSong($scope.data);
 			songService.doUserGetListMostFavoriteSong($scope.data);
@@ -15,33 +12,6 @@ myApp.controller('HomeController', ['$scope', '$http', 'playlistService', 'songS
 			songService.doGetListMostFavoriteSong($scope.data);
 		}
 		songService.doGetListMostViewSong($scope.data);
-		
-	}
-	$scope.showCreatePlaylist = function(){
-		$scope.data.msg=null;
-		$scope.data.success=null;
-		$scope.showCreatePlaylistModal=true;
-	}
-	$scope.hideCreatePlaylist = function(){
-		$scope.showCreatePlaylistModal=false;
-	}
-	$scope.showAddPlaylist = function(song){
-		if(song){
-			$scope.data.selected.song = song
-		}
-		$scope.showPlaylistModal=true;
-	}
-	$scope.hideAddPlaylist = function(){
-		$scope.showPlaylistModal=false;
-	}
-	$scope.createPlaylist = function(){
-		if($cookies.get("auth")){
-			playlistService.doCreatePlaylist($scope.data).then(function(){
-				$scope.data.userPlaylists.push($scope.data.created);
-				$scope.data.playlist.title = "";
-				$scope.data.playlist.image = "";
-			});
-		}
 	}
 	$scope.getListNewSong = function(){
 		if($cookies.get('auth')){
@@ -63,7 +33,7 @@ myApp.controller('HomeController', ['$scope', '$http', 'playlistService', 'songS
 			StreamUri:"http://localhost/resource/audio/"+song.url,
 			title: song.title,
 			artist: song.user.fullname,
-			playlist: false
+			add: false
 		});
 	}
 	$scope.addSongToPlaying = function(song){
@@ -72,7 +42,7 @@ myApp.controller('HomeController', ['$scope', '$http', 'playlistService', 'songS
 			StreamUri:"http://localhost/resource/audio/"+song.url,
 			title: song.title,
 			artist: song.user.fullname,
-			playlist: true
+			add: true
 		});
 	}
 	$scope.addFavorite = function(songId){
@@ -80,20 +50,5 @@ myApp.controller('HomeController', ['$scope', '$http', 'playlistService', 'songS
 	}
 	$scope.removeFavorite = function(songId){
 		songService.doUserFavoriteSong(songId);
-	}
-	$scope.addSongToPlaylist = function(song, playlist){
-		playlistService.doAddSongToPlaylist(song, playlist, $scope.data).then(function(){
-			if(!playlist.songs){
-				playlist.songs = [];
-			}
-			if($scope.data.success){
-				playlist.songs.push(song);
-			}
-		});
-	}
-	$scope.checkSonginPlaylist = function(song, playlist){
-		if(song){
-			return _.findLastIndex(playlist.songs, {id:song.id})==-1;
-		}
 	}
 }]);

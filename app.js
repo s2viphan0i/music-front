@@ -51,6 +51,11 @@ myApp.config(function ($routeProvider) {
 			templateUrl: 'views/song.html',
 			authenticated: false
 		})
+		.when('/playlist/:id', {
+			controller: 'PlaylistController',
+			templateUrl: 'views/playlist.html',
+			authenticated: false
+		})
 		.when('/test', {
 			controller: 'HomeController',
 			templateUrl: 'views/test.html',

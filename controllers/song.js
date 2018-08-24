@@ -10,7 +10,7 @@ myApp.controller('SongController', ['$scope', '$http', '$cookies', 'commentServi
 		$scope.showModal = false;
 	}
 	$scope.getSongById = function(){
-		$scope.showModal = false;
+		$scope.showDeleteModal = false;
 		$scope.data = [];
 		if($cookies.get('auth')){
 			$scope.data.auth = $cookies.get('auth');
@@ -41,7 +41,7 @@ myApp.controller('SongController', ['$scope', '$http', '$cookies', 'commentServi
 			StreamUri:"http://localhost/resource/audio/"+$scope.data.song.url,
 			title: $scope.data.song.title,
 			artist: $scope.data.song.user.fullname,
-			playlist: false
+			add: false
 		});
 	}
 	$scope.addSongToPlaying = function(){
@@ -50,7 +50,7 @@ myApp.controller('SongController', ['$scope', '$http', '$cookies', 'commentServi
 			StreamUri:"http://localhost/resource/audio/"+$scope.data.song.url,
 			title: $scope.data.song.title,
 			artist: $scope.data.song.user.fullname,
-			playlist: true
+			add: true
 		});
 	}
 	$scope.addFavorite = function(){

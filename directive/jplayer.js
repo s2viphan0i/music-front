@@ -37,7 +37,19 @@ myApp.directive("jplayer", ['$window', 'songService', '$cookies', 'playerService
 
             // When the Current track (on the service) changes - we want to tell jPlayer to play that new song
             scope.$watch('playerService.CurrentTrack', function (value) {
-                if (value != null&&value.playlist==false) {
+                if (value != null&&value.playlist==true){
+                    $window.myPlaylist.setPlaylist([]);
+                    for(var i=0;i<value.songs.length;i++){
+                        $window.myPlaylist.add({
+                            id: value.songs[i].id,
+                            mp3: "http://localhost/resource/audio/"+value.songs[i].url,
+                            title: value.songs[i].title,
+                            artist: value.songs[i].user.username
+                        })
+                    }
+                    $window.myPlaylist.play(value.start);
+                }
+                else if (value != null&&value.add==false) {
                     $window.myPlaylist.setPlaylist([]);
                     $window.myPlaylist.add({
                         id: value.id,
@@ -47,7 +59,7 @@ myApp.directive("jplayer", ['$window', 'songService', '$cookies', 'playerService
                     },function(){
                         $window.myPlaylist.play(-1);
                     })
-                } else if(value!=null&&value.playlist==true){
+                } else if(value!=null&&value.add==true){
                     $window.myPlaylist.add({
                         id: value.id,
                         mp3: value.StreamUri,
