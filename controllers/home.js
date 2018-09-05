@@ -45,10 +45,22 @@ myApp.controller('HomeController', ['$scope', '$http', 'playlistService', 'songS
 			add: true
 		});
 	}
-	$scope.addFavorite = function(songId){
-		songService.doUserFavoriteSong(songId);
+	$scope.addFavorite = function(song){
+		if($cookies.get('auth')){
+			songService.doUserFavoriteSong(song.id).then(function(){
+				song.favorited=true;
+			});
+		} else {
+			$location.path('/login');
+		}
 	}
-	$scope.removeFavorite = function(songId){
-		songService.doUserFavoriteSong(songId);
+	$scope.removeFavorite = function(song){
+		if($cookies.get('auth')){
+			songService.doUserFavoriteSong(song.id).then(function(){
+				song.favorited=false;
+			});
+		} else {
+			$location.path('/login');
+		}
 	}
 }]);

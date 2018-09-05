@@ -34,7 +34,13 @@ myApp.controller('IndexController', ['$scope', '$http', 'playlistService', 'user
 			playlistService.doGetAllUserPlaylist($scope.data);
 		}
     });
-
+	$scope.login = function(){
+		userService.doLogin($scope.data).then(function(){
+			if($scope.data.success){
+				$scope.showLogin = false;
+			}
+        })
+	}
 	$scope.logout = function(){
 		$scope.data.auth = null;
 		$scope.cookie = null;
@@ -49,12 +55,16 @@ myApp.controller('IndexController', ['$scope', '$http', 'playlistService', 'user
 		$scope.showCreatePlaylistModal=false;
 	}
 	$scope.showAddPlaylist = function(song){
-		if(song){
-			$scope.data.selected = {
-				song : song
+		if($cookies.get('auth')){
+			if(song){
+				$scope.data.selected = {
+					song : song
+				}
 			}
+			$scope.showPlaylistModal=true;
+		} else {
+			$location.path('/login');
 		}
-		$scope.showPlaylistModal=true;
 	}
 	$scope.hideAddPlaylist = function(){
 		$scope.showPlaylistModal=false;

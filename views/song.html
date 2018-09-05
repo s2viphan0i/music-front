@@ -40,12 +40,12 @@
 
                                     <a href="javascript:" class="pull-right" ng-if="data.song.favorited!=true">
                                         {{data.song.favorites}}
-                                        <i class="fa fa-heart-o" ng-click="data.song.favorites=data.song.favorites+1;data.song.favorited=true;addFavorite(data.song.id)"></i>
+                                        <i class="fa fa-heart-o" ng-click="addFavorite(data.song)"></i>
                                     </a>
                                     <a href="javascript:" class="pull-right active" data-toggle="class" ng-if="data.song.favorited==true">
                                         <i class="fa fa-heart-o text"></i>
                                         {{data.song.favorites}}
-                                        <i class="fa fa-heart text-active text-danger" ng-click="data.song.favorites=data.song.favorites-1;data.song.favorited=false;removeFavorite(data.song.id)"></i>
+                                        <i class="fa fa-heart text-active text-danger" ng-click="removeFavorite(data.song)"></i>
                                     </a>
                                 </div>
                             </div>

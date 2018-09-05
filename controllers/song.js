@@ -53,11 +53,25 @@ myApp.controller('SongController', ['$scope', '$http', '$cookies', 'commentServi
 			add: true
 		});
 	}
-	$scope.addFavorite = function(){
-		songService.doUserFavoriteSong($scope.data.song.id);
+	$scope.addFavorite = function(song){
+		if($cookies.get('auth')){
+			songService.doUserFavoriteSong(song.id).then(function(){
+				song.favorited=true;
+				song.favorites=song.favorites+1;
+			});
+		} else {
+			$location.path('/login');
+		}
 	}
-	$scope.removeFavorite = function(){
-		songService.doUserFavoriteSong($scope.data.song.id);
+	$scope.removeFavorite = function(song){
+		if($cookies.get('auth')){
+			songService.doUserFavoriteSong(song.id).then(function(){
+				song.favorited=false;
+				song.favorites=song.favorites-1;
+			});
+		} else {
+			$location.path('/login');
+		}
 	}
 	$scope.addComment = function(){
 		commentService.doUserAddComment($scope.data, function(){

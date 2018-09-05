@@ -177,6 +177,72 @@ myApp.factory('songService', ['$http', '$cookies', '$location', function($http, 
             }
         });
     };
+    songService.doUserGetSongByUserId = function(data){
+        $(".song-spinner").removeClass("hidden");
+        var auth = $cookies.get("auth");
+        return $http({
+            headers:{
+                'Authorization' : 'Basic ' + auth,
+            },
+            data: { 
+                keyword : data.keyword,
+                sortField: "create_time",
+                userId: data.user.id,
+                sortOrder: "descend",
+                results: 18,
+                page: data.page
+            },
+            url: host+'/user/songs/list',
+            withCredentials: true,
+            method: 'POST'
+        }).then(function (response){
+            $(".song-spinner").addClass("hidden");
+            data.success = response.data.success;
+            data.msg = response.data.msg;
+            data.total = response.data.total;
+            data.totalPage = Math.ceil(data.total/18);
+            for(var i=0; i<response.data.content.length;i++){
+                data.listResult.push(response.data.content[i]);
+            }
+        },function (error){
+            $(".song-spinner").addClass("hidden");
+            if(error.status==404){
+                data.success=false;
+                data.msg="Có lỗi xảy ra! Vui lòng thử lại";
+            }
+        });
+    };
+    songService.doGetSongByUserId = function(data){
+        $(".search-spinner").removeClass("hidden");
+        return $http({
+            data: { 
+                keyword : data.keyword,
+                sortField: "create_time",
+                userId: data.user.id,
+                sortOrder: "descend",
+                results: 18,
+                page: data.page
+            },
+            url: host+'/songs/list',
+            withCredentials: true,
+            method: 'POST'
+        }).then(function (response){
+            $(".search-spinner").addClass("hidden");
+            data.success = response.data.success;
+            data.msg = response.data.msg;
+            data.total = response.data.total;
+            data.totalPage = Math.ceil(data.total/18);
+            for(var i=0; i<response.data.content.length;i++){
+                data.listResult.push(response.data.content[i]);
+            }
+        },function (error){
+            $(".search-spinner").addClass("hidden");
+            if(error.status==404){
+                data.success=false;
+                data.msg="Có lỗi xảy ra! Vui lòng thử lại";
+            }
+        });
+    };
     songService.doUserViewSong = function(id){
         var auth = $cookies.get("auth");
         return $http({
