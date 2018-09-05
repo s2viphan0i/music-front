@@ -35,44 +35,6 @@ myApp.controller('SongController', ['$scope', '$http', '$cookies', 'commentServi
 			});
 		}
 	}
-	$scope.playSong = function(){
-		playerService.Play({
-			id: $scope.data.song.id,
-			StreamUri:"http://localhost/resource/audio/"+$scope.data.song.url,
-			title: $scope.data.song.title,
-			artist: $scope.data.song.user.fullname,
-			add: false
-		});
-	}
-	$scope.addSongToPlaying = function(){
-		playerService.Play({
-			id: $scope.data.song.id,
-			StreamUri:"http://localhost/resource/audio/"+$scope.data.song.url,
-			title: $scope.data.song.title,
-			artist: $scope.data.song.user.fullname,
-			add: true
-		});
-	}
-	$scope.addFavorite = function(song){
-		if($cookies.get('auth')){
-			songService.doUserFavoriteSong(song.id).then(function(){
-				song.favorited=true;
-				song.favorites=song.favorites+1;
-			});
-		} else {
-			$location.path('/login');
-		}
-	}
-	$scope.removeFavorite = function(song){
-		if($cookies.get('auth')){
-			songService.doUserFavoriteSong(song.id).then(function(){
-				song.favorited=false;
-				song.favorites=song.favorites-1;
-			});
-		} else {
-			$location.path('/login');
-		}
-	}
 	$scope.addComment = function(){
 		commentService.doUserAddComment($scope.data, function(){
 			$scope.data.c.createTimeFrom = moment($scope.data.c.createTime, "DD-MM-YYYY hh:mm:ss").fromNow();

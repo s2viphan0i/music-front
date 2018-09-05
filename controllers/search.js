@@ -44,42 +44,6 @@ myApp.controller('SearchController', ['$scope', '$http', '$cookies', 'userServic
 		}
 		console.log($scope.data);
 	}
-	$scope.playSong = function(song){
-		playerService.Play({
-			id: song.id,
-			StreamUri:"http://localhost/resource/audio/"+song.url,
-			title: song.title,
-			artist: song.user.fullname,
-			add: false
-		});
-	}
-	$scope.addSongToPlaying = function(song){
-		playerService.Play({
-			id: song.id,
-			StreamUri:"http://localhost/resource/audio/"+song.url,
-			title: song.title,
-			artist: song.user.fullname,
-			add: true
-		});
-	}
-	$scope.addFavorite = function(song){
-		if($cookies.get('auth')){
-			songService.doUserFavoriteSong(song.id).then(function(){
-				song.favorited=true;
-			});
-		} else {
-			$location.path('/login');
-		}
-	}
-	$scope.removeFavorite = function(song){
-		if($cookies.get('auth')){
-			songService.doUserFavoriteSong(song.id).then(function(){
-				song.favorited=false;
-			});
-		} else {
-			$location.path('/login');
-		}
-	}
 	$scope.addFollow = function(userId){
 		userService.doFollow(userId);
 	}
