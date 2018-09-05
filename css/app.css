@@ -2864,6 +2864,9 @@ a.bg-light:focus {
 .text-success.important{
   color: #1ab667 !important;
 }
+.text-danger.important{
+  color: #f05050 !important;
+}
 .pos-rlt {
   position: relative;
 }
@@ -3562,6 +3565,12 @@ fieldset[disabled] .i-checks input + i:before {
   left: 0;
   right: 0;
 }
+.item .middle {
+  position: absolute;
+  top: -50%;
+  left: 0;
+  right: 0;
+}
 .item .gd {
   background-color: transparent;
   background-image: -webkit-gradient(linear,0 0,0 100%,from(rgba(0,0,0,0)),color-stop(20%,rgba(0,0,0,0.25)),to(rgba(0,0,0,0.75)));
@@ -4048,4 +4057,21 @@ fieldset[disabled] .i-checks input + i:before {
 }
 .more i{
   cursor: pointer;
+}
+
+.modal-footer, .modal-header, .modal-body{
+  padding: 10px 20px;
+  margin: 0;
+}
+
+.height-lg{
+  height: 200px;
+}
+
+.l-h-sm{
+  line-height: 40px;
+}
+
+.l-h-xs{
+  line-height: 30px;
 }

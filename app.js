@@ -42,13 +42,18 @@ myApp.config(function ($routeProvider) {
 			authenticated: true
 		})
 		.when('/upload', {
-			controller: 'SongController',
+			controller: 'UploadController',
 			templateUrl: 'views/upload.html',
 			authenticated: true
 		})
 		.when('/song/:id', {
 			controller: 'SongController',
 			templateUrl: 'views/song.html',
+			authenticated: false
+		})
+		.when('/playlist/:id', {
+			controller: 'PlaylistController',
+			templateUrl: 'views/playlist.html',
 			authenticated: false
 		})
 		.when('/test', {

@@ -1,4 +1,4 @@
-<a href="javascript:" ng-click="getListMostFavoriteSong()" class="pull-right text-muted m-t-lg" ng-init="init();">
+<a href="javascript:" ng-click="getListNewSong()" class="pull-right text-muted m-t-lg" ng-init="init();">
     <i class="icon-refresh i-lg  inline" id="new-spinner"></i>
 </a>
 <h2 class="font-thin m-b">Bài hát mới
@@ -29,19 +29,25 @@
                     </div>
                     <div class="bottom padder m-b-sm">
                         <a href="javascript:" class="pull-right" ng-if="song.favorited!=true">
-                            <i class="fa fa-heart-o" ng-click="song.favorited=true;addFavorite(song.id)"></i>
+                            <i class="fa fa-heart-o" ng-click="addFavorite(song)"></i>
                         </a>
                         <a href="javascript:" class="pull-right active" data-toggle="class" ng-if="song.favorited==true">
                             <i class="fa fa-heart-o text"></i>
-                            <i class="fa fa-heart text-active text-danger" ng-click="song.favorited=false;removeFavorite(song.id)"></i>
+                            <i class="fa fa-heart text-active text-danger" ng-click="removeFavorite(song)"></i>
                         </a>
                         <div class="btn-group">
                             <a href="javascript:" data-toggle="dropdown">
                                 <i class="fa fa-plus-circle"></i>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="javascript:" ng-click="addSongToPlaylist(song)"><i class="icon-list"></i> Thêm vào đang phát</a></li>
-                                <li><a href="javascript:" ng-click="addSongToPlaylist(song)"><i class="icon-playlist"></i> Thêm vào playlist</a></li>
+                                <li>
+                                    <a href="javascript:" ng-click="addSongToPlaying(song)">
+                                        <i class="icon-list"></i> Thêm vào đang phát</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:" ng-click="showAddPlaylist(song)">
+                                        <i class="icon-playlist"></i> Thêm vào playlist</a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -57,7 +63,7 @@
         </div>
     </div>
 </div>
-<a href="javascript:" ng-click="getListNewSong()" class="pull-right text-muted m-t-lg">
+<a href="javascript:" ng-click="getListMostFavoriteSong()" class="pull-right text-muted m-t-lg">
     <i class="icon-refresh i-lg inline" id="mostfavorite-spinner"></i>
 </a>
 <h2 class="font-thin m-b">Bài hát ưa thích
@@ -99,8 +105,14 @@
                                 <i class="fa fa-plus-circle"></i>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="javascript:" ng-click="addSongToPlaylist(song)"><i class="icon-list"></i> Thêm vào đang phát</a></li>
-                                <li><a href="javascript:" ng-click="addSongToPlaylist(song)"><i class="icon-playlist"></i> Thêm vào playlist</a></li>
+                                <li>
+                                    <a href="javascript:" ng-click="addSongToPlaying(song)">
+                                        <i class="icon-list"></i> Thêm vào đang phát</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:" ng-click="showAddPlaylist(song)">
+                                        <i class="icon-playlist"></i> Thêm vào playlist</a>
+                                </li>
                             </ul>
                         </div>
                     </div>

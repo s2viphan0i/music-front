@@ -119,7 +119,7 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
             headers:{
 
             },
-            url: host+'/users/username/'+data.username,
+            url: host+'/users/username/'+data.user.username,
             withCredentials: true,
             method: 'GET'
         }).then(function (response){
@@ -137,7 +137,7 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
             headers:{
                 'Authorization' : 'Basic ' + auth
             },
-            url: host+'/user/users/username/'+data.username,
+            url: host+'/user/users/username/'+data.user.username,
             withCredentials: true,
             method: 'GET'
         }).then(function (response){
@@ -154,7 +154,7 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
             headers:{
 
             },
-            url: host+'/users/'+data.id,
+            url: host+'/users/'+data.user.id,
             withCredentials: true,
             method: 'GET'
         }).then(function (response){
@@ -172,7 +172,7 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
             headers:{
                 'Authorization' : 'Basic ' + auth
             },
-            url: host+'/user/users/'+data.id,
+            url: host+'/user/users/'+data.user.id,
             withCredentials: true,
             method: 'GET'
         }).then(function (response){
@@ -213,7 +213,7 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
         if(data.user.phone==undefined){
             data.user.phone=""
         }
-        var user = '{"fullname":"'+data.user.fullname+'", "birthdate":"'+data.user.birthdate+'", "phone":"'+data.user.phone+
+        var user = '{"fullname":"'+data.user.fullname+'", "birthdate":"'+moment(data.user.birthdate).format("DD-MM-YYYY")+'", "phone":"'+data.user.phone+
         '", "note":"'+data.user.note+'"}'
         if(data.user.birthdate==undefined){
             var user = '{"fullname":"'+data.user.fullname+'", "phone":"'+data.user.phone+
@@ -350,6 +350,32 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
     };
     userService.getCookie = function(){
         return $cookies.get('auth');
+    }
+    userService.doUserGetFollowing = function(data){
+        var auth = $cookies.get("auth");
+        return $http({
+            headers:{
+                'Authorization' : 'Basic ' + auth,
+            },
+            data: { 
+                sortField: "id",
+                sortOrder: "descend",
+                results: 10,
+                page: 1
+            },
+            url: host+'/user/users/followings/list',
+            withCredentials: true,
+            method: 'POST'
+        }).then(function (response){
+            data.success = response.data.success;
+            data.msg = response.data.msg;
+            data.listFollowing = response.data.content;
+        },function (error){
+            if(error.status==404){
+                data.success=false;
+                data.msg="Có lỗi xảy ra! Vui lòng thử lại";
+            }
+        });
     }
     return userService;
 }])

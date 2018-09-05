@@ -1,6 +1,6 @@
 var myApp = angular.module('myApp');
 
-myApp.controller('HomeController', ['$scope', '$http', 'songService', 'userService', 'playerService', '$cookies', '$location', '$routeParams', function($scope, $http, songService, userService, playerService, $cookies, $location, $routeParams){
+myApp.controller('HomeController', ['$scope', '$http', 'playlistService', 'songService', 'userService', 'playerService', '$cookies', '$location', '$routeParams', function($scope, $http, playlistService, songService, userService, playerService, $cookies, $location, $routeParams){
 	console.log('HomeController loaded...');
 
 	$scope.init = function(){
@@ -33,22 +33,34 @@ myApp.controller('HomeController', ['$scope', '$http', 'songService', 'userServi
 			StreamUri:"http://localhost/resource/audio/"+song.url,
 			title: song.title,
 			artist: song.user.fullname,
-			playlist: false
+			add: false
 		});
 	}
-	$scope.addSongToPlaylist = function(song){
+	$scope.addSongToPlaying = function(song){
 		playerService.Play({
 			id: song.id,
 			StreamUri:"http://localhost/resource/audio/"+song.url,
 			title: song.title,
 			artist: song.user.fullname,
-			playlist: true
+			add: true
 		});
 	}
-	$scope.addFavorite = function(songId){
-		songService.doUserFavoriteSong(songId);
+	$scope.addFavorite = function(song){
+		if($cookies.get('auth')){
+			songService.doUserFavoriteSong(song.id).then(function(){
+				song.favorited=true;
+			});
+		} else {
+			$location.path('/login');
+		}
 	}
-	$scope.removeFavorite = function(songId){
-		songService.doUserFavoriteSong(songId);
+	$scope.removeFavorite = function(song){
+		if($cookies.get('auth')){
+			songService.doUserFavoriteSong(song.id).then(function(){
+				song.favorited=false;
+			});
+		} else {
+			$location.path('/login');
+		}
 	}
 }]);

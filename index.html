@@ -1,58 +1,129 @@
 <!DOCTYPE html>
 <html ng-app="myApp" class="app">
-<head>  
-  <meta charset="utf-8" />
-  <title>Musik | Web Application</title>
-  <meta name="description" content="app, web app, responsive, admin dashboard, admin, flat, flat ui, ui kit, off screen nav" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <link rel="icon" href="./images/favicon.png" sizes="100x100" type="image/png">
-  <link rel="stylesheet" href="js/jPlayer/jplayer.flat.css" type="text/css" />
-  <link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
-  <link rel="stylesheet" href="css/animate.css" type="text/css" />
-  <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css" />
-  <link rel="stylesheet" href="css/simple-line-icons.css" type="text/css" />
-  <link rel="stylesheet" href="css/font.css" type="text/css" />
-  <link rel="stylesheet" href="css/app.css" type="text/css" />  
-  <link rel="stylesheet" href="bower_components/jquery-ui/themes/flick/jquery-ui.css"/>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Musik | Web Application</title>
+    <meta name="description" content="app, web app, responsive, admin dashboard, admin, flat, flat ui, ui kit, off screen nav"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <link rel="icon" href="./images/favicon.png" sizes="100x100" type="image/png">
+    <link rel="stylesheet" href="js/jPlayer/jplayer.flat.css" type="text/css" />
+    <link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
+    <link rel="stylesheet" href="css/animate.css" type="text/css" />
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="css/simple-line-icons.css" type="text/css" />
+    <link rel="stylesheet" href="css/font.css" type="text/css" />
+    <link rel="stylesheet" href="css/app.css" type="text/css" />
+    <link rel="stylesheet" href="bower_components/jquery-ui/themes/flick/jquery-ui.css" />
     <!--[if lt IE 9]>
     <script src="js/ie/html5shiv.js"></script>
     <script src="js/ie/respond.min.js"></script>
     <script src="js/ie/excanvas.js"></script>
   <![endif]-->
 </head>
+
 <body data-ng-controller="IndexController">
     <section class="vbox">
-      <header ng-if="!checkNavPage()" ng-class="{'bg-black':checkBlackPage(),'bg-white-only':!checkBlackPage()}" data-ng-include="'./views/header.html'" class="header header-md navbar navbar-fixed-top-xs">
+        <header ng-if="!checkNavPage()" ng-class="{'bg-black':checkBlackPage(),'bg-white-only':!checkBlackPage()}" data-ng-include="'./views/header.html'"
+            class="header header-md navbar navbar-fixed-top-xs">
 
-      </header>
-      <section>
-          <section class="hbox stretch">
-              <!-- left menu -->
-              <aside class="bg-black dk nav-xs aside hidden-print" id="nav" data-ng-hide="checkNavPage()" data-ng-include="'./views/left.html'">
-                  
-              </aside>
-              <!-- /.aside -->
-              <section id="content">
-                  <section class="hbox stretch">
-                      <section>
-                          <section class="vbox">
-                              <section class="scrollable w-f-md" ng-class="{'padder-lg':checkHomePage()}" id="bjax-target" data-ng-view>
-                                  
-                              </section>
-                              <footer class="footer bg-success" data-ng-hide="checkNavPage()" jplayer>
-                              </footer>
-                          </section>
-                      </section>
-                      <!-- side content -->
-                      <aside class="aside-md bg-light dk" id="sidebar" data-ng-hide="!checkHomePage()" data-ng-include="'./views/right.html'">
-                          
-                      </aside>
-                      <!-- / side content -->
-                  </section>
-                  <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen,open" data-target="#nav,html"></a>
-              </section>
-          </section>
-      </section>
+        </header>
+        <section>
+            <section class="hbox stretch">
+                <!-- left menu -->
+                <aside class="bg-black dk nav-xs aside hidden-print" id="nav" data-ng-hide="checkNavPage()" data-ng-include="'./views/left.html'">
+
+                </aside>
+                <!-- /.aside -->
+                <section id="content">
+                    <section class="hbox stretch">
+                        <section>
+                            <section class="vbox">
+                                <section class="scrollable w-f-md" ng-class="{'padder-lg':checkHomePage()}" id="bjax-target" data-ng-view>
+
+                                </section>
+                                <modal visible="showPlaylistModal">
+                                    <modal-header title="Thêm vào playlist"></modal-header>
+                                    <modal-body>
+                                        <input ng-model="data.playlist.keyword" type="text" placeholder="Tên playlist ..." class="form-control" />
+                                        <ul class="list-group bg-white list-group-lg no-bg scrollable height-lg">
+                                            <li class="list-group-item clearfix" ng-repeat="playlist in data.userPlaylists" ng-show="showPlaylist(playlist.title)">
+                                                <span class="pull-right text-muted m-l l-h-sm">
+                                                    <a href="javascript:" ng-click="addSongToPlaylist(data.selected.song, playlist)" ng-if="checkSonginPlaylist(data.selected.song, playlist)">
+                                                        <i class="icon-plus"></i>
+                                                    </a>
+                                                    <a href="javascript:" ng-click="removeSongFromPlaylist(data.selected.song, playlist)" ng-if="!checkSonginPlaylist(data.selected.song, playlist)">
+                                                        <i class="remove-hover text-success important icon-check"></i>
+                                                    </a>
+                                                </span>
+                                                <span class="pull-left thumb-sm m-r">
+                                                    <img src="http://localhost:8080/resource/image?name={{playlist.image}}">
+                                                </span>
+                                                <span class="clear">
+                                                    <span>{{playlist.title}}</span>
+                                                    <small class="text-muted clear text-ellipsis">có {{playlist.songs.length?playlist.songs.length:0}} bài hát</small>
+                                                </span>
+                                            </li>
+                                        </ul>
+                                        <div class="bg-white no-bg">
+                                            <a href="javascript:" class="list-group-item clearfix" ng-click="showCreatePlaylist();hideAddPlaylist()">
+                                                <span class="pull-left thumb-sm m-r">
+                                                    <i class="fa fa-plus-square-o"></i>
+                                                </span>
+                                                <span class="clear">
+                                                    <span>Tạo mới</span>
+                                                </span>
+                                            </a>
+                                        </div>
+                                    </modal-body>
+                                </modal>
+
+                                <modal visible="showCreatePlaylistModal">
+                                    <modal-header title="Tạo playlist mới"></modal-header>
+                                    <modal-body>
+                                        <div class="alert alert-danger" ng-if="data.success!=null&&!data.success">
+                                            <button type="button" class="close" data-dismiss="alert">×</button>
+                                            <i class="fa fa-ban-circle"></i>
+                                            <strong>Ôi không!</strong>
+                                            {{data.msg}}
+                                        </div>
+                                        <div class="alert alert-success" ng-if="data.success!=null&&data.success">
+                                            <button type="button" class="close" data-dismiss="alert">×</button>
+                                            <i class="fa fa-ok-sign"></i>
+                                            <strong>Thành công!</strong>
+                                            {{data.msg}}
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Tên playlist</label>
+                                            <input ng-model="data.playlist.title" type="text" placeholder="Tên playlist" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Ảnh bìa</label>
+                                            <input type="file" accept="image/*" file-model="data.playlist.image" class="customfileinput">
+                                        </div>
+                                    </modal-body>
+                                    <modal-footer>
+                                        <button class="btn btn-default btn-sm" ng-click="hideCreatePlaylist();showAddPlaylist();">Hủy</button>
+                                        <button class="btn btn-success btn-sm" ng-click="createPlaylist();">Tạo mới
+                                            <i class='fa fa-spinner fa fa-spin fa fa-large hidden' id="add-spinner"></i>
+                                        </button>
+                                    </modal-footer>
+                                </modal>
+                                <footer class="footer bg-success" data-ng-hide="checkNavPage()" jplayer>
+                                </footer>
+                            </section>
+                        </section>
+                        <!-- side content -->
+                        <aside class="aside-md bg-light dk" id="sidebar" data-ng-hide="!checkHomePage()" data-ng-include="'./views/right.html'">
+
+                        </aside>
+                        <!-- / side content -->
+                    </section>
+                    <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen,open" data-target="#nav,html"></a>
+                </section>
+            </section>
+        </section>
     </section>
 </body>
 <!-- library -->
@@ -72,11 +143,15 @@
 <!-- app -->
 <script src="./app.js"></script>
 <!-- directive -->
-<script src="./directive/directive.js"></script>
+<script src="./directive/jplayer.js"></script>
+<script src="./directive/modal.js"></script>
+<script src="./directive/file.js"></script>
 <!-- service -->
 <script src="./service/user_service.js"></script>
 <script src="./service/song_service.js"></script>
+<script src="./service/comment_service.js"></script>
 <script src="./service/player_service.js"></script>
+<script src="./service/playlist_service.js"></script>
 <!-- controller -->
 <script src="./controllers/auth.js"></script>
 <script src="./controllers/home.js"></script>
@@ -84,6 +159,8 @@
 <script src="./controllers/index.js"></script>
 <script src="./controllers/song.js"></script>
 <script src="./controllers/search.js"></script>
+<script src="./controllers/upload.js"></script>
+<script src="./controllers/playlist.js"></script>
 <!-- jquery -->
 <!-- <script src="js/jquery.min.js"></script> -->
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> -->
@@ -92,7 +169,8 @@
 <script src="js/bootstrap.js"></script>
 <!-- <script src="js/datepicker/bootstrap-datepicker.js"></script> -->
 <!-- App -->
-<script src="js/app.js"></script>  
+<script src="js/app.js"></script>
 <script src="js/slimscroll/jquery.slimscroll.min.js"></script>
 <script src="js/app.plugin.js"></script>
+
 </html>

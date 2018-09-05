@@ -43,7 +43,7 @@ myApp.factory('songService', ['$http', '$cookies', '$location', function($http, 
     };
     songService.doGetSongById = function(data, callback){
         return $http({
-            url: host+'/songs/'+data.songId,
+            url: host+'/songs/'+data.song.id,
             withCredentials: true,
             method: 'GET'
         }).then(function (response){
@@ -67,7 +67,7 @@ myApp.factory('songService', ['$http', '$cookies', '$location', function($http, 
             headers:{
                 'Authorization' : 'Basic ' + auth,
             },
-            url: host+'/user/songs/'+data.songId,
+            url: host+'/user/songs/'+data.song.id,
             withCredentials: true,
             method: 'GET'
         }).then(function (response){
@@ -169,6 +169,72 @@ myApp.factory('songService', ['$http', '$cookies', '$location', function($http, 
             data.total = response.data.total;
             data.totalPage = Math.ceil(data.total/18);
             data.listResultSong = response.data.content;
+        },function (error){
+            $(".search-spinner").addClass("hidden");
+            if(error.status==404){
+                data.success=false;
+                data.msg="Có lỗi xảy ra! Vui lòng thử lại";
+            }
+        });
+    };
+    songService.doUserGetSongByUserId = function(data){
+        $(".song-spinner").removeClass("hidden");
+        var auth = $cookies.get("auth");
+        return $http({
+            headers:{
+                'Authorization' : 'Basic ' + auth,
+            },
+            data: { 
+                keyword : data.keyword,
+                sortField: "create_time",
+                userId: data.user.id,
+                sortOrder: "descend",
+                results: 18,
+                page: data.page
+            },
+            url: host+'/user/songs/list',
+            withCredentials: true,
+            method: 'POST'
+        }).then(function (response){
+            $(".song-spinner").addClass("hidden");
+            data.success = response.data.success;
+            data.msg = response.data.msg;
+            data.total = response.data.total;
+            data.totalPage = Math.ceil(data.total/18);
+            for(var i=0; i<response.data.content.length;i++){
+                data.listResult.push(response.data.content[i]);
+            }
+        },function (error){
+            $(".song-spinner").addClass("hidden");
+            if(error.status==404){
+                data.success=false;
+                data.msg="Có lỗi xảy ra! Vui lòng thử lại";
+            }
+        });
+    };
+    songService.doGetSongByUserId = function(data){
+        $(".search-spinner").removeClass("hidden");
+        return $http({
+            data: { 
+                keyword : data.keyword,
+                sortField: "create_time",
+                userId: data.user.id,
+                sortOrder: "descend",
+                results: 18,
+                page: data.page
+            },
+            url: host+'/songs/list',
+            withCredentials: true,
+            method: 'POST'
+        }).then(function (response){
+            $(".search-spinner").addClass("hidden");
+            data.success = response.data.success;
+            data.msg = response.data.msg;
+            data.total = response.data.total;
+            data.totalPage = Math.ceil(data.total/18);
+            for(var i=0; i<response.data.content.length;i++){
+                data.listResult.push(response.data.content[i]);
+            }
         },function (error){
             $(".search-spinner").addClass("hidden");
             if(error.status==404){
@@ -359,54 +425,6 @@ myApp.factory('songService', ['$http', '$cookies', '$location', function($http, 
             }
         });
     };
-    songService.doUserAddComment = function(data, callback){
-        var auth = $cookies.get("auth");
-        return $http({
-            headers:{
-                'Authorization' : 'Basic ' + auth
-            },
-            data:{
-                content : escape(data.comment.content)
-            },
-            url: host+'/user/songs/'+data.song.id+'/comments',
-            withCredentials: true,
-            method: 'POST'
-        }).then(function (response){
-            data.success = response.data.success;
-            data.msg = response.data.msg;
-            data.c = response.data.content;
-            callback();
-        },function (error){
-            if(error.status==404){
-                data.success=false;
-                data.msg="Có lỗi xảy ra! Vui lòng thử lại";
-            }
-        });
-    }
-    songService.doGetCommentBySongId = function(data, callback){
-        // $("#mostfavorite-spinner").addClass("fa-spin");
-        return $http({
-            data: { 
-                page : data.page,
-                results: 10
-            },
-            url: host+'/songs/'+data.songId+'/comments/list',
-            withCredentials: true,
-            method: 'POST'
-        }).then(function (response){
-            // $("#mostfavorite-spinner").removeClass("fa-spin");
-            data.success = response.data.success;
-            data.msg = response.data.msg;
-            data.total = response.data.total;
-            data.listComment = response.data.content;
-            callback();
-        },function (error){
-            // $("#mostfavorite-spinner").removeClass("fa-spin");
-            if(error.status==404){
-                data.success=false;
-                data.msg="Có lỗi xảy ra! Vui lòng thử lại";
-            }
-        });
-    };
+    
     return songService;
 }])
