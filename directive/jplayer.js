@@ -52,6 +52,7 @@ myApp.directive("jplayer", ['$window', 'songService', '$cookies', 'playerService
                 else if (value != null&&value.add==false) {
                     $window.myPlaylist.setPlaylist([]);
                     $window.myPlaylist.add({
+                        next: false,
                         id: value.id,
                         mp3: value.StreamUri,
                         title: value.title,
@@ -81,6 +82,31 @@ myApp.directive("jplayer", ['$window', 'songService', '$cookies', 'playerService
                     }
                 }
             });
+            jPlayer.bind($.jPlayer.event.playing, function (event) {
+                console.log($window.myPlaylist.playlist[myPlaylist.current]);
+                if(!$window.myPlaylist.playlist[myPlaylist.current].next){
+                    $window.myPlaylist.playlist[myPlaylist.current].next=true;
+                    var d = {
+                        song :{
+                            id : $window.myPlaylist.playlist[myPlaylist.current].id
+                        }
+                    }
+                    songService.doGetListRecommendSong(d).then(function(){
+                        d.listRecommendSong.every(function(song, index) {
+                            if(_.findLastIndex($window.myPlaylist.playlist, {id: song.id})==-1){
+                                $window.myPlaylist.add({
+                                    id: song.id,
+                                    mp3: "http://localhost/resource/audio/"+song.url,
+                                    title: song.title,
+                                    artist: song.user.username,
+                                })
+                                return false;
+                            }
+                            return true;
+                        })
+                    })
+                }
+            });
 
             jPlayer.bind($.jPlayer.event.ended, function (event) {
                 // Song has ended, try to go next
@@ -89,6 +115,8 @@ myApp.directive("jplayer", ['$window', 'songService', '$cookies', 'playerService
                 }
                 if (scope.playerService.HasNext) {
                     scope.playerService.Next();
+                } else{
+                     
                 }
             });
 

@@ -41,6 +41,21 @@ myApp.factory('songService', ['$http', '$cookies', '$location', function($http, 
             }
         });
     };
+    songService.doGetListRecommendSong = function(data){
+        return $http({
+            url: host+'/songs/'+data.song.id+'/recommends',
+            method: 'GET'
+        }).then(function (response){
+            data.success = response.data.success;
+            data.msg = response.data.msg;
+            data.listRecommendSong = response.data.content;
+        },function (error){
+            if(error.status==404){
+                data.success=false;
+                data.msg="Có lỗi xảy ra! Vui lòng thử lại";
+            }
+        });
+    };
     songService.doGetSongById = function(data, callback){
         return $http({
             url: host+'/songs/'+data.song.id,

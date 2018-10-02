@@ -107,7 +107,7 @@
                     <div class="panel-body">
                         <div class="tab-content">
                             <div class="tab-pane padder-lg" id="song">
-                                <h2 class="font-thin m-b">Bài hát
+                                <h2 class="font-thin m-b">Từ khóa '{{data.keyword}}'
                                     <i class='fa fa-spinner fa fa-spin fa fa-large hidden search-spinner'></i>
                                 </h2>
                                 <div class="row row-sm">
@@ -153,9 +153,16 @@
                                                 </a>
                                             </div>
                                             <div class="padder-v">
-                                                <a href="./#!/song/{{song.id}}" class="text-ellipsis">{{song.title}}</a>
+                                                <a href="./#!/song/{{song.id}}" class="text-ellipsis" data-toggle="tooltip" title="{{song.title}}">{{song.title}}</a>
                                                 <a href="./#!/profile/{{song.user.username}}" class="text-ellipsis text-xs text-muted">{{song.user.fullname}}</a>
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="" ng-if="!data.listResultSong">
+                                        <div class="text-center">
+                                            <img src="images/search.svg" class="thumb-xlg m-t-md m-b-md">
+                                            <h2>Không tìm thấy kết quả nào</h2>
+                                            <p class="m-b-lg">Vui lòng thử lại bằng từ khóa hoặc cách tìm kiếm khác.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -188,7 +195,7 @@
                                 </ul>
                             </div>
                             <div class="tab-pane padder-lg" id="user">
-                                <h2 class="font-thin m-b">Người dùng
+                                <h2 class="font-thin m-b">Từ khóa '{{data.keyword}}'
                                     <i class='fa fa-spinner fa fa-spin fa fa-large hidden search-spinner'></i>
                                 </h2>
                                 <div class="row row-sm">
@@ -212,6 +219,13 @@
                                                 <a href="javascript:" ng-click="user.followers=user.followers+1;user.followed=true;addFollow(user.id)" class="btn btn-xs btn-success m-t-xs" ng-if="user.followed==false">Theo dõi</a>
                                                 <a href="javascript:" ng-click="user.followers=user.followers-1;user.followed=false;removeFollow(user.id)" class="btn btn-xs active btn-success m-t-xs" ng-if="user.followed==true">Đã theo dõi</a>
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="" ng-if="!data.listResultUser">
+                                        <div class="text-center">
+                                            <img src="images/search.svg" class="thumb-xlg m-t-md m-b-md">
+                                            <h2>Không tìm thấy kết quả nào</h2>
+                                            <p class="m-b-lg">Vui lòng thử lại bằng từ khóa hoặc cách tìm kiếm khác.</p>
                                         </div>
                                     </div>
                                 </div>
