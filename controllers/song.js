@@ -34,6 +34,7 @@ myApp.controller('SongController', ['$scope', '$http', '$cookies', 'commentServi
 				console.log($scope.data.song);
 			});
 		}
+    	songService.doGetListRecommendSong($scope.data);
 	}
 	$scope.addComment = function(){
 		commentService.doUserAddComment($scope.data, function(){

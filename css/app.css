@@ -3399,6 +3399,10 @@ a.bg-light:focus {
 .avatar i.away {
   background-color: #fad733;
 }
+.thumb-xlg {
+  width: 400px;
+  display: inline-block;
+}
 .thumb-lg {
   width: 128px;
   display: inline-block;
@@ -4074,4 +4078,16 @@ fieldset[disabled] .i-checks input + i:before {
 
 .l-h-xs{
   line-height: 30px;
+}
+
+b.dot{
+  display: inline-block;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background-color: #9badb9;
+}
+
+a:hover b.dot{
+  background-color: #fff;
 }
