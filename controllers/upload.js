@@ -6,7 +6,6 @@ myApp.controller('UploadController', ['$scope', '$http', '$cookies', 'userServic
 	$scope.initAddSong = function(){
 		$scope.status = true;
 		userService.doGetUserByAuth($scope.data);
-		songService.doGetAllGenres($scope.data);
 	}
     $scope.addSong = function(){
 		songService.doAddSong($scope.data);

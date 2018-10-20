@@ -7,8 +7,15 @@
                     <div class="row line-xs">
                         <div class="wrapper-lg col-sm-4">
                             <div class="pos-rlt">
-                                <img class="img-full" src="http://localhost:8080/resource/image?name={{data.song.image}}" >
+                                <img class="img-full" src="http://localhost:8080/resource/image?name={{data.song.image}}">
                                 <div class="item-overlay active opacity bg-black">
+                                    <div class="top padder m-t-sm text-white">
+                                        <a href="javascript:" class="pull-right" ng-if="checkOwner()" ng-click="showEditSong()">
+                                            <b class="dot"></b>
+                                            <b class="dot"></b>
+                                            <b class="dot"></b>
+                                        </a>
+                                    </div>
                                     <div class="center text-center m-t-n">
                                         <a href="javascript:">
                                             <i class="icon-control-play i-2x" ng-click="playSong(data.song)"></i>
@@ -56,7 +63,7 @@
                 <section class="bg-black clearfix b-b b-gray">
                     <div class="panel-body">
                         <a href="./#!/profile/{{data.song.user.username}}" class="thumb pull-right m-l m-t-xs avatar">
-                            <img src="http://localhost:8080/resource/image?name={{data.song.user.avatar}}" >
+                            <img src="http://localhost:8080/resource/image?name={{data.song.user.avatar}}">
                             <i class="on md b-white bottom"></i>
                         </a>
                         <div class="clear">
@@ -64,11 +71,9 @@
                                 <i class="icon-twitter"></i>
                             </a>
                             <small class="block text-muted">{{data.song.user.followers}} người theo dõi</small>
-                            <a href="javascript:" class="btn btn-xs btn-success m-t-xs" 
-                                ng-click="data.song.user.followers=data.song.user.followers+1;data.song.user.followed=true;addFollow(data.song.user.id)"
+                            <a href="javascript:" class="btn btn-xs btn-success m-t-xs" ng-click="data.song.user.followers=data.song.user.followers+1;data.song.user.followed=true;addFollow(data.song.user.id)"
                                 ng-if="data.song.user.followed!=true&&data.song.user.username!=username">Theo dõi</a>
-                            <a href="javascript:" class="btn btn-xs btn-success m-t-xs active" 
-                                ng-click="data.song.user.followers=data.song.user.followers-1;data.song.user.followed=false;removeFollow(data.song.user.id)"
+                            <a href="javascript:" class="btn btn-xs btn-success m-t-xs active" ng-click="data.song.user.followers=data.song.user.followers-1;data.song.user.followed=false;removeFollow(data.song.user.id)"
                                 ng-if="data.song.user.followed==true&&data.song.user.username!=username">Đang theo dõi</a>
                         </div>
                     </div>
@@ -86,10 +91,11 @@
                 <!-- Comment -->
                 <section class="comment-list panel-body block bg-black">
                     <h2 class="font-thin padder-v bg-black line-xs">Bình luận</h2>
-                    <div class="more m-sm"><a href="javascript:" ng-click="loadComment(data.page+1)" ng-if="(data.page)*10<data.total">Xem thêm</a></div>
+                    <div class="more m-sm"><a href="javascript:" ng-click="loadComment(data.page+1)" ng-if="(data.page)*10<data.total">Xem
+                            thêm</a></div>
                     <article class="comment-item" ng-repeat="comment in data.listComment | orderBy:'id' track by $index">
                         <a class="pull-left thumb-sm avatar">
-                            <img src="http://localhost:8080/resource/image?name={{comment.user.avatar}}" class="img-circle" >
+                            <img src="http://localhost:8080/resource/image?name={{comment.user.avatar}}" class="img-circle">
                         </a>
                         <span class="arrow left"></span>
                         <section class="comment-body panel panel-default">
@@ -115,7 +121,7 @@
                     <!-- comment form -->
                     <article class="comment-item media" id="comment-form" ng-if="data.avatar">
                         <a class="pull-left thumb-sm avatar">
-                            <img src="http://localhost:8080/resource/image?name={{data.avatar}}" >
+                            <img src="http://localhost:8080/resource/image?name={{data.avatar}}">
                         </a>
                         <section class="media-body">
                             <form class="m-b-none">
@@ -144,7 +150,7 @@
                             <i class="icon-control-pause text-active"></i>
                         </a>
                         <a href="#" class="pull-left thumb-sm m-r">
-                            <img src="http://localhost:8080/resource/image?name={{s.image}}" >
+                            <img src="http://localhost:8080/resource/image?name={{s.image}}">
                         </a>
                         <a class="clear" href="./#!/song/{{s.id}}">
                             <span class="block text-ellipsis">{{s.title}}</span>
@@ -168,7 +174,7 @@
                             </span>
                         </a>
                         <a href="#">
-                            <img class="img-full" src="images/m40.jpg" >
+                            <img class="img-full" src="images/m40.jpg">
                         </a>
                     </div>
                     <div class="item pos-rlt">
@@ -179,7 +185,7 @@
                                 <i class="icon-arrow-right i-lg pull-left"></i> -</span>
                         </a>
                         <a href="#">
-                            <img class="img-full" src="images/m41.jpg" >
+                            <img class="img-full" src="images/m41.jpg">
                         </a>
                     </div>
                     <div class="item pos-rlt">
@@ -191,7 +197,7 @@
                             </span>
                         </a>
                         <a href="#">
-                            <img class="img-full" src="images/m42.jpg" >
+                            <img class="img-full" src="images/m42.jpg">
                         </a>
                     </div>
                     <div class="item pos-rlt">
@@ -202,7 +208,7 @@
                                 <i class="icon-arrow-right i-lg pull-left"></i> -</span>
                         </a>
                         <a href="#">
-                            <img class="img-full" src="images/m44.jpg" >
+                            <img class="img-full" src="images/m44.jpg">
                         </a>
                     </div>
                     <div class="item pos-rlt">
@@ -214,7 +220,7 @@
                             </span>
                         </a>
                         <a href="#">
-                            <img class="img-full" src="images/m45.jpg" >
+                            <img class="img-full" src="images/m45.jpg">
                         </a>
                     </div>
                 </div>
@@ -230,5 +236,50 @@
     <modal-footer>
         <button class="btn btn-default btn-sm" ng-click="cancelDeleteComment()">Hủy</button>
         <button class="btn btn-success btn-sm" ng-click="confirmDeleteComment(selected)">Xóa</button>
+    </modal-footer>
+</modal>
+<modal visible="showEditSongModal">
+    <modal-header title="Sửa thông tin"></modal-header>
+    <modal-body>
+        <div class="alert alert-danger" ng-if="data.success!=null&&!data.success">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <i class="fa fa-ban-circle"></i>
+            <strong>Ôi không!</strong>
+            {{data.msg}}
+        </div>
+        <div class="alert alert-success" ng-if="data.success!=null&&data.success">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <i class="fa fa-ok-sign"></i>
+            <strong>Thành công!</strong>
+            {{data.msg}}
+        </div>
+        <div class="form-group">
+            <label>Tiêu đề</label>
+            <input ng-model="data.selected.song.title" type="text" placeholder="Tiêu đề" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Lời bài hát</label>
+            <textarea class="form-control" ng-model="data.selected.song.lyric" rows="6" data-minwords="6" data-required="true"
+                placeholder="Viết gì đó ..."></textarea>
+        </div>
+        <div class="form-group">
+            <label>Thể loại</label>
+            <select ng-model="data.selected.song.genre" ng-options="obj.name for obj in genres track by obj.id" class="form-control m-b"></select>
+        </div>
+        <div class="form-group">
+            <label>Ảnh bìa</label><br>
+            <img class="thumb-md m-b" id="preview" src="http://localhost:8080/resource/image?name={{data.selected.song.image}}">
+            <input type="file" accept="image/*" file-model="data.selected.song.image" class="customfileinput">
+        </div>
+    </modal-body>
+    <modal-footer>
+        <button class="btn btn-default btn-sm" ng-click="hideEditSong();">Hủy</button>
+        <button class="btn btn-danger btn-sm" ng-click="deleteSong();">Xóa
+            <i class='fa fa-spinner fa fa-spin fa fa-large hidden' id="delete-spinner"></i>
+        </button>
+        <button class="btn btn-success btn-sm" ng-click="editSong();">Sửa
+            <i class='fa fa-spinner fa fa-spin fa fa-large hidden' id="edit-spinner"></i>
+        </button>
+
     </modal-footer>
 </modal>

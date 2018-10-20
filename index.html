@@ -48,7 +48,7 @@
                                     <modal-body>
                                         <input ng-model="data.playlist.keyword" type="text" placeholder="Tên playlist ..." class="form-control" />
                                         <ul class="list-group bg-white list-group-lg no-bg scrollable height-lg">
-                                            <li class="list-group-item clearfix" ng-repeat="playlist in data.userPlaylists" ng-show="showPlaylist(playlist.title)">
+                                            <li class="list-group-item clearfix" ng-repeat="playlist in userPlaylists" ng-show="showPlaylist(playlist.title)">
                                                 <span class="pull-right text-muted m-l l-h-sm">
                                                     <a href="javascript:" ng-click="addSongToPlaylist(data.selected.song, playlist)" ng-if="checkSonginPlaylist(data.selected.song, playlist)">
                                                         <i class="icon-plus"></i>
@@ -146,6 +146,7 @@
 <script src="./directive/jplayer.js"></script>
 <script src="./directive/modal.js"></script>
 <script src="./directive/file.js"></script>
+<script src="./directive/song.js"></script>
 <!-- service -->
 <script src="./service/user_service.js"></script>
 <script src="./service/song_service.js"></script>

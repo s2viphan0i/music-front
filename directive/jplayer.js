@@ -36,7 +36,7 @@ myApp.directive("jplayer", ['$window', 'songService', '$cookies', 'playerService
             scope.playerService = playerService;
 
             // When the Current track (on the service) changes - we want to tell jPlayer to play that new song
-            scope.$watch('playerService.CurrentTrack', function (value) {
+            scope.$watch('playerService.Data', function (value) {
                 if (value != null&&value.playlist==true){
                     $window.myPlaylist.setPlaylist([]);
                     for(var i=0;i<value.songs.length;i++){
@@ -69,7 +69,6 @@ myApp.directive("jplayer", ['$window', 'songService', '$cookies', 'playerService
                     })
                 }
             });
-
             // Pausing is controlled from a service (so many things can toggle it).
             // So watch it an control jPlayer when it changes
             scope.$watch('playerService.IsPaused', function (value) {
@@ -83,7 +82,6 @@ myApp.directive("jplayer", ['$window', 'songService', '$cookies', 'playerService
                 }
             });
             jPlayer.bind($.jPlayer.event.playing, function (event) {
-                console.log($window.myPlaylist.playlist[myPlaylist.current]);
                 if(!$window.myPlaylist.playlist[myPlaylist.current].next){
                     $window.myPlaylist.playlist[myPlaylist.current].next=true;
                     var d = {
@@ -106,8 +104,15 @@ myApp.directive("jplayer", ['$window', 'songService', '$cookies', 'playerService
                         })
                     })
                 }
+                var id = $window.myPlaylist.playlist[myPlaylist.current].id;
+                $('.playbtn'+id).addClass('icon-control-pause');
+                $('.playbtn'+id).removeClass('icon-control-play');
             });
-
+            jPlayer.bind($.jPlayer.event.pause , function (event) {
+                var id = $window.myPlaylist.playlist[myPlaylist.current].id;
+                $('.playbtn'+id).removeClass('icon-control-pause');
+                $('.playbtn'+id).addClass('icon-control-play');
+            });
             jPlayer.bind($.jPlayer.event.ended, function (event) {
                 // Song has ended, try to go next
                 if($cookies.get('auth')){

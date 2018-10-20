@@ -440,6 +440,65 @@ myApp.factory('songService', ['$http', '$cookies', '$location', function($http, 
             }
         });
     };
-    
+    songService.doEditSong = function(data){
+        $("#edit-spinner").removeClass("hidden");
+        var auth = $cookies.get("auth");
+        if(data.selected.song.lyric==undefined){
+            data.selected.song.lyric="";
+        }
+        return $http({
+            headers:{
+                'Authorization' : 'Basic ' + auth,
+                'Content-Type': undefined
+            },
+            data: { 
+                image: data.selected.song.image,
+                song: '{"title":"'+data.selected.song.title+'", "genre": {"id":"'+data.selected.song.genre.id+'"}, "lyric":"'+escape(data.selected.song.lyric)+'"}'
+            },
+            transformRequest: function (data, headersGetter) {
+                var formData = new FormData();
+                angular.forEach(data, function (value, key) {
+                    formData.append(key, value);
+                });
+                return formData;
+            },
+            url: host+'/user/songs/'+data.selected.song.id,
+            withCredentials: true,
+            method: 'PUT'
+        }).then(function (response){
+            $("#edit-spinner").addClass("hidden");
+            data.success = response.data.success;
+            data.msg = response.data.msg;
+        },function (error){
+            $("#edit-spinner").addClass("hidden");
+            if(error.status==404){
+                data.success=false;
+                data.msg="Có lỗi xảy ra! Vui lòng thử lại";
+            }
+        });
+    };
+    songService.doDeleteSong = function(data){
+        $("#delete-spinner").removeClass("hidden");
+        var auth = $cookies.get("auth");
+        return $http({
+            headers:{
+                'Authorization' : 'Basic ' + auth,
+                'Content-Type': undefined
+            },
+            url: host+'/user/songs/'+data.selected.song.id,
+            withCredentials: true,
+            method: 'DELETE'
+        }).then(function (response){
+            $("#delete-spinner").addClass("hidden");
+            data.success = response.data.success;
+            data.msg = response.data.msg;
+        },function (error){
+            $("#delete-spinner").addClass("hidden");
+            if(error.status==404){
+                data.success=false;
+                data.msg="Có lỗi xảy ra! Vui lòng thử lại";
+            }
+        });
+    };
     return songService;
 }])

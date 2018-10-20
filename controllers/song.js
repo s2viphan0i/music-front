@@ -50,6 +50,31 @@ myApp.controller('SongController', ['$scope', '$http', '$cookies', 'commentServi
 			$scope.data.comment.content = "";
 		});
 	}
+	$scope.checkOwner = function(){
+		if($cookies.get('auth')&&$scope.data.song.user){
+			return $cookies.get('username') == $scope.data.song.user.username;
+		}
+		return false;
+	}
+	$scope.showEditSong = function(){
+		$scope.data.msg = '';
+		$scope.data.success = undefined;
+		if($scope.data.song){
+			$scope.data.selected = {
+				song : angular.copy($scope.data.song)
+			}
+		}
+		$scope.showEditSongModal=true;
+	}
+	$scope.hideEditSong = function(){
+		$scope.showEditSongModal=false;
+	}
+	$scope.editSong = function(){
+		songService.doEditSong($scope.data);
+	}
+	$scope.deleteSong = function(){
+		songService.doDeleteSong($scope.data);
+	}
 	$scope.loadComment = function(page){
 		$scope.data.songId = $routeParams.id;
 		$scope.data.page = page;
