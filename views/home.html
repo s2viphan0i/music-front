@@ -12,56 +12,7 @@
 </h2>
 <div class="row row-sm">
     <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2" ng-repeat="song in data.listNewSong">
-        <div class="item">
-            <div class="pos-rlt">
-                <div class="item-overlay opacity r r-2x bg-black">
-                    <div class="top padder m-t-sm text-white">
-                        <a>{{song.views}} lượt nghe</a>
-                        <a href="javascript:" class="pull-right">
-                            <b class="dot"></b>
-                            <b class="dot"></b>
-                            <b class="dot"></b>
-                        </a>
-                    </div>
-                    <div class="center text-center m-t-n">
-                        <a href="javascript:">
-                            <i class="icon-control-play i-2x" ng-click="playSong(song)"></i>
-                        </a>
-                    </div>
-                    <div class="bottom padder m-b-sm">
-                        <a href="javascript:" class="pull-right" ng-if="song.favorited!=true">
-                            <i class="fa fa-heart-o" ng-click="addFavorite(song)"></i>
-                        </a>
-                        <a href="javascript:" class="pull-right active" data-toggle="class" ng-if="song.favorited==true">
-                            <i class="fa fa-heart-o text"></i>
-                            <i class="fa fa-heart text-active text-danger" ng-click="removeFavorite(song)"></i>
-                        </a>
-                        <div class="btn-group">
-                            <a href="javascript:" data-toggle="dropdown">
-                                <i class="fa fa-plus-circle"></i>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a href="javascript:" ng-click="addSongToPlaying(song)">
-                                        <i class="icon-list"></i> Thêm vào đang phát</a>
-                                </li>
-                                <li>
-                                    <a href="javascript:" ng-click="showAddPlaylist(song)">
-                                        <i class="icon-playlist"></i> Thêm vào playlist</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <a href="#">
-                    <img src="http://localhost:8080/resource/image?name={{song.image}}" alt="" class="r r-2x img-full">
-                </a>
-            </div>
-            <div class="padder-v">
-                <a href="./#!/song/{{song.id}}" class="text-ellipsis" data-toggle="tooltip" title="{{song.title}}">{{song.title}}</a>
-                <a href="./#!/profile/{{song.user.username}}" class="text-ellipsis text-xs text-muted">{{song.user.fullname}}</a>
-            </div>
-        </div>
+        <song song="song" show-add-playlist="showAddPlaylist(song)"></song>
     </div>
 </div>
 <a href="javascript:" ng-click="getListMostFavoriteSong()" class="pull-right text-muted m-t-lg">
@@ -78,51 +29,7 @@
 </h2>
 <div class="row row-sm">
     <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2" ng-repeat="song in data.listMostFavoriteSong">
-        <div class="item">
-            <div class="pos-rlt">
-                <div class="item-overlay opacity r r-2x bg-black">
-                    <div class="top padder m-t-sm text-white">
-                        <p>{{song.views}} lượt nghe</p>
-                    </div>
-                    <div class="center text-center m-t-n">
-                        <a href="javascript:">
-                            <i class="icon-control-play i-2x" ng-click="playSong(song)"></i>
-                        </a>
-                    </div>
-                    <div class="bottom padder m-b-sm">
-                        <a href="javascript:" class="pull-right" ng-if="song.favorited!=true">
-                            <i class="fa fa-heart-o" ng-click="song.favorited=true;addFavorite(song)"></i>
-                        </a>
-                        <a href="javascript:" class="pull-right active" data-toggle="class" ng-if="song.favorited==true">
-                            <i class="fa fa-heart-o text"></i>
-                            <i class="fa fa-heart text-active text-danger" ng-click="song.favorited=false;removeFavorite(song)"></i>
-                        </a>
-                        <div class="btn-group">
-                            <a href="javascript:" data-toggle="dropdown">
-                                <i class="fa fa-plus-circle"></i>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a href="javascript:" ng-click="addSongToPlaying(song)">
-                                        <i class="icon-list"></i> Thêm vào đang phát</a>
-                                </li>
-                                <li>
-                                    <a href="javascript:" ng-click="showAddPlaylist(song)">
-                                        <i class="icon-playlist"></i> Thêm vào playlist</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <a href="#">
-                    <img src="http://localhost:8080/resource/image?name={{song.image}}" alt="" class="r r-2x img-full">
-                </a>
-            </div>
-            <div class="padder-v">
-                <a href="./#!/song/{{song.id}}" class="text-ellipsis" data-toggle="tooltip" title="{{song.title}}">{{song.title}}</a>
-                <a href="./#!/profile/{{song.user.username}}" class="text-ellipsis text-xs text-muted">{{song.user.fullname}}</a>
-            </div>
-        </div>
+        <song song="song" show-add-playlist="showAddPlaylist(song)"></song>
     </div>
 </div>
 <div class="row">

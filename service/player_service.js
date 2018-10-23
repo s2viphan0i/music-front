@@ -1,10 +1,11 @@
 myApp.service("playerService", [function () {
     this.IsPaused = false;
     this.CurrentTrack = null;
+    this.Data = null;
     this.CurrentTime = 0;
 	
     this.Play = function (track) {
-        this.CurrentTrack = track;
+        this.Data = track;
         this.IsPaused = false;
     };
     this.Stop = function (){

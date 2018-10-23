@@ -30,8 +30,9 @@ myApp.controller('IndexController', ['$scope', '$http', 'songService', 'playerSe
 			}
 		};
 		if($cookies.get('auth')){
-			userService.doUserGetFollowing($scope.data);
-			playlistService.doGetAllUserPlaylist($scope.data);
+			userService.doUserGetFollowing($scope);
+			playlistService.doGetAllUserPlaylist($scope);
+			songService.doGetAllGenres($scope);
 		}
     });
 	$scope.login = function(){
@@ -72,10 +73,10 @@ myApp.controller('IndexController', ['$scope', '$http', 'songService', 'playerSe
 	$scope.createPlaylist = function(){
 		if($cookies.get("auth")){
 			playlistService.doCreatePlaylist($scope.data).then(function(){
-				if(!$scope.data.userPlaylists){
-					$scope.data.userPlaylists = [];
+				if(!$scope.userPlaylists){
+					$scope.userPlaylists = [];
 				}
-				$scope.data.userPlaylists.push($scope.data.created);
+				$scope.userPlaylists.push($scope.data.created);
 				$scope.data.playlist.title = "";
 				$scope.data.playlist.image = "";
 			});
