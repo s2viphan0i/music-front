@@ -12,8 +12,7 @@ myApp.controller('SongController', ['$scope', '$http', '$cookies', 'commentServi
 	$scope.getSongById = function(){
 		$scope.showDeleteModal = false;
 		$scope.data = [];
-		if($cookies.get('auth')){
-			$scope.data.auth = $cookies.get('auth');
+		if($cookies.get('token')){
 			$scope.data.username = $cookies.get('username');
 			$scope.data.fullname = $cookies.get('fullname');
 			$scope.data.avatar = $cookies.get('avatar');
@@ -21,7 +20,7 @@ myApp.controller('SongController', ['$scope', '$http', '$cookies', 'commentServi
 		$scope.data.song = {
 			id : $routeParams.id
 		}
-		if($cookies.get('auth')){
+		if($cookies.get('token')){
 			songService.doUserGetSongById($scope.data, function(){
 				$scope.data.song.lyric = unescape($scope.data.song.lyric);
 				userService.doUserGetUserById($scope.data.song);
@@ -51,7 +50,7 @@ myApp.controller('SongController', ['$scope', '$http', '$cookies', 'commentServi
 		});
 	}
 	$scope.checkOwner = function(){
-		if($cookies.get('auth')&&$scope.data.song.user){
+		if($cookies.get('token')&&$scope.data.song.user){
 			return $cookies.get('username') == $scope.data.song.user.username;
 		}
 		return false;

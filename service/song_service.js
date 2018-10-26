@@ -2,14 +2,11 @@ myApp.factory('songService', ['$http', '$cookies', '$location', function($http, 
     var songService = {};
     var host = "http://localhost:8080";
     songService.doGetAllGenres = function(data){
-        var auth = $cookies.get("auth");
         $http({
             headers:{
-                'Authorization' : 'Basic ' + auth,
-                'Content-Type': undefined
+                'x-auth-token' : $cookies.get('token')
             },
             url: host+'/user/genre/genres',
-            withCredentials: true,
             method: 'GET'
         }).then(function (response){
             data.genres = response.data.content;
@@ -25,7 +22,6 @@ myApp.factory('songService', ['$http', '$cookies', '$location', function($http, 
                 page: 1
             },
             url: host+'/songs/list',
-            withCredentials: true,
             method: 'POST'
         }).then(function (response){
             $("#new-spinner").removeClass("fa-spin");
@@ -59,7 +55,6 @@ myApp.factory('songService', ['$http', '$cookies', '$location', function($http, 
     songService.doGetSongById = function(data, callback){
         return $http({
             url: host+'/songs/'+data.song.id,
-            withCredentials: true,
             method: 'GET'
         }).then(function (response){
             // $("#new-spinner").addClass("hidden");
@@ -77,13 +72,11 @@ myApp.factory('songService', ['$http', '$cookies', '$location', function($http, 
         });
     };
     songService.doUserGetSongById = function(data, callback){
-        var auth = $cookies.get("auth");
         return $http({
             headers:{
-                'Authorization' : 'Basic ' + auth,
+                'x-auth-token' : $cookies.get('token')
             },
             url: host+'/user/songs/'+data.song.id,
-            withCredentials: true,
             method: 'GET'
         }).then(function (response){
             // $("#new-spinner").addClass("hidden");
@@ -134,10 +127,9 @@ myApp.factory('songService', ['$http', '$cookies', '$location', function($http, 
     };
     songService.doUserGetSongByKeyword = function(data){
         $(".search-spinner").removeClass("hidden");
-        var auth = $cookies.get("auth");
         return $http({
             headers:{
-                'Authorization' : 'Basic ' + auth,
+                'x-auth-token' : $cookies.get('token')
             },
             data: { 
                 keyword : data.keyword,
@@ -147,7 +139,6 @@ myApp.factory('songService', ['$http', '$cookies', '$location', function($http, 
                 page: data.page
             },
             url: host+'/user/songs/list',
-            withCredentials: true,
             method: 'POST'
         }).then(function (response){
             $(".search-spinner").addClass("hidden");
@@ -175,7 +166,6 @@ myApp.factory('songService', ['$http', '$cookies', '$location', function($http, 
                 page: data.page
             },
             url: host+'/songs/list',
-            withCredentials: true,
             method: 'POST'
         }).then(function (response){
             $(".search-spinner").addClass("hidden");
@@ -194,10 +184,9 @@ myApp.factory('songService', ['$http', '$cookies', '$location', function($http, 
     };
     songService.doUserGetSongByUserId = function(data){
         $(".song-spinner").removeClass("hidden");
-        var auth = $cookies.get("auth");
         return $http({
             headers:{
-                'Authorization' : 'Basic ' + auth,
+                'x-auth-token' : $cookies.get('token')
             },
             data: { 
                 keyword : data.keyword,
@@ -208,7 +197,6 @@ myApp.factory('songService', ['$http', '$cookies', '$location', function($http, 
                 page: data.page
             },
             url: host+'/user/songs/list',
-            withCredentials: true,
             method: 'POST'
         }).then(function (response){
             $(".song-spinner").addClass("hidden");
@@ -259,13 +247,11 @@ myApp.factory('songService', ['$http', '$cookies', '$location', function($http, 
         });
     };
     songService.doUserViewSong = function(id){
-        var auth = $cookies.get("auth");
         return $http({
             headers:{
-                'Authorization' : 'Basic ' + auth,
+                'x-auth-token' : $cookies.get('token')
             },
             url: host+'/user/songs/'+id+'/views',
-            withCredentials: true,
             method: 'POST'
         }).then(function (response){
             console.log(response);
@@ -274,21 +260,11 @@ myApp.factory('songService', ['$http', '$cookies', '$location', function($http, 
         });
     };
     songService.doUserFavoriteSong = function(songId){
-        var auth = $cookies.get("auth");
         return $http({
             headers:{
-                'Authorization' : 'Basic ' + auth,
-                'Content-Type': undefined
-            },
-            transformRequest: function (data, headersGetter) {
-                var formData = new FormData();
-                angular.forEach(data, function (value, key) {
-                    formData.append(key, value);
-                });
-                return formData;
+                'x-auth-token' : $cookies.get('token')
             },
             url: host+'/user/songs/'+songId+'/favorites',
-            withCredentials: true,
             method: 'POST'
         }).then(function (response){
             console.log(response);
@@ -301,10 +277,9 @@ myApp.factory('songService', ['$http', '$cookies', '$location', function($http, 
     }
     songService.doUserGetListNewSong = function(data){
         $("#new-spinner").addClass("fa-spin");
-        var auth = $cookies.get("auth");
         return $http({
             headers:{
-                'Authorization' : 'Basic ' + auth,
+                'x-auth-token' : $cookies.get('token')
             },
             data: { 
                 sortField: "id",
@@ -313,7 +288,6 @@ myApp.factory('songService', ['$http', '$cookies', '$location', function($http, 
                 page: 1
             },
             url: host+'/user/songs/list',
-            withCredentials: true,
             method: 'POST'
         }).then(function (response){
             $("#new-spinner").removeClass("fa-spin");
@@ -322,6 +296,33 @@ myApp.factory('songService', ['$http', '$cookies', '$location', function($http, 
             data.listNewSong = response.data.content;
         },function (error){
             $("#new-spinner").removeClass("fa-spin");
+            if(error.status==404){
+                data.success=false;
+                data.msg="Có lỗi xảy ra! Vui lòng thử lại";
+            }
+        });
+    };
+    songService.doUserGetListFollowingSong = function(data){
+        $("#following-spinner").addClass("fa-spin");
+        return $http({
+            headers:{
+                'x-auth-token' : $cookies.get('token')
+            },
+            data: { 
+                sortField: "create_time",
+                sortOrder: "descend",
+                results: 6,
+                page: 1
+            },
+            url: host+'/user/songs/following/list',
+            method: 'POST'
+        }).then(function (response){
+            $("#following-spinner").removeClass("fa-spin");
+            data.success = response.data.success;
+            data.msg = response.data.msg;
+            data.listFollowingSong = response.data.content;
+        },function (error){
+            $("#following-spinner").removeClass("fa-spin");
             if(error.status==404){
                 data.success=false;
                 data.msg="Có lỗi xảy ra! Vui lòng thử lại";
@@ -369,10 +370,9 @@ myApp.factory('songService', ['$http', '$cookies', '$location', function($http, 
         var firstDayString = moment(firstDay.toString()).format("DD-MM-YYYY")
         var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
         var lastDayString = moment(lastDay.toString()).format("DD-MM-YYYY")
-        var auth = $cookies.get("auth");
         return $http({
             headers:{
-                'Authorization' : 'Basic ' + auth,
+                'x-auth-token' : $cookies.get('token')
             },
             data: { 
                 sortField: "favorites",
@@ -383,7 +383,6 @@ myApp.factory('songService', ['$http', '$cookies', '$location', function($http, 
                 favoriteEndDate : lastDayString
             },
             url: host+'/user/songs/list',
-            withCredentials: true,
             method: 'POST'
         }).then(function (response){
             $("#mostfavorite-spinner").removeClass("fa-spin");
@@ -403,13 +402,12 @@ myApp.factory('songService', ['$http', '$cookies', '$location', function($http, 
             data.mode = true;
         }
         $("#add-spinner").removeClass("hidden");
-        var auth = $cookies.get("auth");
         if(data.lyric==undefined){
             data.lyric="";
         }
         return $http({
             headers:{
-                'Authorization' : 'Basic ' + auth,
+                'x-auth-token' : $cookies.get('token'),
                 'Content-Type': undefined
             },
             data: { 
@@ -426,7 +424,6 @@ myApp.factory('songService', ['$http', '$cookies', '$location', function($http, 
                 return formData;
             },
             url: host+'/user/songs',
-            withCredentials: true,
             method: 'POST'
         }).then(function (response){
             $("#add-spinner").addClass("hidden");
@@ -442,13 +439,12 @@ myApp.factory('songService', ['$http', '$cookies', '$location', function($http, 
     };
     songService.doEditSong = function(data){
         $("#edit-spinner").removeClass("hidden");
-        var auth = $cookies.get("auth");
         if(data.selected.song.lyric==undefined){
             data.selected.song.lyric="";
         }
         return $http({
             headers:{
-                'Authorization' : 'Basic ' + auth,
+                'x-auth-token' : $cookies.get('token'),
                 'Content-Type': undefined
             },
             data: { 
@@ -463,7 +459,6 @@ myApp.factory('songService', ['$http', '$cookies', '$location', function($http, 
                 return formData;
             },
             url: host+'/user/songs/'+data.selected.song.id,
-            withCredentials: true,
             method: 'PUT'
         }).then(function (response){
             $("#edit-spinner").addClass("hidden");
@@ -479,14 +474,11 @@ myApp.factory('songService', ['$http', '$cookies', '$location', function($http, 
     };
     songService.doDeleteSong = function(data){
         $("#delete-spinner").removeClass("hidden");
-        var auth = $cookies.get("auth");
         return $http({
             headers:{
-                'Authorization' : 'Basic ' + auth,
-                'Content-Type': undefined
+                'x-auth-token' : $cookies.get('token')
             },
             url: host+'/user/songs/'+data.selected.song.id,
-            withCredentials: true,
             method: 'DELETE'
         }).then(function (response){
             $("#delete-spinner").addClass("hidden");

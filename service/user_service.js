@@ -2,26 +2,26 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
     var userService = {};
     var host = "http://localhost:8080"
     userService.doLogin = function(data){
+        var expireDate = new Date();
+        expireDate.setDate(expireDate.getDate() + 1);
         var auth = btoa(unescape(data.username+":"+data.password));
         $("#login-spinner").removeClass("hidden")
         return $http({
             headers:{
-                'Content-Type': 'application/json',
+                'Authorization' : 'Basic ' + auth,
+                'Content-Type': 'application/json'
             },
-            data:{
-                username:data.username,
-                password:data.password
-            },
-            url: host+'/login',
+            url: host+'/user/login',
+            withCredentials: true,
             method: 'POST'
         }).then(function (response){
             $("#login-spinner").addClass("hidden");
             if(response.data.success){
-                $cookies.put('id', response.data.content.id);
-                $cookies.put('username', response.data.content.username);
-                $cookies.put('fullname', response.data.content.fullname);
-                $cookies.put('avatar', response.data.content.avatar);
-                $cookies.put('auth', auth);
+                $cookies.put('id', response.data.content.id, {'expires': expireDate});
+                $cookies.put('username', response.data.content.username, {'expires': expireDate});
+                $cookies.put('fullname', response.data.content.fullname, {'expires': expireDate});
+                $cookies.put('avatar', response.data.content.avatar, {'expires': expireDate});
+                $cookies.put('token', response.headers('x-auth-token'), {'expires': expireDate});
                 $location.path('/home');
             }else{
                 data.success=false;
@@ -132,10 +132,9 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
         });
     };
     userService.doUserGetUserByUsername = function(data){
-        var auth = $cookies.get("auth");
         return $http({
             headers:{
-                'Authorization' : 'Basic ' + auth
+                'x-auth-token' : $cookies.get('token')
             },
             url: host+'/user/users/username/'+data.user.username,
             withCredentials: true,
@@ -151,11 +150,7 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
     };
     userService.doGetUserById = function(data){
         return $http({
-            headers:{
-
-            },
             url: host+'/users/'+data.user.id,
-            withCredentials: true,
             method: 'GET'
         }).then(function (response){
             data.user = response.data.content;
@@ -167,13 +162,11 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
         });
     };
     userService.doUserGetUserById = function(data){
-        var auth = $cookies.get("auth");
         return $http({
             headers:{
-                'Authorization' : 'Basic ' + auth
+                'x-auth-token' : $cookies.get('token')
             },
             url: host+'/user/users/'+data.user.id,
-            withCredentials: true,
             method: 'GET'
         }).then(function (response){
             data.user = response.data.content;
@@ -185,14 +178,12 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
         });
     };
     userService.doGetUserByAuth = function(data){
-        var auth = $cookies.get("auth");
         var username = $cookies.get("username");
         return $http({
             headers:{
-                'Authorization' : 'Basic ' + auth
+                'x-auth-token' : $cookies.get('token')
             },
             url: host+'/user/users/auth',
-            withCredentials: true,
             method: 'GET'
         }).then(function (response){
             data.user = response.data.content;
@@ -206,7 +197,6 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
     userService.doEditUser = function(data){
         $("#edit-spinner").removeClass("hidden");
         console.log(data);
-        var auth = $cookies.get("auth");
         if(data.user.note==undefined){
             data.user.note=""
         }
@@ -221,7 +211,7 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
         }
         return $http({
             headers:{
-                'Authorization' : 'Basic ' + auth,
+                'x-auth-token' : $cookies.get('token'),
                 'Content-Type': undefined
             },
             data: { 
@@ -236,7 +226,6 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
                 return formData;
             },
             url: host+'/user/users/'+data.user.id,
-            withCredentials: true,
             method: 'PUT'
         }).then(function (response){
             $("#edit-spinner").addClass("hidden");
@@ -255,21 +244,19 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
         });
     };
     userService.doLogout = function(){
-        $cookies.remove("auth");
+        $cookies.remove("token");
+        $cookies.remove("id");
         $cookies.remove("avatar");
         $cookies.remove("username");
         $cookies.remove("fullname");
         $location.path("/login");
     };
     userService.doFollow = function(userId){
-        var auth = $cookies.get("auth");
         return $http({
             headers:{
-                'Authorization' : 'Basic ' + auth,
-                'Content-Type': undefined
+                'x-auth-token' : $cookies.get('token')
             },
             url: host+'/user/users/'+userId+'/follows',
-            withCredentials: true,
             method: 'POST'
         }).then(function (response){
             console.log(response);
@@ -281,7 +268,7 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
         });
     }
     userService.getAuthStatus = function(){
-        var status = $cookies.get('auth');
+        var status = $cookies.get('token');
         if(status){
             return true;
         }else{
@@ -290,10 +277,9 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
     };
     userService.doUserGetUserByKeyword = function(data){
         $(".search-spinner").removeClass("hidden");
-        var auth = $cookies.get("auth");
         return $http({
             headers:{
-                'Authorization' : 'Basic ' + auth,
+                'x-auth-token' : $cookies.get('token')
             },
             data: { 
                 keyword : data.keyword,
@@ -303,7 +289,6 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
                 page: data.page
             },
             url: host+'/user/users/list',
-            withCredentials: true,
             method: 'POST'
         }).then(function (response){
             $(".search-spinner").addClass("hidden");
@@ -323,6 +308,9 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
     userService.doGetUserByKeyword = function(data){
         $(".search-spinner").removeClass("hidden");
         return $http({
+            headers:{
+                'x-auth-token' : $cookies.get('token')
+            },
             data: { 
                 keyword : data.keyword,
                 sortField: "followers",
@@ -331,7 +319,6 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
                 page: data.page
             },
             url: host+'/users/list',
-            withCredentials: true,
             method: 'POST'
         }).then(function (response){
             $(".search-spinner").addClass("hidden");
@@ -349,22 +336,20 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
         });
     };
     userService.getCookie = function(){
-        return $cookies.get('auth');
+        return $cookies.get('username');
     }
     userService.doUserGetFollowing = function(data){
-        var auth = $cookies.get("auth");
         return $http({
             headers:{
-                'Authorization' : 'Basic ' + auth,
+                'x-auth-token' : $cookies.get('token')
             },
             data: { 
-                sortField: "id",
+                sortField: "timestamp",
                 sortOrder: "descend",
                 results: 10,
                 page: 1
             },
             url: host+'/user/users/followings/list',
-            withCredentials: true,
             method: 'POST'
         }).then(function (response){
             data.success = response.data.success;

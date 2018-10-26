@@ -3,10 +3,9 @@ myApp.factory('playlistService', ['$http', '$cookies', '$location', function($ht
     var host = "http://localhost:8080";
     playlistService.doCreatePlaylist = function(data){
         $("#add-spinner").removeClass("hidden");
-        var auth = $cookies.get("auth");
         return $http({
             headers:{
-                'Authorization' : 'Basic ' + auth,
+                'x-auth-token' : $cookies.get('token'),
                 'Content-Type': undefined
             },
             data: { 
@@ -21,7 +20,6 @@ myApp.factory('playlistService', ['$http', '$cookies', '$location', function($ht
                 return formData;
             },
             url: host+'/user/playlists',
-            withCredentials: true,
             method: 'POST'
         }).then(function (response){
             $("#add-spinner").addClass("hidden");
@@ -38,14 +36,11 @@ myApp.factory('playlistService', ['$http', '$cookies', '$location', function($ht
     };
     playlistService.doGetAllUserPlaylist = function(data){
         $("#playlist-spinner").removeClass("hidden");
-        var auth = $cookies.get("auth");
         return $http({
             headers:{
-                'Authorization' : 'Basic ' + auth,
-                'Content-Type': undefined
+                'x-auth-token' : $cookies.get('token')
             },
             url: host+'/user/playlists/list',
-            withCredentials: true,
             method: 'POST'
         }).then(function (response){
             $("#playlist-spinner").addClass("hidden");
@@ -64,13 +59,12 @@ myApp.factory('playlistService', ['$http', '$cookies', '$location', function($ht
         var auth = $cookies.get("auth");
         return $http({
             headers:{
-                'Authorization' : 'Basic ' + auth
+                'x-auth-token' : $cookies.get('token')
             },
             data: { 
                 id: song.id
             },
             url: host+'/user/playlists/'+playlist.id+'/songs/',
-            withCredentials: true,
             method: 'POST'
         }).then(function (response){
             data.success = response.data.success;
@@ -86,10 +80,9 @@ myApp.factory('playlistService', ['$http', '$cookies', '$location', function($ht
         var auth = $cookies.get("auth");
         return $http({
             headers:{
-                'Authorization' : 'Basic ' + auth
+                'x-auth-token' : $cookies.get('token')
             },
             url: host+'/user/playlists/'+playlist.id+'/songs/'+song.id,
-            withCredentials: true,
             method: 'DELETE'
         }).then(function (response){
             data.success = response.data.success;
@@ -104,7 +97,6 @@ myApp.factory('playlistService', ['$http', '$cookies', '$location', function($ht
     playlistService.doGetPlaylistById = function(data){
         return $http({
             url: host+'/playlists/'+data.playlist.id,
-            withCredentials: true,
             method: 'GET'
         }).then(function (response){
             // $("#new-spinner").addClass("hidden");
@@ -121,10 +113,9 @@ myApp.factory('playlistService', ['$http', '$cookies', '$location', function($ht
     };
     playlistService.doUserGetPlaylistByUserId = function(data){
         $(".song-spinner").removeClass("hidden");
-        var auth = $cookies.get("auth");
         return $http({
             headers:{
-                'Authorization' : 'Basic ' + auth,
+                'x-auth-token' : $cookies.get('token')
             },
             data: { 
                 keyword : data.keyword,
@@ -135,7 +126,6 @@ myApp.factory('playlistService', ['$http', '$cookies', '$location', function($ht
                 page: data.page
             },
             url: host+'/playlists/list',
-            withCredentials: true,
             method: 'POST'
         }).then(function (response){
             $(".song-spinner").addClass("hidden");
@@ -166,7 +156,6 @@ myApp.factory('playlistService', ['$http', '$cookies', '$location', function($ht
                 page: data.page
             },
             url: host+'/playlists/list',
-            withCredentials: true,
             method: 'POST'
         }).then(function (response){
             $(".search-spinner").addClass("hidden");

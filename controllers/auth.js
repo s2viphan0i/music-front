@@ -4,8 +4,7 @@ myApp.controller('AuthController', ['$scope', '$http', 'userService', '$location
 	console.log('AuthController loaded...');
 	$scope.data = [];
 	$scope.login = function(){
-		userService.doLogin($scope.data).then(function(){
-        })
+		userService.doLogin($scope.data);
 	}
 	$scope.reset = function(){
 		$scope.user.username = '';
