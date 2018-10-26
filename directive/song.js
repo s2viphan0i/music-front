@@ -30,17 +30,17 @@ myApp.directive('song', ['playlistService', 'songService', 'playerService', '$co
                 });
             }
             scope.addFavorite = function(){
-                if($cookies.get('auth')){
+                if($cookies.get('token')){
                     songService.doUserFavoriteSong(scope.song.id).then(function(){
                         scope.song.favorited=true;
-                        scope.song.favorites=song.favorites+1;
+                        scope.song.favorites=scope.song.favorites+1;
                     });
                 } else {
                     $location.path('/login');
                 }
             }
             scope.removeFavorite = function(){
-                if($cookies.get('auth')){
+                if($cookies.get('token')){
                     songService.doUserFavoriteSong(scope.song.id).then(function(){
                         scope.song.favorited=false;
                         scope.song.favorites=song.favorites-1;

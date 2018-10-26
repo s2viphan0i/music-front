@@ -2,16 +2,14 @@ myApp.factory('commentService', ['$http', '$cookies', '$location', function ($ht
     var commentService = {};
     var host = "http://localhost:8080";
     commentService.doUserAddComment = function (data, callback) {
-        var auth = $cookies.get("auth");
         return $http({
-            headers: {
-                'Authorization': 'Basic ' + auth
+            headers:{
+                'x-auth-token' : $cookies.get('token')
             },
             data: {
                 content: escape(data.comment.content)
             },
             url: host + '/user/songs/' + data.song.id + '/comments',
-            withCredentials: true,
             method: 'POST'
         }).then(function (response) {
             data.success = response.data.success;
@@ -55,13 +53,11 @@ myApp.factory('commentService', ['$http', '$cookies', '$location', function ($ht
         });
     };
     commentService.doUserDeleteComment = function (data, callback) {
-        var auth = $cookies.get("auth");
         return $http({
-            headers: {
-                'Authorization': 'Basic ' + auth
+            headers:{
+                'x-auth-token' : $cookies.get('token')
             },
             url: host + '/user/comments/' + data.comment.id,
-            withCredentials: true,
             method: 'DELETE'
         }).then(function (response) {
             data.success = response.data.success;

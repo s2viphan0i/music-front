@@ -32,6 +32,13 @@
         <song song="song" show-add-playlist="showAddPlaylist(song)"></song>
     </div>
 </div>
+<h2 class="font-thin m-b" ng-if="data.listFollowingSong">Upload gần đây
+</h2>
+<div class="row row-sm">
+    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2" ng-if="data.listFollowingSong" ng-repeat="song in data.listFollowingSong">
+        <song song="song" show-add-playlist="showAddPlaylist(song)"></song>
+    </div>
+</div>
 <div class="row">
     <div class="col-md-7">
         <h3 class="font-thin">New Songs</h3>

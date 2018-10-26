@@ -24,7 +24,7 @@ myApp.controller('SearchController', ['$scope', '$http', '$cookies', 'userServic
 				$("#song-tab").addClass("active");
 				$(".tab-content .tab-pane").removeClass("active");
 				$("#song").addClass("active");
-				if($cookies.get('auth')){
+				if($cookies.get('token')){
 					songService.doUserGetSongByKeyword($scope.data);
 				} else{
 					songService.doGetSongByKeyword($scope.data);
@@ -35,7 +35,7 @@ myApp.controller('SearchController', ['$scope', '$http', '$cookies', 'userServic
 				$("#user-tab").addClass("active");
 				$(".tab-content .tab-pane").removeClass("active");
 				$("#user").addClass("active");
-				if($cookies.get('auth')){
+				if($cookies.get('token')){
 					userService.doUserGetUserByKeyword($scope.data);
 				} else{
 					songService.doGetUserByKeyword($scope.data);

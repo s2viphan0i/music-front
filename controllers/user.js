@@ -19,7 +19,7 @@ myApp.controller('UserController', ['$scope', '$http', '$cookies', 'playlistServ
 					username : $routeParams.username
 				}
 			};
-			if($cookies.get('auth')){
+			if($cookies.get('token')){
 				userService.doUserGetUserByUsername($scope.data).then(function(){
 					$scope.getSongByUser(1);
 				});
@@ -51,7 +51,7 @@ myApp.controller('UserController', ['$scope', '$http', '$cookies', 'playlistServ
 		if(page==1){
 			$scope.data.listResult = [];
 		}
-		if($cookies.get('auth')){
+		if($cookies.get('token')){
 			songService.doUserGetSongByUserId($scope.data);
 		} else{
 			songService.doGetSongByUserId($scope.data);
@@ -63,7 +63,7 @@ myApp.controller('UserController', ['$scope', '$http', '$cookies', 'playlistServ
 		if(page==1){
 			$scope.data.listResult = [];
 		}
-		if($cookies.get('auth')){
+		if($cookies.get('token')){
 			playlistService.doUserGetPlaylistByUserId($scope.data);
 		} else{
 			playlistService.doGetPlaylistByUserId($scope.data);

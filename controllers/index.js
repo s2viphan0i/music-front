@@ -20,16 +20,15 @@ myApp.controller('IndexController', ['$scope', '$http', 'songService', 'playerSe
 		$location.path('/search').search({keyword: key, type: $routeParams.type});
 	}
 
-	$scope.$watch(function() { return $cookies.get('auth'); }, function(newValue) {
+	$scope.$watch(function() { return $cookies.get('token'); }, function(newValue) {
         $scope.data = {
-			auth : $cookies.get('auth'),
 			cookie : {
 				username : $cookies.get('username'),
 				fullname : $cookies.get('fullname'),
 				avatar : $cookies.get('avatar'),
 			}
 		};
-		if($cookies.get('auth')){
+		if($cookies.get('token')){
 			userService.doUserGetFollowing($scope);
 			playlistService.doGetAllUserPlaylist($scope);
 			songService.doGetAllGenres($scope);
@@ -43,7 +42,6 @@ myApp.controller('IndexController', ['$scope', '$http', 'songService', 'playerSe
         })
 	}
 	$scope.logout = function(){
-		$scope.data.auth = null;
 		$scope.cookie = null;
 		userService.doLogout();
 	}
@@ -56,7 +54,7 @@ myApp.controller('IndexController', ['$scope', '$http', 'songService', 'playerSe
 		$scope.showCreatePlaylistModal=false;
 	}
 	$scope.showAddPlaylist = function(song){
-		if($cookies.get('auth')){
+		if($cookies.get('token')){
 			if(song){
 				$scope.data.selected = {
 					song : song
@@ -71,7 +69,7 @@ myApp.controller('IndexController', ['$scope', '$http', 'songService', 'playerSe
 		$scope.showPlaylistModal=false;
 	}
 	$scope.createPlaylist = function(){
-		if($cookies.get("auth")){
+		if($cookies.get("token")){
 			playlistService.doCreatePlaylist($scope.data).then(function(){
 				if(!$scope.userPlaylists){
 					$scope.userPlaylists = [];
@@ -133,7 +131,7 @@ myApp.controller('IndexController', ['$scope', '$http', 'songService', 'playerSe
 		});
 	}
 	$scope.addFavorite = function(song){
-		if($cookies.get('auth')){
+		if($cookies.get('token')){
 			songService.doUserFavoriteSong(song.id).then(function(){
 				song.favorited=true;
 				song.favorites=song.favorites+1;
@@ -143,7 +141,7 @@ myApp.controller('IndexController', ['$scope', '$http', 'songService', 'playerSe
 		}
 	}
 	$scope.removeFavorite = function(song){
-		if($cookies.get('auth')){
+		if($cookies.get('token')){
 			songService.doUserFavoriteSong(song.id).then(function(){
 				song.favorited=false;
 				song.favorites=song.favorites-1;
