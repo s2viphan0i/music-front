@@ -329,6 +329,33 @@ myApp.factory('songService', ['$http', '$cookies', '$location', function($http, 
             }
         });
     };
+    songService.doUserGetListFavoriteSong = function(data){
+        $("#favorite-spinner").addClass("fa-spin");
+        return $http({
+            headers:{
+                'x-auth-token' : $cookies.get('token')
+            },
+            data: { 
+                sortField: "timestamp",
+                sortOrder: "descend",
+                results: 6,
+                page: 1
+            },
+            url: host+'/user/songs/favorite/list',
+            method: 'POST'
+        }).then(function (response){
+            $("#favorite-spinner").removeClass("fa-spin");
+            data.success = response.data.success;
+            data.msg = response.data.msg;
+            data.listFavoriteSong = response.data.content;
+        },function (error){
+            $("#favorite-spinner").removeClass("fa-spin");
+            if(error.status==404){
+                data.success=false;
+                data.msg="Có lỗi xảy ra! Vui lòng thử lại";
+            }
+        });
+    };
     songService.doGetListMostFavoriteSong = function(data){
         $("#mostfavorite-spinner").addClass("fa-spin");
         var date = new Date();

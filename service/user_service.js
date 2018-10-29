@@ -305,6 +305,60 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
             }
         });
     };
+    userService.doUserGetMostFollowing = function(data){
+        $(".search-spinner").removeClass("hidden");
+        return $http({
+            headers:{
+                'x-auth-token' : $cookies.get('token')
+            },
+            data: { 
+                sortField: "followers",
+                sortOrder: "descend",
+                results: 8,
+                page: data.page
+            },
+            url: host+'/user/users/list',
+            method: 'POST'
+        }).then(function (response){
+            $(".search-spinner").addClass("hidden");
+            data.success = response.data.success;
+            data.msg = response.data.msg;
+            data.listMostFollowing = response.data.content;
+        },function (error){
+            $(".search-spinner").addClass("hidden");
+            if(error.status==404){
+                data.success=false;
+                data.msg="Có lỗi xảy ra! Vui lòng thử lại";
+            }
+        });
+    };
+    userService.doGetMostFollowing = function(data){
+        $(".search-spinner").removeClass("hidden");
+        return $http({
+            headers:{
+                'x-auth-token' : $cookies.get('token')
+            },
+            data: { 
+                sortField: "followers",
+                sortOrder: "descend",
+                results: 8,
+                page: data.page
+            },
+            url: host+'/users/list',
+            method: 'POST'
+        }).then(function (response){
+            $(".search-spinner").addClass("hidden");
+            data.success = response.data.success;
+            data.msg = response.data.msg;
+            data.listMostFollowing = response.data.content;
+        },function (error){
+            $(".search-spinner").addClass("hidden");
+            if(error.status==404){
+                data.success=false;
+                data.msg="Có lỗi xảy ra! Vui lòng thử lại";
+            }
+        });
+    };
     userService.doGetUserByKeyword = function(data){
         $(".search-spinner").removeClass("hidden");
         return $http({
