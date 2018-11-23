@@ -66,8 +66,12 @@ myApp.config(function ($routeProvider) {
 			templateUrl: 'views/search.html',
 			authenticated: false
 		})
+		.when('/404', {
+			templateUrl: 'views/404.html',
+			authenticated: false
+		})
 		.otherwise({
-			redirectTo: '/home'
+			redirectTo: '/404'
 		});
 });
 myApp.run(["$rootScope", "$location", "$cookies", 'userService', 'songService',

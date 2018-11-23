@@ -144,6 +144,36 @@ myApp.factory('playlistService', ['$http', '$cookies', '$location', function($ht
             }
         });
     };
+    playlistService.doGetPlaylistByKeyWord = function(data){
+        $(".playlist-spinner").removeClass("hidden");
+        return $http({
+            headers:{
+                'x-auth-token' : $cookies.get('token')
+            },
+            data: { 
+                keyword : data.keyword,
+                sortField: "create_time",
+                sortOrder: "descend",
+                results: 18,
+                page: data.page
+            },
+            url: host+'/playlists/list',
+            method: 'POST'
+        }).then(function (response){
+            $(".playlist-spinner").addClass("hidden");
+            data.success = response.data.success;
+            data.msg = response.data.msg;
+            data.total = response.data.total;
+            data.totalPage = Math.ceil(data.total/18);
+            data.listResultPlaylist = response.data.content;
+        },function (error){
+            $(".playlist-spinner").addClass("hidden");
+            if(error.status==404){
+                data.success=false;
+                data.msg="Có lỗi xảy ra! Vui lòng thử lại";
+            }
+        });
+    };
     playlistService.doGetPlaylistByUserId = function(data){
         $(".search-spinner").removeClass("hidden");
         return $http({

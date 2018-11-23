@@ -133,7 +133,8 @@ myApp.factory('songService', ['$http', '$cookies', '$location', function($http, 
             },
             data: { 
                 keyword : data.keyword,
-                sortField: "views",
+                genreId: data.genre.id,
+                sortField: data.sortField,
                 sortOrder: "descend",
                 results: 18,
                 page: data.page
@@ -157,10 +158,12 @@ myApp.factory('songService', ['$http', '$cookies', '$location', function($http, 
     };
     songService.doGetSongByKeyword = function(data){
         $(".search-spinner").removeClass("hidden");
+        console.log(data.sortField);
         return $http({
             data: { 
                 keyword : data.keyword,
-                sortField: "views",
+                genreId: data.genre.id,
+                sortField: data.sortField,
                 sortOrder: "descend",
                 results: 18,
                 page: data.page

@@ -41,6 +41,7 @@ myApp.directive("jplayer", ['$window', 'songService', '$cookies', 'playerService
                     $window.myPlaylist.setPlaylist([]);
                     for(var i=0;i<value.songs.length;i++){
                         $window.myPlaylist.add({
+                            next: true,
                             id: value.songs[i].id,
                             mp3: "http://localhost/resource/audio/"+value.songs[i].url,
                             title: value.songs[i].title,
@@ -62,6 +63,7 @@ myApp.directive("jplayer", ['$window', 'songService', '$cookies', 'playerService
                     })
                 } else if(value!=null&&value.add==true){
                     $window.myPlaylist.add({
+                        next: true,
                         id: value.id,
                         mp3: value.StreamUri,
                         title: value.title,
