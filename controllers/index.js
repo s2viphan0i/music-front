@@ -5,7 +5,7 @@ myApp.controller('IndexController', ['$scope', '$http', 'songService', 'playerSe
 	$scope.showCreatePlaylistModal=false;
 	$scope.showPlaylistModal=false;
 	$scope.checkNavPage = function(){
-		return _.contains(["/login", "/logout", "/register", "/forgot"], $location.path());
+		return _.contains(["/login", "/logout", "/register", "/forgot", "/404"], $location.path());
     }
     
     $scope.checkHomePage = function(){
@@ -13,11 +13,11 @@ myApp.controller('IndexController', ['$scope', '$http', 'songService', 'playerSe
 	}
 
 	$scope.checkBlackPage = function(){
-		return $location.path().match(/song/)||location.hash.match(/playlist/)?true:false;
+		return $location.path().match(/song/)||$location.path().match(/playlist/)?true:false;
 	}
 
 	$scope.search = function(key){
-		$location.path('/search').search({keyword: key, type: $routeParams.type});
+		$location.path('/search').search({keyword: key, type: $routeParams.type, sort: "2"});
 	}
 
 	$scope.$watch(function() { return $cookies.get('token'); }, function(newValue) {
@@ -26,6 +26,7 @@ myApp.controller('IndexController', ['$scope', '$http', 'songService', 'playerSe
 				username : $cookies.get('username'),
 				fullname : $cookies.get('fullname'),
 				avatar : $cookies.get('avatar'),
+				role : $cookies.get('role'),
 			}
 		};
 		if($cookies.get('token')){

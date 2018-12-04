@@ -21,16 +21,14 @@ myApp.controller('SongController', ['$scope', '$http', '$cookies', 'commentServi
 			id : $routeParams.id
 		}
 		if($cookies.get('token')){
-			songService.doUserGetSongById($scope.data, function(){
+			songService.doUserGetSongById($scope.data).then(function(){
 				$scope.data.song.lyric = unescape($scope.data.song.lyric);
 				userService.doUserGetUserById($scope.data.song);
-				console.log($scope.data.song);
 			});
 		} else{
-			songService.doGetSongById($scope.data, function(){
+			songService.doGetSongById($scope.data).then(function(){
 				$scope.data.song.lyric = unescape($scope.data.song.lyric);
 				userService.doGetUserById($scope.data.song);
-				console.log($scope.data.song);
 			});
 		}
     	songService.doGetListRecommendSong($scope.data);

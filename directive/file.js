@@ -15,7 +15,7 @@ myApp.directive('fileModel', ['$parse', function ($parse) {
 					var reader = new FileReader();
 
 					reader.onload = function (e) {
-						$('#preview').attr('src', e.target.result);
+						$('.preview').attr('src', e.target.result);
 					}
 
 					reader.readAsDataURL(element[0].files[0]);

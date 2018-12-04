@@ -8,9 +8,11 @@ myApp.controller('HomeController', ['$scope', '$http', 'playlistService', 'songS
 			songService.doUserGetListNewSong($scope.data);
 			songService.doUserGetListMostFavoriteSong($scope.data);
 			songService.doUserGetListFollowingSong($scope.data);
+			userService.doUserGetMostFollowing($scope.data);
 		} else{
 			songService.doGetListNewSong($scope.data);
 			songService.doGetListMostFavoriteSong($scope.data);
+			userService.doGetMostFollowing($scope.data);
 		}
 		songService.doGetListMostViewSong($scope.data);
 	}
@@ -24,6 +26,11 @@ myApp.controller('HomeController', ['$scope', '$http', 'playlistService', 'songS
 	$scope.getListFollowingSong = function(){
 		if($cookies.get('token')){
 			songService.doUserGetListFollowingSong($scope.data);
+		}
+	}
+	$scope.getListFavoriteSong = function(){
+		if($cookies.get('token')){
+			songService.doUserGetListFavoriteSong($scope.data);
 		}
 	}
 	$scope.getListMostFavoriteSong = function(){

@@ -1,0 +1,303 @@
+<section class="scrollable padder" ng-init="init()">
+    <div class="m-b-md">
+        <div class="row">
+            <div class="col-sm-6">
+                <h3 class="m-b-none">Dashboard</h3>
+                <small>Thống kê trang web</small>
+            </div>
+            <div class="col-sm-6">
+                <div class="text-right text-left-xs">
+                    <div class="sparkline m-l m-r-lg pull-right" data-type="bar" data-height="35" data-bar-width="6"
+                        data-bar-spacing="2" data-bar-color="#fff">5,8,9,12,8,10,8,9,7,8,6</div>
+                    <div class="m-t-md">
+                        <span class="text-uc">New users</span>
+                        <div class="h4 m-n"><strong>1,120,100</strong></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class="panel panel-default">
+        <header class="panel-heading font-bold">Đăng tải</header>
+        <div class="panel-body">
+            <canvas id="line-chart" width="800" height="200"></canvas>
+        </div>
+        <footer class="panel-footer bg-white">
+            <div class="row text-center no-gutter">
+                <div class="col-xs-3 b-r b-light">
+                    <p class="h3 font-bold m-t">{{data.views}}</p>
+                    <p class="text-muted">Lượt nghe</p>
+                </div>
+                <div class="col-xs-3 b-r b-light">
+                    <p class="h3 font-bold m-t">{{data.favorites}}</p>
+                    <p class="text-muted">Lượt thích</p>
+                </div>
+                <div class="col-xs-3 b-r b-light">
+                    <p class="h3 font-bold m-t">{{data.follows}}</p>
+                    <p class="text-muted">Lượt theo dõi</p>
+                </div>
+                <div class="col-xs-3">
+                    <p class="h3 font-bold m-t">{{data.users}}</p>
+                    <p class="text-muted">Người dùng mới</p>
+                </div>
+            </div>
+        </footer>
+    </section>
+    <section class="panel panel-default">
+        <header class="panel-heading">
+            Bài hát mới
+        </header>
+        <div class="row wrapper">
+            <div class="pull-right col-sm-3">
+                <div class="input-group">
+                    <input type="text" class="input-sm form-control" ng-model="data.keywordSong" placeholder="Từ khóa">
+                    <span class="input-group-btn">
+                        <button class="btn btn-sm btn-default" type="button" ng-click="search(1,'song')">Tìm kiếm</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped b-t b-light">
+                <thead>
+                    <tr>
+                        <th style="width:20px;"></th>
+                        <th>Ảnh</th>
+                        <th class="th-sortable" data-toggle="class">Tiêu đề
+                            <span class="th-sort">
+                                <i class="fa fa-sort-down text"></i>
+                                <i class="fa fa-sort-up text-active"></i>
+                                <i class="fa fa-sort"></i>
+                            </span>
+                        </th>
+                        <th>Người đăng</th>
+                        <th>Lượt nghe</th>
+                        <th>Lượt thích</th>
+                        <th style="width:30px;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="song in data.listResultSong">
+                        <td>{{song.id}}</td>
+                        <td><img class="thumb-xs" src="http://localhost:8080/resource/image?name={{song.image}}"></td>
+                        <td><a href="./#!/song/{{song.id}}">{{song.title}}</a></td>
+                        <td><a href="./#!/profile/{{song.user.username}}">{{song.user.username}}</a></td>
+                        <td>{{song.views}}</td>
+                        <td>{{song.favorites}}</td>
+                        <td>
+                            <a href="javascript:">
+                                <i class="fa fa-pencil" ng-click="showEditSong(song)"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <footer class="panel-footer">
+            <div class="row">
+                <div class="col-sm-4 text-right pull-right text-center-xs">
+                    <ul class="pagination pagination-sm m-t-none m-b-none" ng-if="data.totalSong!=0">
+                            <li ng-if="data.pageSong-1>0">
+                                <a href="javascript:" ng-click="search(data.pageSong-1,'song')" class="text-success important">
+                                    <i class="fa fa-chevron-left"></i>
+                                </a>
+                            </li>
+                            <li ng-if="data.pageSong-2>0" class="text-success">
+                                <a href="javascript:" ng-click="search(data.pageSong-2,'song')" class="text-success important">{{data.pageSong-2}}</a>
+                            </li>
+                            <li ng-if="data.pageSong-1>0">
+                                <a href="javascript:" ng-click="search(data.pageSong-1,'song')" class="text-success important">{{data.pageSong-1}}</a>
+                            </li>
+                            <li class="active">
+                                <a href="javascript:" ng-click="search(data.pageSong,'song')" class="bg-success important">{{data.pageSong}}</a>
+                            </li>
+                            <li ng-if="(data.pageSong+1)<=data.totalSongPage">
+                                <a href="javascript:" ng-click="search(data.pageSong+1,'song')" class="text-success important">{{data.pageSong+1}}</a>
+                            </li>
+                            <li ng-if="(data.pageSong+2)<=data.totalSongPage">
+                                <a href="javascript:" ng-click="search(data.pageSong+2,'song')" class="text-success important">{{data.pageSong+2}}</a>
+                            </li>
+                            <li ng-if="(data.pageSong+1)<=data.totalSongPage">
+                                <a href="javascript:" ng-click="search(data.pageSong+1,'song')" class="text-success important">
+                                    <i class="fa fa-chevron-right"></i>
+                                </a>
+                            </li>
+                        </ul>
+                </div>
+            </div>
+        </footer>
+    </section>
+    <section class="panel panel-default">
+        <header class="panel-heading">
+            Người dùng mới
+        </header>
+        <div class="row wrapper">
+            <div class="pull-right col-sm-3">
+                <div class="input-group">
+                    <input type="text" class="input-sm form-control" ng-model="data.keywordUser" placeholder="Từ khóa">
+                    <span class="input-group-btn">
+                        <button class="btn btn-sm btn-default" type="button" ng-click="search(1,'user')">Tìm kiếm</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped b-t b-light">
+                <thead>
+                    <tr>
+                        <th style="width:20px;"></th>
+                        <th>Ảnh</th>
+                        <th class="th-sortable" data-toggle="class">Tên đăng nhập
+                            <span class="th-sort">
+                                <i class="fa fa-sort-down text"></i>
+                                <i class="fa fa-sort-up text-active"></i>
+                                <i class="fa fa-sort"></i>
+                            </span>
+                        </th>
+                        <th>Tên đầy đủ</th>
+                        <th>Email</th>
+                        <th>Lượt theo dõi</th>
+                        <th style="width:30px;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="user in data.listResultUser">
+                        <td>{{user.id}}</td>
+                        <td><img class="thumb-xs" src="http://localhost:8080/resource/image?name={{user.avatar}}"></td>
+                        <td><a href="./#!/profile/{{user.username}}">{{user.username}}</a></td>
+                        <td>{{user.fullname}}</td>
+                        <td>{{user.email}}</td>
+                        <td>{{user.followers}}</td>
+                        <td>
+                            <a href="javascript:">
+                                <i class="fa fa-pencil" ng-click="showEditUser(user)"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <footer class="panel-footer">
+            <div class="row">
+                <div class="col-sm-4 text-right pull-right text-center-xs">
+                    <ul class="pagination pagination-sm m-t-none m-b-none" ng-if="data.totalUser!=0">
+                            <li ng-if="data.pageUser-1>0">
+                                <a href="javascript:" ng-click="search(data.pageUser-1,'user')" class="text-success important">
+                                    <i class="fa fa-chevron-left"></i>
+                                </a>
+                            </li>
+                            <li ng-if="data.pageUser-2>0" class="text-success">
+                                <a href="javascript:" ng-click="search(data.pageUser-2,'user')" class="text-success important">{{data.pageUser-2}}</a>
+                            </li>
+                            <li ng-if="data.pageUser-1>0">
+                                <a href="javascript:" ng-click="search(data.pageUser-1,'user')" class="text-success important">{{data.pageUser-1}}</a>
+                            </li>
+                            <li class="active">
+                                <a href="javascript:" ng-click="search(data.pageUser,'user')" class="bg-success important">{{data.pageUser}}</a>
+                            </li>
+                            <li ng-if="(data.pageUser+1)<=data.totalUserPage">
+                                <a href="javascript:" ng-click="search(data.pageUser+1,'user')" class="text-success important">{{data.pageUser+1}}</a>
+                            </li>
+                            <li ng-if="(data.pageUser+2)<=data.totalUserPage">
+                                <a href="javascript:" ng-click="search(data.pageUser+2,'user')" class="text-success important">{{data.pageUser+2}}</a>
+                            </li>
+                            <li ng-if="(data.pageUser+1)<=data.totalUserPage">
+                                <a href="javascript:" ng-click="search(data.pageUser+1,'user')" class="text-success important">
+                                    <i class="fa fa-chevron-right"></i>
+                                </a>
+                            </li>
+                        </ul>
+                </div>
+            </div>
+        </footer>
+    </section>
+</section>
+<modal visible="showEditUserModal">
+    <modal-header title="Sửa thông tin"></modal-header>
+    <modal-body>
+        <div class="alert alert-danger" ng-if="data.success!=null&&!data.success">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <i class="fa fa-ban-circle"></i>
+            <strong>Ôi không!</strong>
+            {{data.msg}}
+        </div>
+        <div class="alert alert-success" ng-if="data.success!=null&&data.success">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <i class="fa fa-ok-sign"></i>
+            <strong>Thành công!</strong>
+            {{data.msg}}
+        </div>
+        <div class="form-group">
+            <label>Tên đầy đủ</label>
+            <input ng-model="data.user.fullname" type="text" placeholder="Tên đầy đủ" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Sinh nhật</label>
+            <input class="datepicker-input form-control" ui-date="dateOptions" size="16" type="text" ng-model="data.user.birthdate" value="data.user.birthdate" placeholder="dd-mm-yyyy" data-date-format="dd-mm-yyyy">
+        </div>
+        <div class="form-group">
+            <label>Số điện thoại</label>
+            <input type="text" class="form-control" ng-model="data.user.phone" placeholder="0 XXXX XXXX" data-required="true">
+        </div>
+        <div class="form-group">
+            <label>Ảnh đại diện</label><br>
+            <img class="thumb-md m-b preview" src="http://localhost:8080/resource/image?name={{data.user.avatar}}">
+            <input type="file" accept="image/*" file-model="data.user.avatar" class="customfileinput">
+        </div>
+    </modal-body>
+    <modal-footer>
+        <button class="btn btn-default btn-sm" ng-click="hideEditUser();">Hủy</button>
+        <button class="btn btn-danger btn-sm" ng-click="deleteUser();">Xóa
+            <i class='fa fa-spinner fa fa-spin fa fa-large hidden delete-spinner'></i>
+        </button>
+        <button class="btn btn-success btn-sm" ng-click="editUser();">Sửa
+            <i class='fa fa-spinner fa fa-spin fa fa-large hidden edit-spinner'></i>
+        </button>
+
+    </modal-footer>
+</modal>
+<modal visible="showEditSongModal">
+        <modal-header title="Sửa thông tin"></modal-header>
+        <modal-body>
+            <div class="alert alert-danger" ng-if="data.success!=null&&!data.success">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <i class="fa fa-ban-circle"></i>
+                <strong>Ôi không!</strong>
+                {{data.msg}}
+            </div>
+            <div class="alert alert-success" ng-if="data.success!=null&&data.success">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <i class="fa fa-ok-sign"></i>
+                <strong>Thành công!</strong>
+                {{data.msg}}
+            </div>
+            <div class="form-group">
+                <label>Tiêu đề</label>
+                <input ng-model="data.selected.song.title" type="text" placeholder="Tiêu đề" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>Lời bài hát</label>
+                <textarea class="form-control" ng-model="data.selected.song.lyric" rows="6" data-minwords="6" data-required="true"
+                    placeholder="Viết gì đó ..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>Thể loại</label>
+                <select ng-model="data.selected.song.genre" ng-options="obj.name for obj in genres track by obj.id" class="form-control m-b"></select>
+            </div>
+            <div class="form-group">
+                <label>Ảnh bìa</label><br>
+                <img class="thumb-md m-b preview" src="http://localhost:8080/resource/image?name={{data.selected.song.image}}">
+                <input type="file" accept="image/*" file-model="data.selected.song.image" class="customfileinput">
+            </div>
+        </modal-body>
+        <modal-footer>
+            <button class="btn btn-default btn-sm" ng-click="hideEditSong();">Hủy</button>
+            <button class="btn btn-danger btn-sm" ng-click="deleteSong();">Xóa
+                <i class='fa fa-spinner fa fa-spin fa fa-large hidden' id="delete-spinner"></i>
+            </button>
+            <button class="btn btn-success btn-sm" ng-click="editSong();">Sửa
+                <i class='fa fa-spinner fa fa-spin fa fa-large hidden' id="edit-spinner"></i>
+            </button>
+    
+        </modal-footer>
+    </modal>

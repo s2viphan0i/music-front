@@ -21,6 +21,7 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
                 $cookies.put('username', response.data.content.username, {'expires': expireDate});
                 $cookies.put('fullname', response.data.content.fullname, {'expires': expireDate});
                 $cookies.put('avatar', response.data.content.avatar, {'expires': expireDate});
+                $cookies.put('role', response.data.content.role, {'expires': expireDate});
                 $cookies.put('token', response.headers('x-auth-token'), {'expires': expireDate});
                 $location.path('/home');
             }else{
@@ -154,6 +155,7 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
             method: 'GET'
         }).then(function (response){
             data.user = response.data.content;
+            data.user.birthdate = new Date(moment(data.user.birthdate, "DD-MM-YYYY").format("MM-DD-YYYY"))
         },function (error){
             if(error.status==404){
                 data.success=false;
@@ -187,6 +189,8 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
             method: 'GET'
         }).then(function (response){
             data.user = response.data.content;
+            data.user.birthdate = new Date(moment(data.user.birthdate, "DD-MM-YYYY").format("MM-DD-YYYY"))
+            console.log(data.user.birthdate);
         },function (error){
             if(error.status==404){
                 data.success=false;
@@ -248,6 +252,7 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
         $cookies.remove("id");
         $cookies.remove("avatar");
         $cookies.remove("username");
+        $cookies.remove("role");
         $cookies.remove("fullname");
         $location.path("/login");
     };
@@ -297,6 +302,60 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
             data.total = response.data.total;
             data.totalPage = Math.ceil(data.total/18);
             data.listResultUser = response.data.content;
+        },function (error){
+            $(".search-spinner").addClass("hidden");
+            if(error.status==404){
+                data.success=false;
+                data.msg="Có lỗi xảy ra! Vui lòng thử lại";
+            }
+        });
+    };
+    userService.doUserGetMostFollowing = function(data){
+        $(".search-spinner").removeClass("hidden");
+        return $http({
+            headers:{
+                'x-auth-token' : $cookies.get('token')
+            },
+            data: { 
+                sortField: "followers",
+                sortOrder: "descend",
+                results: 8,
+                page: data.page
+            },
+            url: host+'/user/users/list',
+            method: 'POST'
+        }).then(function (response){
+            $(".search-spinner").addClass("hidden");
+            data.success = response.data.success;
+            data.msg = response.data.msg;
+            data.listMostFollowing = response.data.content;
+        },function (error){
+            $(".search-spinner").addClass("hidden");
+            if(error.status==404){
+                data.success=false;
+                data.msg="Có lỗi xảy ra! Vui lòng thử lại";
+            }
+        });
+    };
+    userService.doGetMostFollowing = function(data){
+        $(".search-spinner").removeClass("hidden");
+        return $http({
+            headers:{
+                'x-auth-token' : $cookies.get('token')
+            },
+            data: { 
+                sortField: "followers",
+                sortOrder: "descend",
+                results: 8,
+                page: data.page
+            },
+            url: host+'/users/list',
+            method: 'POST'
+        }).then(function (response){
+            $(".search-spinner").addClass("hidden");
+            data.success = response.data.success;
+            data.msg = response.data.msg;
+            data.listMostFollowing = response.data.content;
         },function (error){
             $(".search-spinner").addClass("hidden");
             if(error.status==404){

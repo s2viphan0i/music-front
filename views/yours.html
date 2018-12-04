@@ -1,0 +1,129 @@
+<section class="hbox stretch" ng-init="search(1);">
+    <!-- side content -->
+    <aside class="aside bg-light dk" id="sidebar">
+        <section class="vbox animated fadeInUp">
+            <section class="scrollable hover">
+                <div class="no-radius no-border m-t-n-xxs m-b-none padder auto">
+                    <div class="form-group m-t-md">
+                        <label>Tiêu đề</label>
+                        <input type="text" class="form-control" ng-model="data.keyword" placeholder="Tiêu đề bài hát"
+                            data-required="true">
+                    </div>
+                    <a class="btn btn-sm btn-success pull-right text-uc m-t-n-xs" ng-if="data.type=='loved'" href="./#!/yours?keyword={{data.keyword}}&type={{data.type}}">Tìm
+                        kiếm</a>
+                    <a class="btn btn-sm btn-success pull-right text-uc m-t-n-xs" ng-if="data.type=='history'" href="./#!/yours?keyword={{data.keyword}}&type={{data.type}}">Tìm
+                        kiếm</a>
+                </div>
+            </section>
+        </section>
+    </aside>
+    <!-- / side content -->
+    <section>
+        <section class="vbox">
+            <section class="scrollable">
+                <section class="panel panel-default">
+                    <header class="panel-heading text-right bg-light">
+                        <ul class="nav nav-tabs pull-left">
+                            <li id="loved-tab">
+                                <a href="./#!/yours?keyword={{data.keyword}}&type=loved">
+                                    <i class="icon-heart text-muted"></i> Đã thích
+                                </a>
+                            </li>
+                            <li id="history-tab">
+                                <a href="./#!/yours?keyword={{data.keyword}}&type=history">
+                                    <i class="icon-clock text-muted"></i> Lịch sử</a>
+                            </li>
+                        </ul>
+                        <span class="hidden-sm">...</span>
+                    </header>
+                    <div class="panel-body">
+                        <div class="tab-content">
+                            <div class="tab-pane padder-lg" id="loved">
+                                <div class="row row-sm">
+                                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2" ng-repeat="song in data.listResultSong">
+                                        <song song="song" show-add-playlist="showAddPlaylist(song)" show-edit-song="showEditSong(song)"></song>
+                                    </div>
+                                    <div class="" ng-if="!data.listResultSong">
+                                        <div class="text-center">
+                                            <img src="images/search.svg" class="thumb-xlg m-t-md m-b-md">
+                                            <h2>Không tìm thấy kết quả nào</h2>
+                                            <p class="m-b-lg">Vui lòng thử lại bằng từ khóa hoặc cách tìm kiếm khác.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <ul class="pagination" ng-if="data.total!=0">
+                                    <li ng-if="data.page-1>0">
+                                        <a href="javascript:" ng-click="search(data.page-1)" class="text-success important">
+                                            <i class="fa fa-chevron-left"></i>
+                                        </a>
+                                    </li>
+                                    <li ng-if="data.page-2>0" class="text-success">
+                                        <a href="javascript:" ng-click="search(data.page-2)" class="text-success important">{{data.page-2}}</a>
+                                    </li>
+                                    <li ng-if="data.page-1>0">
+                                        <a href="javascript:" ng-click="search(data.page-1)" class="text-success important">{{data.page-1}}</a>
+                                    </li>
+                                    <li class="active">
+                                        <a href="javascript:" ng-click="search(data.page)" class="bg-success important">{{data.page}}</a>
+                                    </li>
+                                    <li ng-if="(data.page+1)<=data.totalPage">
+                                        <a href="javascript:" ng-click="search(data.page+1)" class="text-success important">{{data.page+1}}</a>
+                                    </li>
+                                    <li ng-if="(data.page+2)<=data.totalPage">
+                                        <a href="javascript:" ng-click="search(data.page+2)" class="text-success important">{{data.page+2}}</a>
+                                    </li>
+                                    <li ng-if="(data.page+1)<=data.totalPage">
+                                        <a href="javascript:" ng-click="search(data.page+1)" class="text-success important">
+                                            <i class="fa fa-chevron-right"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="tab-pane padder-lg" id="history">
+                                <div class="row row-sm">
+                                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2" ng-repeat="song in data.listResultSong">
+                                        <song song="song" show-add-playlist="showAddPlaylist(song)" show-edit-song="showEditSong(song)"></song>
+                                    </div>
+                                    <div class="" ng-if="!data.listResultSong">
+                                        <div class="text-center">
+                                            <img src="images/search.svg" class="thumb-xlg m-t-md m-b-md">
+                                            <h2>Không tìm thấy kết quả nào</h2>
+                                            <p class="m-b-lg">Vui lòng thử lại bằng từ khóa hoặc cách tìm kiếm khác.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <ul class="pagination" ng-if="data.total!=0">
+                                    <li ng-if="data.page-1>0">
+                                        <a href="javascript:" ng-click="search(data.page-1)" class="text-success important">
+                                            <i class="fa fa-chevron-left"></i>
+                                        </a>
+                                    </li>
+                                    <li ng-if="data.page-2>0" class="text-success">
+                                        <a href="javascript:" ng-click="search(data.page-2)" class="text-success important">{{data.page-2}}</a>
+                                    </li>
+                                    <li ng-if="data.page-1>0">
+                                        <a href="javascript:" ng-click="search(data.page-1)" class="text-success important">{{data.page-1}}</a>
+                                    </li>
+                                    <li class="active">
+                                        <a href="javascript:" ng-click="search(data.page)" class="bg-success important">{{data.page}}</a>
+                                    </li>
+                                    <li ng-if="(data.page+1)<=data.totalPage">
+                                        <a href="javascript:" ng-click="search(data.page+1)" class="text-success important">{{data.page+1}}</a>
+                                    </li>
+                                    <li ng-if="(data.page+2)<=data.totalPage">
+                                        <a href="javascript:" ng-click="search(data.page+2)" class="text-success important">{{data.page+2}}</a>
+                                    </li>
+                                    <li ng-if="(data.page+1)<=data.totalPage">
+                                        <a href="javascript:" ng-click="search(data.page+1)" class="text-success important">
+                                            <i class="fa fa-chevron-right"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </section>
+        </section>
+    </section>
+</section>
