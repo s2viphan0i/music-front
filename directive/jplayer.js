@@ -117,7 +117,7 @@ myApp.directive("jplayer", ['$window', 'songService', '$cookies', 'playerService
             });
             jPlayer.bind($.jPlayer.event.ended, function (event) {
                 // Song has ended, try to go next
-                if($cookies.get('auth')){
+                if($cookies.get('token')){
                     songService.doUserViewSong(event.jPlayer.status.media.id);
                 }
                 if (scope.playerService.HasNext) {

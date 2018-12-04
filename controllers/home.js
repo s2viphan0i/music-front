@@ -8,7 +8,6 @@ myApp.controller('HomeController', ['$scope', '$http', 'playlistService', 'songS
 			songService.doUserGetListNewSong($scope.data);
 			songService.doUserGetListMostFavoriteSong($scope.data);
 			songService.doUserGetListFollowingSong($scope.data);
-			songService.doUserGetListFavoriteSong($scope.data);
 			userService.doUserGetMostFollowing($scope.data);
 		} else{
 			songService.doGetListNewSong($scope.data);

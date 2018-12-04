@@ -45,13 +45,6 @@
 <a href="javascript:" ng-if="data.listFavoriteSong" ng-click="getListFavoriteSong()" class="pull-right text-muted m-t-lg" ng-init="init();">
     <i class="icon-refresh i-lg  inline" id="favorite-spinner"></i>
 </a>
-<h2 class="font-thin m-b" ng-if="data.listFavoriteSong">Bài hát đã thích
-</h2>
-<div class="row row-sm">
-    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2" ng-if="data.listFavoriteSong" ng-repeat="song in data.listFavoriteSong">
-        <song song="song" show-add-playlist="showAddPlaylist(song)"></song>
-    </div>
-</div>
 <div class="row">
     <div class="col-md-7">
         <h3 class="font-thin">Ca sĩ ưa thích</h3>

@@ -63,7 +63,7 @@ myApp.controller('SearchController', ['$scope', '$http', '$cookies', 'playlistSe
 				if($cookies.get('token')){
 					userService.doUserGetUserByKeyword($scope.data);
 				} else{
-					songService.doGetUserByKeyword($scope.data);
+					userService.doGetUserByKeyword($scope.data);
 				}
 				break;
 			case "playlist":
@@ -72,6 +72,20 @@ myApp.controller('SearchController', ['$scope', '$http', '$cookies', 'playlistSe
 				$(".tab-content .tab-pane").removeClass("active");
 				$("#playlist").addClass("active");
 				playlistService.doGetPlaylistByKeyWord($scope.data);
+				break;
+			case "loved":
+				$(".nav-tabs li").removeClass("active");
+				$("#loved-tab").addClass("active");
+				$(".tab-content .tab-pane").removeClass("active");
+				$("#loved").addClass("active");
+				songService.doUserGetListFavoriteSong($scope.data);
+				break;
+			case "history":
+				$(".nav-tabs li").removeClass("active");
+				$("#history-tab").addClass("active");
+				$(".tab-content .tab-pane").removeClass("active");
+				$("#history").addClass("active");
+				songService.doUserGetListViewSong($scope.data);
 				break;
 		}
 		console.log($scope.data);

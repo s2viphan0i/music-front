@@ -66,6 +66,16 @@ myApp.config(function ($routeProvider) {
 			templateUrl: 'views/search.html',
 			authenticated: false
 		})
+		.when('/yours', {
+			controller: 'SearchController',
+			templateUrl: 'views/yours.html',
+			authenticated: false
+		})
+		.when('/dashboard', {
+			controller: 'AdminController',
+			templateUrl: 'views/dashboard.html',
+			authenticated: true
+		})
 		.when('/404', {
 			templateUrl: 'views/404.html',
 			authenticated: false

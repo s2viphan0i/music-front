@@ -26,6 +26,7 @@ myApp.controller('IndexController', ['$scope', '$http', 'songService', 'playerSe
 				username : $cookies.get('username'),
 				fullname : $cookies.get('fullname'),
 				avatar : $cookies.get('avatar'),
+				role : $cookies.get('role'),
 			}
 		};
 		if($cookies.get('token')){

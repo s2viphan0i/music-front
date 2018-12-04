@@ -21,6 +21,7 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
                 $cookies.put('username', response.data.content.username, {'expires': expireDate});
                 $cookies.put('fullname', response.data.content.fullname, {'expires': expireDate});
                 $cookies.put('avatar', response.data.content.avatar, {'expires': expireDate});
+                $cookies.put('role', response.data.content.role, {'expires': expireDate});
                 $cookies.put('token', response.headers('x-auth-token'), {'expires': expireDate});
                 $location.path('/home');
             }else{
@@ -154,6 +155,7 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
             method: 'GET'
         }).then(function (response){
             data.user = response.data.content;
+            data.user.birthdate = new Date(moment(data.user.birthdate, "DD-MM-YYYY").format("MM-DD-YYYY"))
         },function (error){
             if(error.status==404){
                 data.success=false;
@@ -187,6 +189,8 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
             method: 'GET'
         }).then(function (response){
             data.user = response.data.content;
+            data.user.birthdate = new Date(moment(data.user.birthdate, "DD-MM-YYYY").format("MM-DD-YYYY"))
+            console.log(data.user.birthdate);
         },function (error){
             if(error.status==404){
                 data.success=false;
@@ -248,6 +252,7 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
         $cookies.remove("id");
         $cookies.remove("avatar");
         $cookies.remove("username");
+        $cookies.remove("role");
         $cookies.remove("fullname");
         $location.path("/login");
     };
