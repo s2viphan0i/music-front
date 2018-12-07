@@ -25,6 +25,13 @@
                                 <br>{{data.playlist.user.username}}</a>
                             <span class="h2 font-thin">{{data.playlist.title}}</span>
                         </div>
+                        <div class="top wrapper-lg m-t-sm text-white">
+                            <a href="javascript:" class="pull-right" ng-if="checkOwner()" ng-click="showEditPlaylist()">
+                                <b class="dot"></b>
+                                <b class="dot"></b>
+                                <b class="dot"></b>
+                            </a>
+                        </div>
                         <div class="center text-center m-t-n">
                             <a href="javascript:">
                                 <i class="icon-control-play i-2x" ng-click="playPlaylist(0)"></i>
@@ -41,8 +48,8 @@
                             <a href="#" class="m-r-sm">
                                 <i class="icon-plus"></i>
                             </a>
-                            <a href="#">
-                                <i class="icon-close"></i>
+                            <a href="javascript:">
+                                <i class="icon-close" ng-click="removeSongFromPlaylist(song, data.playlist)"></i>
                             </a>
                         </div>
                         <a href="javascript:" class="jp-play-me m-r-sm pull-left" ng-click="playPlaylist($index)">
@@ -292,3 +299,39 @@
         </section>
     </section>
 </section>
+<modal visible="showEditPlaylistModal">
+    <modal-header title="Sửa thông tin"></modal-header>
+    <modal-body>
+        <div class="alert alert-danger" ng-if="data.success!=null&&!data.success">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <i class="fa fa-ban-circle"></i>
+            <strong>Ôi không!</strong>
+            {{data.msg}}
+        </div>
+        <div class="alert alert-success" ng-if="data.success!=null&&data.success">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <i class="fa fa-ok-sign"></i>
+            <strong>Thành công!</strong>
+            {{data.msg}}
+        </div>
+        <div class="form-group">
+            <label>Tiêu đề</label>
+            <input ng-model="data.selected.playlist.title" type="text" placeholder="Tiêu đề" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Ảnh bìa</label><br>
+            <img class="thumb-md m-b preview" src="http://localhost:8080/resource/image?name={{data.selected.playlist.image}}">
+            <input type="file" accept="image/*" file-model="data.selected.playlist.image" class="customfileinput">
+        </div>
+    </modal-body>
+    <modal-footer>
+        <button class="btn btn-default btn-sm" ng-click="hideEditPlaylist();">Hủy</button>
+        <button class="btn btn-danger btn-sm" ng-click="deletePlaylist();">Xóa
+            <i class='fa fa-spinner fa fa-spin fa fa-large hidden' id="delete-spinner"></i>
+        </button>
+        <button class="btn btn-success btn-sm" ng-click="editPlaylist();">Sửa
+            <i class='fa fa-spinner fa fa-spin fa fa-large hidden' id="edit-spinner"></i>
+        </button>
+
+    </modal-footer>
+</modal>

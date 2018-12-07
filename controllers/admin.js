@@ -48,7 +48,7 @@ myApp.controller('AdminController', ['$scope', '$http', '$cookies', 'adminServic
                     pointBorder: 2
                 }]
                 for(j;j<=date; j.setDate(j.getDate()+1)){
-                    var temp = _.findLastIndex($scope.data.uploads, {create_time: moment(j.toString()).format("DD-MM-YYYY")});
+                    var temp = _.findLastIndex($scope.data.uploads, {create_time: moment(j.toString()).format("MM-DD-YYYY")});
                     d1.labels.push(moment(j.toString()).format('DD-MM-YYYY'));
                     if(temp!=-1){
                         d1.datasets[0].data.push($scope.data.uploads[temp].uploads);

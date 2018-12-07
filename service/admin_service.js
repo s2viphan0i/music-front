@@ -266,7 +266,7 @@ myApp.factory('adminService', ['$http', '$cookies', '$location', function ($http
         if(data.user.phone==undefined){
             data.user.phone=""
         }
-        var user = '{"fullname":"'+data.user.fullname+'", "birthdate":"'+moment(data.user.birthdate).format("DD-MM-YYYY")+'", "phone":"'+data.user.phone+
+        var user = '{"fullname":"'+data.user.fullname+'", "birthdate":"'+moment(data.user.birthdate).format("YYYY-MM-DD")+'", "phone":"'+data.user.phone+
         '", "note":"'+data.user.note+'"}'
         if(data.user.birthdate==undefined){
             var user = '{"fullname":"'+data.user.fullname+'", "phone":"'+data.user.phone+

@@ -2,6 +2,11 @@ myApp.factory('commentService', ['$http', '$cookies', '$location', function ($ht
     var commentService = {};
     var host = "http://localhost:8080";
     commentService.doUserAddComment = function (data, callback) {
+        if(data.comment==undefined||data.comment.content==undefined){
+            data.comment = {
+                content : ""
+            }
+        }
         return $http({
             headers:{
                 'x-auth-token' : $cookies.get('token')

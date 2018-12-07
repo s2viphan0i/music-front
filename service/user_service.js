@@ -12,7 +12,6 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
                 'Content-Type': 'application/json'
             },
             url: host+'/user/login',
-            withCredentials: true,
             method: 'POST'
         }).then(function (response){
             $("#login-spinner").addClass("hidden");
@@ -155,7 +154,6 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
             method: 'GET'
         }).then(function (response){
             data.user = response.data.content;
-            data.user.birthdate = new Date(moment(data.user.birthdate, "DD-MM-YYYY").format("MM-DD-YYYY"))
         },function (error){
             if(error.status==404){
                 data.success=false;
@@ -189,7 +187,6 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
             method: 'GET'
         }).then(function (response){
             data.user = response.data.content;
-            data.user.birthdate = new Date(moment(data.user.birthdate, "DD-MM-YYYY").format("MM-DD-YYYY"))
             console.log(data.user.birthdate);
         },function (error){
             if(error.status==404){
@@ -207,7 +204,10 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
         if(data.user.phone==undefined){
             data.user.phone=""
         }
-        var user = '{"fullname":"'+data.user.fullname+'", "birthdate":"'+moment(data.user.birthdate).format("DD-MM-YYYY")+'", "phone":"'+data.user.phone+
+        if(data.user.fullname==undefined){
+            data.user.fullname=""
+        }
+        var user = '{"fullname":"'+data.user.fullname+'", "birthdate":"'+moment(data.user.birthdate).format("YYYY-MM-DD")+'", "phone":"'+data.user.phone+
         '", "note":"'+data.user.note+'"}'
         if(data.user.birthdate==undefined){
             var user = '{"fullname":"'+data.user.fullname+'", "phone":"'+data.user.phone+
@@ -229,7 +229,7 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
                 });
                 return formData;
             },
-            url: host+'/user/users/'+data.user.id,
+            url: host+'/user/',
             method: 'PUT'
         }).then(function (response){
             $("#edit-spinner").addClass("hidden");

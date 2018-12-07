@@ -76,6 +76,7 @@ myApp.controller('UserController', ['$scope', '$http', '$cookies', 'playlistServ
 		userService.doFollow(id);
 	}
 	$scope.editUser = function(){
+		console.log($scope.data.user.birthdate)
 		userService.doEditUser($scope.data);
 	}
 	$scope.isCurrent = function(username){

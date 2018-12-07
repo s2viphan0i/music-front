@@ -204,5 +204,57 @@ myApp.factory('playlistService', ['$http', '$cookies', '$location', function($ht
             }
         });
     };
+    playlistService.doEditPlaylist = function(data){
+        $("#edit-spinner").removeClass("hidden");
+        return $http({
+            headers:{
+                'x-auth-token' : $cookies.get('token'),
+                'Content-Type': undefined
+            },
+            data: { 
+                image: data.selected.playlist.image,
+                playlist: '{"title":"'+data.selected.playlist.title+'"}'
+            },
+            transformRequest: function (data, headersGetter) {
+                var formData = new FormData();
+                angular.forEach(data, function (value, key) {
+                    formData.append(key, value);
+                });
+                return formData;
+            },
+            url: host+'/user/playlists/'+data.selected.playlist.id,
+            method: 'PUT'
+        }).then(function (response){
+            $("#edit-spinner").addClass("hidden");
+            data.success = response.data.success;
+            data.msg = response.data.msg;
+        },function (error){
+            $("#edit-spinner").addClass("hidden");
+            if(error.status==404){
+                data.success=false;
+                data.msg="Có lỗi xảy ra! Vui lòng thử lại";
+            }
+        });
+    };
+    playlistService.doDeletePlaylist = function(data){
+        $("#delete-spinner").removeClass("hidden");
+        return $http({
+            headers:{
+                'x-auth-token' : $cookies.get('token')
+            },
+            url: host+'/user/playlists/'+data.selected.playlist.id,
+            method: 'DELETE'
+        }).then(function (response){
+            $("#delete-spinner").addClass("hidden");
+            data.success = response.data.success;
+            data.msg = response.data.msg;
+        },function (error){
+            $("#delete-spinner").addClass("hidden");
+            if(error.status==404){
+                data.success=false;
+                data.msg="Có lỗi xảy ra! Vui lòng thử lại";
+            }
+        });
+    };
     return playlistService;
 }]);
