@@ -151,4 +151,13 @@ myApp.controller('IndexController', ['$scope', '$http', 'songService', 'playerSe
 			$location.path('/login');
 		}
 	}
+	$scope.addFollow = function(id){
+		userService.doFollow(id);
+	}
+	$scope.removeFollow = function(id){
+		userService.doFollow(id);
+	}
+	$scope.isLogin = function(){
+		return $cookies.get('token');
+	}
 }]);

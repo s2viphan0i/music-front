@@ -48,7 +48,7 @@ myApp.controller('AdminController', ['$scope', '$http', '$cookies', 'adminServic
                     pointBorder: 2
                 }]
                 for(j;j<=date; j.setDate(j.getDate()+1)){
-                    var temp = _.findLastIndex($scope.data.uploads, {create_time: moment(j.toString()).format("DD-MM-YYYY")});
+                    var temp = _.findLastIndex($scope.data.uploads, {create_time: moment(j.toString()).format("MM-DD-YYYY")});
                     d1.labels.push(moment(j.toString()).format('DD-MM-YYYY'));
                     if(temp!=-1){
                         d1.datasets[0].data.push($scope.data.uploads[temp].uploads);
@@ -70,7 +70,13 @@ myApp.controller('AdminController', ['$scope', '$http', '$cookies', 'adminServic
                                     display: true,
                                     ticks: {
                                         beginAtZero: true,
-                                        minStepSize: 1
+                                        userCallback: function(label, index, labels) {
+                                            // when the floored value is the same as the value we have a whole number
+                                            if (Math.floor(label) === label) {
+                                                return label;
+                                            }
+                       
+                                        },
                                     }
                                 }]
                         },
