@@ -3,6 +3,14 @@ var myApp = angular.module('myApp');
 myApp.controller('AuthController', ['$scope', '$http', 'userService', '$location', '$routeParams', function($scope, $http, userService, $location, $routeParams){
 	console.log('AuthController loaded...');
 	$scope.data = [];
+	$scope.initLogin = function(){
+		if($routeParams.code){
+			$scope.data.code = $routeParams.code;
+			userService.doActivate($scope.data).then(function(){
+				console.log($scope.data);
+			})
+		}
+	}
 	$scope.login = function(){
 		userService.doLogin($scope.data);
 	}

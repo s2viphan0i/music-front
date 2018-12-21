@@ -161,6 +161,20 @@ myApp.factory('userService', ['$http', '$cookies', '$location', function($http, 
             }
         });
     };
+    userService.doActivate = function(data){
+        return $http({
+            url: host+'/activate?code='+data.code,
+            method: 'GET'
+        }).then(function (response){
+            data.success = response.data.success;
+            data.msg = response.data.msg;
+        },function (error){
+            if(error.status==404){
+                data.success=false;
+                data.msg="Có lỗi xảy ra! Vui lòng thử lại";
+            }
+        });
+    };
     userService.doUserGetUserById = function(data){
         return $http({
             headers:{

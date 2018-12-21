@@ -16,7 +16,7 @@
                                             <b class="dot"></b>
                                         </a>
                                     </div>
-                                    <div class="center text-center m-t-n">
+                                    <div class="center text-center m-t-n text-white">
                                         <a href="javascript:">
                                             <i class="icon-control-play i-2x" ng-click="playSong(data.song)"></i>
                                         </a>
@@ -24,7 +24,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="wrapper-lg col-sm-8">
+                        <div class="wrapper-lg col-sm-8 text-white">
                             <div>
                                 <h2 class="h2 font-thin img-full">{{data.song.title}}</h2>
                                 <p>{{data.song.views}} lượt nghe</p>
@@ -67,10 +67,10 @@
                             <i class="on md b-white bottom"></i>
                         </a>
                         <div class="clear">
-                            <a href="./#!/profile/{{data.song.user.username}}" class="text-info">@{{data.song.user.fullname}}
+                            <a href="./#!/profile/{{data.song.user.username}}" class="text-white">@{{data.song.user.fullname}}
                                 <i class="icon-twitter"></i>
                             </a>
-                            <small class="block text-muted">{{data.song.user.followers}} người theo dõi</small>
+                            <small class="block text-white">{{data.song.user.followers}} người theo dõi</small>
                             <a href="javascript:" class="btn btn-xs btn-success m-t-xs" ng-click="data.song.user.followers=data.song.user.followers+1;data.song.user.followed=true;addFollow(data.song.user.id)"
                                 ng-if="data.song.user.followed!=true&&data.song.user.username!=username">Theo dõi</a>
                             <a href="javascript:" class="btn btn-xs btn-success m-t-xs active" ng-click="data.song.user.followers=data.song.user.followers-1;data.song.user.followed=false;removeFollow(data.song.user.id)"
@@ -78,7 +78,7 @@
                         </div>
                     </div>
                 </section>
-                <section class="bg-black clearfix b-b b-gray">
+                <section class="bg-black clearfix b-b b-gray text-white">
                     <div class="panel-body">
                         <strong>Đăng tải ngày {{data.song.createTime}}</strong>
                         <h2 class="">Lời bài hát</h2>
@@ -90,7 +90,7 @@
                 </section>
                 <!-- Comment -->
                 <section class="comment-list panel-body block bg-black">
-                    <h2 class="font-thin padder-v bg-black line-xs">Bình luận</h2>
+                    <h2 class="font-thin padder-v bg-black line-xs text-white">Bình luận</h2>
                     <div class="more m-sm"><a href="javascript:" ng-click="loadComment(data.page+1)" ng-if="(data.page)*10<data.total">Xem
                             thêm</a></div>
                     <article class="comment-item" ng-repeat="comment in data.listComment | orderBy:'id' track by $index">
@@ -100,18 +100,18 @@
                         <span class="arrow left"></span>
                         <section class="comment-body panel panel-default">
                             <header class="panel-heading bg-white">
-                                <a href="#">{{comment.user.username}}</a>
+                                <a href="#" class="text-black">{{comment.user.username}}</a>
                                 <label class="label bg-danger m-l-xs" ng-if="comment.user.username==='admin'">Admin</label>
-                                <span class="text-muted m-l-sm pull-right">
+                                <span class="text-black m-l-sm pull-right">
                                     <i class="fa fa-clock-o"></i>
                                     {{comment.createTimeFrom}}
                                 </span>
                             </header>
                             <div class="panel-body">
-                                <div>{{comment.content}}</div>
+                                <div class="text-black">{{comment.content}}</div>
                                 <div class="comment-action m-t-sm" ng-if="comment.user.username==data.username">
                                     <a href="javascript:" ng-click="deleteComment(comment.id);" class="btn btn-default btn-xs">
-                                        <i class="fa fa-trash-o text-muted"></i>
+                                        <i class="fa fa-trash-o text-black"></i>
                                         Xóa
                                     </a>
                                 </div>
@@ -145,9 +145,8 @@
             <section class="scrollable hover">
                 <ul class="list-group list-group-lg no-bg auto m-b-none m-t-n-xxs">
                     <li class="list-group-item clearfix" ng-repeat="s in data.listRecommendSong">
-                        <a href="#" class="jp-play-me pull-right m-t-sm m-l text-md">
-                            <i class="icon-control-play text"></i>
-                            <i class="icon-control-pause text-active"></i>
+                        <a href="javascript:" class="jp-play-me pull-right m-t-sm m-l text-md">
+                            <i class="icon-control-play text" ng-click="playSong(s)"></i>
                         </a>
                         <a href="#" class="pull-left thumb-sm m-r">
                             <img src="http://localhost:8080/resource/image?name={{s.image}}">
@@ -166,9 +165,9 @@
             <section class="scrollable hover">
                 <div class="m-t-n-xxs">
                     <div class="item pos-rlt">
-                        <a href="#" class="item-overlay active opacity wrapper-md font-xs">
-                            <span class="block h3 font-bold text-info">Find</span>
-                            <span class="text-muted">Search the music you like</span>
+                        <a href="./#!/search" class="item-overlay active opacity wrapper-md font-xs">
+                            <span class="block h3 font-bold text-info">Tìm kiếm</span>
+                            <span class="text-muted">Tìm kiếm bài hát bạn thích</span>
                             <span class="bottom wrapper-md block">-
                                 <i class="icon-arrow-right i-lg pull-right"></i>
                             </span>
@@ -178,49 +177,38 @@
                         </a>
                     </div>
                     <div class="item pos-rlt">
-                        <a href="#" class="item-overlay active opacity wrapper-md font-xs text-right">
-                            <span class="block h3 font-bold text-warning text-u-c">Listen</span>
-                            <span class="text-muted">Find the peace in your heart</span>
+                        <a href="./#!/search?keyword=&type=song&sort=3&genre=" class="item-overlay active opacity wrapper-md font-xs text-right">
+                            <span class="block h3 font-bold text-danger-lter">Top yêu thích</span>
+                            <span class="text-muted">Danh sách các bài hát được yêu thích nhất</span>
                             <span class="bottom wrapper-md block">
                                 <i class="icon-arrow-right i-lg pull-left"></i> -</span>
+                        </a>
+                        <a href="#">
+                            <img class="img-full" src="images/m45.jpg" alt="...">
+                        </a>
+                    </div>
+                    <div class="item pos-rlt">
+                        <a href="#" class="item-overlay active opacity wrapper-md font-xs">
+                            <span class="block h3 font-bold text-warning text-u-c">Listen</span>
+                            <span class="text-muted">Find the peace in your heart</span>
+                            <span class="bottom wrapper-md block">-
+                                <i class="icon-arrow-right i-lg pull-right"></i>
+                            </span>
                         </a>
                         <a href="#">
                             <img class="img-full" src="images/m41.jpg">
                         </a>
                     </div>
                     <div class="item pos-rlt">
-                        <a href="#" class="item-overlay active opacity wrapper-md font-xs">
+                        <a href="#" class="item-overlay active opacity wrapper-md font-xs text-right">
                             <span class="block h3 font-bold text-success text-u-c">Share</span>
                             <span class="text-muted">Share the good songs with your loves</span>
-                            <span class="bottom wrapper-md block">-
-                                <i class="icon-arrow-right i-lg pull-right"></i>
+                            <span class="bottom wrapper-md block">
+                                <i class="icon-arrow-right i-lg pull-left"></i> -</span>
                             </span>
                         </a>
                         <a href="#">
                             <img class="img-full" src="images/m42.jpg">
-                        </a>
-                    </div>
-                    <div class="item pos-rlt">
-                        <a href="#" class="item-overlay active opacity wrapper-md font-xs text-right">
-                            <span class="block h3 font-bold text-white text-u-c">2014</span>
-                            <span class="text-muted">Find, Listen & Share</span>
-                            <span class="bottom wrapper-md block">
-                                <i class="icon-arrow-right i-lg pull-left"></i> -</span>
-                        </a>
-                        <a href="#">
-                            <img class="img-full" src="images/m44.jpg">
-                        </a>
-                    </div>
-                    <div class="item pos-rlt">
-                        <a href="#" class="item-overlay active opacity wrapper-md font-xs">
-                            <span class="block h3 font-bold text-danger-lter text-u-c">Top10</span>
-                            <span class="text-muted">Selected songs</span>
-                            <span class="bottom wrapper-md block">-
-                                <i class="icon-arrow-right i-lg pull-right"></i>
-                            </span>
-                        </a>
-                        <a href="#">
-                            <img class="img-full" src="images/m45.jpg">
                         </a>
                     </div>
                 </div>

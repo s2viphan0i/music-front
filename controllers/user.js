@@ -69,12 +69,6 @@ myApp.controller('UserController', ['$scope', '$http', '$cookies', 'playlistServ
 			playlistService.doGetPlaylistByUserId($scope.data);
 		}
 	}
-	$scope.addFollow = function(id){
-		userService.doFollow(id);
-	}
-	$scope.removeFollow = function(id){
-		userService.doFollow(id);
-	}
 	$scope.editUser = function(){
 		console.log($scope.data.user.birthdate)
 		userService.doEditUser($scope.data);

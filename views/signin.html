@@ -1,4 +1,4 @@
-<section id="content" class="m-t-lg wrapper-md animated fadeInUp">
+<section id="content" ng-init="initLogin()" class="m-t-lg wrapper-md animated fadeInUp">
     <div class="container aside-xl">
         <a class="navbar-brand block" href="index.html">
             <span class="h1 font-bold">BMusic</span>
@@ -8,6 +8,12 @@
                 <strong>Đăng nhập để có những trải nhiệm mới</strong>
             </header>
             <form>
+                <div class="alert alert-success" ng-if="data.success!=null&&data.success">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <i class="fa fa-ok-sign"></i>
+                    <strong>Thành công!</strong>
+                    {{data.msg}}
+                </div>
                 <div class="alert alert-danger" ng-if="data.success!=null&&!data.success">
                     <button type="button" class="close" data-dismiss="alert">×</button>
                     <i class="fa fa-ban-circle"></i>

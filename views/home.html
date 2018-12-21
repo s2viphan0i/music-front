@@ -18,7 +18,7 @@
 <a href="javascript:" ng-click="getListMostFavoriteSong()" class="pull-right text-muted m-t-lg">
     <i class="icon-refresh i-lg inline" id="mostfavorite-spinner"></i>
 </a>
-<h2 class="font-thin m-b">Bài hát ưa thích
+<h2 class="font-thin m-b">Bài hát ưa thích trong tháng
     <span class="musicbar animate inline m-l-sm" style="width:20px;height:20px">
         <span class="bar1 b1 bg-primary lter"></span>
         <span class="bar2 b2 bg-info lt"></span>
@@ -90,12 +90,12 @@
     </div>
 </div>
 <div class="row m-t-lg m-b-lg">
-    <div class="col-sm-6">
+    <div class="col-sm-6" ng-if="!isLogin()">
         <div class="bg-primary wrapper-md r">
-            <a href="#">
+            <a href="./#!/login">
                 <span class="h4 m-b-xs block">
-                    <i class=" icon-user-follow i-lg"></i> Login or Create account</span>
-                <span class="text-muted">Save and share your playlist with your friends when you log in or create an account.</span>
+                    <i class=" icon-user-follow i-lg"></i> Đăng nhập hoặc tạo tài khoản</span>
+                <span class="text-muted">Đăng và chia sẻ bài hát của bạn với bạn bè bằng cách đăng nhập hoặc tạo tài khoản.</span>
             </a>
         </div>
     </div>
@@ -103,8 +103,8 @@
         <div class="bg-black wrapper-md r">
             <a href="#">
                 <span class="h4 m-b-xs block">
-                    <i class="icon-cloud-download i-lg"></i> Download our app</span>
-                <span class="text-muted">Get the apps for desktop and mobile to start listening music at anywhere and anytime.
+                    <i class="icon-cloud-download i-lg"></i> Tải ứng dụng của chúng tôi</span>
+                <span class="text-muted">Tải ứng dụng cho máy tính hoặc điện thoại di động để nghe nhạc mọi lúc mọi nơi.
                 </span>
             </a>
         </div>
